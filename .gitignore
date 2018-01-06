@@ -23,3 +23,6 @@ hs_err_pid*
 /bin/
 
 sysProps.xml
+
+# Ignore .idea, has a bunch of stuff that should be user-specific
+.idea
