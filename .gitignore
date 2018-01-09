@@ -26,3 +26,5 @@ sysProps.xml
 
 # Ignore .idea, has a bunch of stuff that should be user-specific
 .idea
+.project
+.gradle/
