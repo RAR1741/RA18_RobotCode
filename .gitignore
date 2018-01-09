@@ -34,3 +34,4 @@ sysProps.xml
 
 #gradle files
 .gradle/
+build/
