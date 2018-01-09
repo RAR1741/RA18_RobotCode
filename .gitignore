@@ -23,6 +23,11 @@ hs_err_pid*
 /bin/
 
 sysProps.xml
+# Leave .gradle alone
+.gradle
 
 # Ignore .idea, has a bunch of stuff that should be user-specific
 .idea
+
+# Ignore build files
+build
