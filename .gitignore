@@ -26,3 +26,12 @@ sysProps.xml
 
 # Ignore .idea, has a bunch of stuff that should be user-specific
 .idea
+
+#eclipse files
+.project
+.settings/
+.classpath
+
+#gradle files
+.gradle/
+build/

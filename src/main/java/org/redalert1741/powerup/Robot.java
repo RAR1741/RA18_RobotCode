@@ -23,7 +23,6 @@ public class Robot extends IterativeRobot
 //		} else {
 //			// uh oh!
 //		}
-
 	}
 
 	@Override
@@ -35,4 +34,3 @@ public class Robot extends IterativeRobot
 	@Override
 	public void testPeriodic() {}
 }
-
