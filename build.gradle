@@ -59,13 +59,7 @@ junitPlatform {
   platformVersion '1.0.2'
   filters {
     engines {
-      include 'junit-jupiter', 'junit-vintage'
-      // exclude 'custom-engine'
+      include 'junit-jupiter'
     }
-    tags {
-      include 'fast'
-    }
-    // includeClassNamePattern '.*Test'
   }
-  // logManager 'org.apache.logging.log4j.jul.LogManager'
 }
