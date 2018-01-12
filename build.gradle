@@ -11,8 +11,7 @@ def ROBOT_CLASS = "org.redalert1741.powerup.Robot"
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
-    println "Connecting to: " + TEAM
-        targets {
+    targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
             team = Integer.parseInt(TEAM)
         }
@@ -28,6 +27,8 @@ repositories {
     mavenCentral()
 }
 
+tasks.discoverRoborio.doFirst { println "Connecting to: " + TEAM }
+
 // Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
 // and NavX.
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
     // compile group: 'org.apache.logging.log4j.jul.LogManager'
     testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
+    testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
@@ -58,13 +60,7 @@ junitPlatform {
   platformVersion '1.0.2'
   filters {
     engines {
-      include 'junit-jupiter', 'junit-vintage'
-      // exclude 'custom-engine'
+      include 'junit-jupiter'
     }
-    tags {
-      include 'fast'
-    }
-    // includeClassNamePattern '.*Test'
   }
-  // logManager 'org.apache.logging.log4j.jul.LogManager'
 }
