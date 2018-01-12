@@ -16,3 +16,8 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+notifications:
+  slack:
+    secure:
+      v2hBf4bH47aK1VXQj0QvWQk4x5vPn31bgFIXeDnjYDEGfJgRBRiPiYIdc8oCw6VhuLk8AS725uZQWuC3hDe8wy7Z74SEsrKdi7/fvjInKZ323w6Sv3vR5UjwLLFHg6R6fSZie3lNNbaCdlY/ID6QbENAqS44MV2SFNHgQQJSmMepbP0iZ2TPXmE0lXl5QpD9MNJQloEObEyZTXnVkAgTYcqBVtK81wrsQk3bMJdtaE8ekbPuthF9pS6Qa5hvmlIGE0tu4lXAsAitKz27g0CCe/rSJjUGN4AAwGMxxAmWnbfO4BE2xHSrGdnodmOl2fmKWuDEjJAIUej075NiVypRprHHnhk0+/KortDtg4GUB+t2rZnnoCAsKPs/UoJsEJPV8p44EVu95TKApXwKLQxYTQw6rq1/Sv3A3lQfCoX/k149kdgbvQAuwgbLTagfPpFVXkTJRp1P+lPkqhQOekUNKQWjKihIflsP46zPXUKwfuF/xUIWIl9AMLC752F5xLv7CH8tkATj6uquI2spSByR1N8YHlzArrdajRbyY6AHY8n1+7/J1i4yJq6R49gEZqn4o93hKRBR+OaFYLiQNuN/X9PVx6uaMtBMNvfHavFth0ktjyRmZqieZqnjyT2F6ayfP/rRyPGFp/6Vjf2P1fzvEDhMI+zPdEwdr4LPkYsdCZ4=
