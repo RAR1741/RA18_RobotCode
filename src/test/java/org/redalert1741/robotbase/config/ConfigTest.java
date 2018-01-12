@@ -46,4 +46,20 @@ public class ConfigTest
 		Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
 		assertEquals("default value", Config.getSetting("nonexistant_value", "default value"));
     }
+
+	/**
+	 * Tests that {@link Configurable Configurables} are called after {@link Config#reloadConfig()}
+	 */
+	@Test
+	void configurableTest() {
+		boolean[] success = {false};
+		Config.addConfigurable(()->{
+			assertEquals(5.5, Config.getSetting("double_value", 1.0));
+			success[0]=true;
+		});
+		Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
+		assertFalse(success[0]);
+		Config.reloadConfig();
+		assertTrue(success[0]);
+	}
 }
