@@ -1,7 +1,8 @@
+package org.redalert1741.powerup;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.redalert1741.powerup.Robot;
 
 class JunitTest {
 
