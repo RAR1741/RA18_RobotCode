@@ -9,12 +9,18 @@ import org.redalert1741.robotBase.config.Config;
 
 public class ConfigTest
 {
+	/**
+	 * Tests whether {@link Config} can load a file
+	 */
 	@Test
     void configLoadTest() {
 		boolean success = Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
 		assertTrue(success, "Could not open test_config.txt");
     }
 	
+	/**
+	 * Tests whether {@link Config} values are parsed and returned as the correct types 
+	 */
 	@Test
     void configTypeTest() {
 		Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
@@ -23,12 +29,18 @@ public class ConfigTest
 		assertEquals(true, Config.getSetting("boolean_value", false));
     }
 	
+	/**
+	 * Tests whether comments are ignored in {@link Config}
+	 */
 	@Test
     void configCommentTest() {
 		Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
 		assertEquals(20, Config.getSetting("comment_value", 30));
     }
 	
+	/**
+	 * Tests whether default values are properly returned for nonexistant {@link Config} values
+	 */
 	@Test
     void configDefaultValueTest() {
 		Config.loadFromFile(getClass().getResource("test_config.txt").getPath());
