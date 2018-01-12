@@ -11,9 +11,9 @@
 * Enter `build` in arguments
 * Duplicate the launch setting
 * Rename the new launch setting to `Gradle Deploy 1741`
-* Change the argument to `deploy`
+* Change the argument to `deploy -x test`
 * Duplicate the launch setting
 * Rename the new launch setting to `Gradle Deploy 1751`
-* Change the argument to `deploy -PTEAM=1751`
+* Change the argument to `deploy -x test -PTEAM=1751`
 * Do the same thing to create any other team numbers that you want to deploy to, changing `-PTEAM=####`
 
