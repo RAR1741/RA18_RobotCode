@@ -32,17 +32,54 @@ public class Autonomous
     public void run()
     {
         //TODO make async work
-        if(i < moves.size())
+//        if(i < moves.size())
+//        {
+//            moves.get(i).run();
+//            if(moves.get(i).isFinshed())
+//            {
+//                i++;
+//                if(i == moves.size())
+//                    return;
+//                moves.get(i).start();
+//            }
+//        }
+        addMoves();
+        executeActiveMoves();
+        finishActiveMoves();
+    }
+    
+    public void addMoves()
+    {
+        if(active.isEmpty() || active.get(active.size()-1).isAsync())
         {
-            moves.get(i).run();
-            if(moves.get(i).isFinshed())
+            do
             {
-                i++;
-                if(i == moves.size())
-                    return;
+                active.add(moves.get(i));
                 moves.get(i).start();
+                i++;
+            }
+            while(moves.get(i-1).isAsync());
+        }
+    }
+    
+    public void executeActiveMoves()
+    {
+        for(AutoMove move : active)
+        {
+            move.run();
+        }
+    }
+    
+    public void finishActiveMoves()
+    {
+        List<AutoMove> toRemove = new ArrayList<>();
+        for(AutoMove move : active)
+        {
+            if(move.isFinshed())
+            {
+                toRemove.add(move);
             }
         }
-
+        active.removeAll(toRemove);
     }
 }
