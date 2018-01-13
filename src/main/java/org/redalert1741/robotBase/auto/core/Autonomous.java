@@ -31,18 +31,6 @@ public class Autonomous
      */
     public void run()
     {
-        //TODO make async work
-//        if(i < moves.size())
-//        {
-//            moves.get(i).run();
-//            if(moves.get(i).isFinshed())
-//            {
-//                i++;
-//                if(i == moves.size())
-//                    return;
-//                moves.get(i).start();
-//            }
-//        }
         addMoves();
         executeActiveMoves();
         finishActiveMoves();
@@ -50,7 +38,8 @@ public class Autonomous
     
     public void addMoves()
     {
-        if(active.isEmpty() || active.get(active.size()-1).isAsync())
+        // only add more moves if the previous active sync move has finished
+        if(active.isEmpty() || active.get(active.size()-1).isAsync()) 
         {
             do
             {
