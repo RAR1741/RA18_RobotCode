@@ -1,12 +1,28 @@
 package org.redalert1741.powerup;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends IterativeRobot
 {
+	WPI_TalonSRX motor;
+	XboxController driver;
+	
 	@Override
-	public void robotInit() {}
+	public void robotInit() {
+		driver = new XboxController(0);
+		
+		motor = new WPI_TalonSRX(3);
+		motor.setInverted(true);
+		motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,1000);
+	}
 
 	@Override
 	public void autonomousInit() {
@@ -27,9 +43,22 @@ public class Robot extends IterativeRobot
 
 	@Override
 	public void autonomousPeriodic() {}
+	
+	@Override
+	public void teleopInit() {
+		System.out.println(motor.getSensorCollection().setQuadraturePosition(0, 1000));
+	}
 
 	@Override
-	public void teleopPeriodic() {}
+	public void teleopPeriodic() {
+		System.out.println(motor.getSensorCollection().getQuadraturePosition());
+		if(driver.getAButton()) {
+			motor.set(ControlMode.Position,0);
+		} else {
+			motor.set(ControlMode.Position, 1000);
+		}
+		
+	}
 
 	@Override
 	public void testPeriodic() {}
