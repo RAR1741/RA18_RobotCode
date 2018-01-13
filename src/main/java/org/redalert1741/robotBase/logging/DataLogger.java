@@ -7,7 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 public class DataLogger
 {
@@ -21,7 +23,7 @@ public class DataLogger
     {
         fields = new LinkedHashMap<String,String>();
         loggables = new ArrayList<>();
-        table = NetworkTable.getTable("logging");
+        table = NetworkTableInstance.getDefault().getTable("logging");
         for(String s : table.getKeys())
         {
             table.delete(s);
@@ -99,7 +101,7 @@ public class DataLogger
 
     public boolean log(String field, double d)
     {
-        table.putNumber(field, d);
+        table.getEntry(field).setDouble(d);
         return log(field, String.valueOf(d));
     }
 
