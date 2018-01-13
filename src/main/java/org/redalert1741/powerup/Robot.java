@@ -3,25 +3,31 @@ package org.redalert1741.powerup;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends IterativeRobot
 {
-	WPI_TalonSRX motor;
+	TalonSRX motor;
 	XboxController driver;
 	
 	@Override
 	public void robotInit() {
 		driver = new XboxController(0);
 		
-		motor = new WPI_TalonSRX(3);
-		motor.setInverted(true);
-		motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,1000);
+		motor = new TalonSRX(3);
+		//motor.setInverted(true);
+		motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,10);
+		motor.configNominalOutputForward(0, 10);
+		motor.configNominalOutputReverse(0, 10);
+		motor.configPeakOutputForward(1, 10);
+		motor.configPeakOutputReverse(-1, 10);
+		motor.configAllowableClosedloopError(0, 0, 10);
+		motor.config_kF(0, 0, 10);
+		motor.config_kP(0, 1, 10);
+		motor.config_kI(0, 0, 10);
+		motor.config_kD(0, 0, 10);
 	}
 
 	@Override
@@ -52,12 +58,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic() {
 		System.out.println(motor.getSensorCollection().getQuadraturePosition());
-		if(driver.getAButton()) {
-			motor.set(ControlMode.Position,0);
-		} else {
-			motor.set(ControlMode.Position, 1000);
-		}
-		
+		if(driver.getPOV()!=-1)
+			motor.set(ControlMode.Position, (driver.getPOV()*2048)/360);
 	}
 
 	@Override
