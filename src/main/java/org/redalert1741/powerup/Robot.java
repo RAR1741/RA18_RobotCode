@@ -1,12 +1,22 @@
 package org.redalert1741.powerup;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Robot extends IterativeRobot
 {
+	TankDrive tank;
+	XboxController driver;
+
 	@Override
-	public void robotInit() {}
+	public void robotInit() {
+	    //controllers
+	    driver = new XboxController(0);
+	    
+	    //drivetrain
+	    tank = new TankDrive(1,2,3,4,5,6);
+	}
 
 	@Override
 	public void autonomousInit() {
@@ -29,7 +39,9 @@ public class Robot extends IterativeRobot
 	public void autonomousPeriodic() {}
 
 	@Override
-	public void teleopPeriodic() {}
+	public void teleopPeriodic() {
+	    tank.arcadeDrive(driver.getX(Hand.kRight) * -0.6, driver.getY(Hand.kLeft) * 0.6);
+	}
 
 	@Override
 	public void testPeriodic() {}
