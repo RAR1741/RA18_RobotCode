@@ -1,0 +1,10 @@
+# types test
+
+string_value="string"
+double_value=5.5
+boolean_value=true
+
+# comment test
+
+comment_value=20
+#comment_value=25
