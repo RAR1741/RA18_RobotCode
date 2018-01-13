@@ -6,12 +6,12 @@ import org.redalert1741.robotBase.auto.core.AutoMoveEnd;
 
 public class EmptyEnd implements AutoMoveEnd
 {
-	@Override
-	public void setArgs(Map<String, String> args) {}
+    @Override
+    public void setArgs(Map<String, String> args) {}
 
-	@Override
-	public boolean isFinished() { return true; }
+    @Override
+    public boolean isFinished() { return true; }
 
-	@Override
-	public void start() {}
+    @Override
+    public void start() {}
 }
