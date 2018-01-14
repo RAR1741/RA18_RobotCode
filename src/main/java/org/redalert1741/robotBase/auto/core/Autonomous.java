@@ -23,7 +23,9 @@ public class Autonomous
     public void start()
     {
         i = 0;
-        moves.get(i).start();
+        if(!moves.isEmpty()) {
+            moves.get(i).start();
+        }
     }
 
     /**
@@ -31,9 +33,11 @@ public class Autonomous
      */
     public void run()
     {
-        addMoves();
-        executeActiveMoves();
-        finishActiveMoves();
+        if(!moves.isEmpty()) {
+            addMoves();
+            executeActiveMoves();
+            finishActiveMoves();
+        }
     }
     
     public void addMoves()
