@@ -34,7 +34,9 @@ public class Autonomous
     public void run()
     {
         if(!moves.isEmpty()) {
-            addMoves();
+            if(i < moves.size()) {
+                addMoves();
+            }
             executeActiveMoves();
             finishActiveMoves();
         }
