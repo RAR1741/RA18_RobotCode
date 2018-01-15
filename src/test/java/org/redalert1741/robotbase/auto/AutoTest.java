@@ -154,5 +154,36 @@ public class AutoTest {
         assertEquals(5, asyncCounter2.count);
         assertEquals(1, asyncCounter1.count);
         assertEquals(1, asyncCounter3.count);
+
+        //end new async
+        manual1.completed = true;
+        auto.run();
+
+        //old async, new async, and sync move remain
+        auto.run();
+        assertEquals(3, counter.count);
+        assertEquals(7, asyncCounter2.count);
+        assertEquals(2, asyncCounter1.count);
+        assertEquals(3, asyncCounter3.count);
+
+        //stop sync
+        manual3.completed = true;
+        auto.run();
+
+        //old async and new async remain
+        auto.run();
+        assertEquals(4, counter.count);
+        assertEquals(9, asyncCounter2.count);
+        assertEquals(5, asyncCounter3.count);
+        
+        //end remaining async
+        manual2.completed = true;
+        manual4.completed = true;
+        auto.run();
+
+        //everything should stop
+        auto.run();
+        assertEquals(10, asyncCounter2.count);
+        assertEquals(6, asyncCounter3.count);
     }
 }
