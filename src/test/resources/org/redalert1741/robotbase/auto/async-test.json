@@ -1,0 +1,10 @@
+{
+    "auto": [
+        {"type":"async-counter1","args":{},"end":{"type":"manual1","args":{}},"moveargs":{"async":true}},
+        {"type":"async-counter2","args":{},"end":{"type":"manual2","args":{}},"moveargs":{"async":true}},
+        {"type":"counter","args":{},"end":{"type":"manual3","args":{}},"moveargs":{}},
+        {"type":"async-counter1","args":{},"end":{"type":"manual1","args":{}},"moveargs":{"async":true}},
+        {"type":"async-counter3","args":{},"end":{"type":"manual4","args":{}},"moveargs":{"async":true}},
+        {"type":"counter","args":{},"end":{"type":"manual3","args":{}},"moveargs":{}}
+    ]
+}

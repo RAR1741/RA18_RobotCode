@@ -23,7 +23,9 @@ public class Autonomous
     public void start()
     {
         i = 0;
-        moves.get(i).start();
+        if(!moves.isEmpty()) {
+            moves.get(i).start();
+        }
     }
 
     /**
@@ -31,18 +33,48 @@ public class Autonomous
      */
     public void run()
     {
-        //TODO make async work
-        if(i < moves.size())
+        if(!moves.isEmpty()) {
+            if(i < moves.size()) {
+                addMoves();
+            }
+            executeActiveMoves();
+            finishActiveMoves();
+        }
+    }
+    
+    public void addMoves()
+    {
+        // only add more moves if the previous active sync move has finished
+        if(active.isEmpty() || active.get(active.size()-1).isAsync()) 
         {
-            moves.get(i).run();
-            if(moves.get(i).isFinshed())
+            do
             {
-                i++;
-                if(i == moves.size())
-                    return;
+                active.add(moves.get(i));
                 moves.get(i).start();
+                i++;
+            }
+            while(moves.get(i-1).isAsync());
+        }
+    }
+    
+    public void executeActiveMoves()
+    {
+        for(AutoMove move : active)
+        {
+            move.run();
+        }
+    }
+    
+    public void finishActiveMoves()
+    {
+        List<AutoMove> toRemove = new ArrayList<>();
+        for(AutoMove move : active)
+        {
+            if(move.isFinshed())
+            {
+                toRemove.add(move);
             }
         }
-
+        active.removeAll(toRemove);
     }
 }

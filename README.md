@@ -16,4 +16,7 @@ Requires ctrlib installed on computer
 [![GitHub issues](https://img.shields.io/github/issues/RAR1741/RA18_RobotCode.svg)](https://github.com/RAR1741/RA18_RobotCode/issues?q=is%3Aopen+is%3Aissue)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/RAR1741/RA18_RobotCode.svg)](https://github.com/RAR1741/RA18_RobotCode/issues?q=is%3Aissue+is%3Aclosed)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc64fcbe33c96330949e/maintainability)](https://codeclimate.com/github/RAR1741/RA18_RobotCode/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fc64fcbe33c96330949e/test_coverage)](https://codeclimate.com/github/RAR1741/RA18_RobotCode/test_coverage)
+
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat)](LICENSE)
