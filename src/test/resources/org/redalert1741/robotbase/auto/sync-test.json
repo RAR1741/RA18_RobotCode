@@ -1,0 +1,6 @@
+{
+    "auto": [
+        {"type":"counter","args":{},"end":{"type":"manual","args":{}},"moveargs":{}},
+        {"type":"counter","args":{},"end":{"type":"manual","args":{}},"moveargs":{}}
+    ]
+}
