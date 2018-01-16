@@ -2,8 +2,6 @@ package org.redalert1741.robotbase.config;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-
 import org.junit.jupiter.api.Test;
 import org.redalert1741.robotBase.config.Config;
 

@@ -11,85 +11,71 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Config
-{
+public class Config {
     private static Map<String, Double> doubleSettings;
     private static Map<String, Boolean> booleanSettings;
     private static Map<String, String> stringSettings;
     private static List<Configurable> configurables;
 
-    public static void dumpConfig()
-    {
+    public static void dumpConfig() {
         System.out.println("DUMP");
-        for(Map.Entry<String, Double> e : doubleSettings.entrySet())
-        {
+        for(Map.Entry<String, Double> e : doubleSettings.entrySet()) {
             System.out.println(e.getKey() + ": " + e.getValue());
         }
         System.out.println("END DUMP");
     }
 
-    public static boolean loadFromFile(String filename)
-    {
+    public static boolean loadFromFile(String filename) {
         return parse(filename);
     }
 
-    public static double getSetting(String name, double reasonable_default)
-    {
+    public static double getSetting(String name, double reasonable_default) {
         double retval = reasonable_default;
         name = name.toLowerCase();
 
-        if (doubleSettings.containsKey(name))
-        {
+        if (doubleSettings.containsKey(name)) {
             retval = doubleSettings.get(name);
         }
 
         return retval;
     }
 
-    public static boolean getSetting(String name, boolean r_default)
-    {
+    public static boolean getSetting(String name, boolean r_default) {
         boolean retval = r_default;
         name = name.toLowerCase();
 
-        if (booleanSettings.containsKey(name))
-        {
+        if (booleanSettings.containsKey(name)) {
             retval = booleanSettings.get(name);
         }
 
         return retval;
     }
 
-    public static String getSetting(String name, String r_default)
-    {
+    public static String getSetting(String name, String r_default) {
         String retval = r_default;
         name = name.toLowerCase();
 
-        if (stringSettings.containsKey(name))
-        {
+        if (stringSettings.containsKey(name)) {
             retval = stringSettings.get(name);
         }
 
         return retval;
     }
 
-    public static void setSetting(String name, double value)
-    {
+    public static void setSetting(String name, double value) {
         name = name.toLowerCase();
         doubleSettings.put(name, value);
     }
 
-    static boolean parse(String filename)
-    {
+    static boolean parse(String filename) {
         doubleSettings = new HashMap<String,Double>();
         booleanSettings = new HashMap<>();
         stringSettings = new HashMap<>();
         Scanner infile;
-        try
-        {
+        try {
             infile = new Scanner(new File(filename));
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e) {
             System.out.println("Couldn't find config file \"" + filename + "\"");
             return false;
         }
@@ -104,33 +90,25 @@ public class Config
         Pattern booleanpattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?= ?([Tt]rue|[Ff]alse)$");
         Pattern stringpattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?\"([^\"]*)\"$");
         Matcher t;
-        while(infile.hasNextLine())
-        {
+        while(infile.hasNextLine()) {
             String in = infile.nextLine();
-            if((t = doublepattern.matcher(in)).matches())
-            {
+            if((t = doublepattern.matcher(in)).matches()) {
                 String key = t.group(1);
                 Double value = Double.parseDouble(t.group(2));
                 doubleSettings.put(key.toLowerCase(), value);
                 //System.out.println(key + ": " + value);
             }
-            else if((t = booleanpattern.matcher(in)).matches())
-            {
+            else if((t = booleanpattern.matcher(in)).matches()) {
                 String key = t.group(1);
                 Boolean value = Boolean.parseBoolean(t.group(2));
                 booleanSettings.put(key.toLowerCase(), value);
                 //System.out.println(key + ": " + value);
             }
-            else if((t = stringpattern.matcher(in)).matches())
-            {
+            else if((t = stringpattern.matcher(in)).matches()) {
                 String key = t.group(1);
                 String value = t.group(2);
                 stringSettings.put(key.toLowerCase(), value);
                 //System.out.println(key + ": " + value);
-            }
-            else if(!in.startsWith("#") && !in.isEmpty())
-            {
-                //System.out.println("Could not parse line \"" + in + "\"");
             }
         }
         infile.close();
@@ -143,10 +121,8 @@ public class Config
         configurables.add(c);
     }
 
-    public static void reloadConfig()
-    {
-        for(Configurable c : configurables)
-        {
+    public static void reloadConfig() {
+        for(Configurable c : configurables) {
             c.reloadConfig();
         }
     }

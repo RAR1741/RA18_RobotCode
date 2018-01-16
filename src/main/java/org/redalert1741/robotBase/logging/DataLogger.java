@@ -11,84 +11,56 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 
-public class DataLogger
-{
+public class DataLogger {
     private String filename;
     private FileWriter log = null;
     private Map<String, String> fields;
     private List<Loggable> loggables;
     private NetworkTable table;
 
-    public DataLogger()
-    {
+    public DataLogger() {
         fields = new LinkedHashMap<String,String>();
         loggables = new ArrayList<>();
         table = NetworkTableInstance.getDefault().getTable("logging");
-        for(String s : table.getKeys())
-        {
+        for(String s : table.getKeys()) {
             table.delete(s);
         }
     }
 
-    public boolean open(String filename)
-    {
+    public boolean open(String filename) {
         this.filename = filename;
-        try
-        {
+        try {
             log = new FileWriter(filename);
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             return false;
         }
         return true;
     }
 
-    public void close()
-    {
-        if(log!=null)
-        {
-            try
-            {
+    public void close() {
+        if(log!=null) {
+            try {
                 log.close();
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public boolean reset()
-    {
+    public boolean reset() {
         close();
         open(this.filename);
         writeAttributes();
         return true;
     }
 
-    public boolean hasAttribute(String name)
-    {
+    public boolean hasAttribute(String name) {
         return fields.containsKey(name);
     }
 
-    // TODO: needs some serious optimization most likely
-//    Entry<String,String> FindField(String name)
-//    {
-//        String real_name = Normalize(name);
-//        for (Entry<String,String> e : fields)
-//        {
-//            if (real_name == e.getKey())
-//            {
-//                System.out.println(e.getKey());
-//                return e;
-//            }
-//        }
-//        return null;
-//    }
-
-    public boolean addAttribute(String field)
-    {
+    public boolean addAttribute(String field) {
         if (hasAttribute(field)) {
             // TODO: Output warning
             return false; // We already have this attribute
@@ -99,86 +71,65 @@ public class DataLogger
         return true;
     }
 
-    public boolean log(String field, double d)
-    {
+    public boolean log(String field, double d) {
         table.getEntry(field).setDouble(d);
         return log(field, String.valueOf(d));
     }
 
-    public boolean log(String field, String data)
-    {
-        if(!hasAttribute(field)) return false;
+    public boolean log(String field, String data) {
+        if(!hasAttribute(field)) { return false; }
 
         fields.put(field, data);
         return true;
     }
 
-    public boolean log(String field, Object data)
-    {
-        if(!hasAttribute(field)) return false;
+    public boolean log(String field, Object data) {
+        if(!hasAttribute(field)) { return false; }
 
         fields.put(field, data.toString());
         return true;
     }
 
-    public boolean writeAttributes()
-    {
-        try
-        {
-            for (Map.Entry<String,String> e : fields.entrySet())
-            {
+    public boolean writeAttributes() {
+        try {
+            for (Map.Entry<String,String> e : fields.entrySet()) {
                 log.write(e.getKey() + ',');
             }
             log.write("\n");
             log.flush();
         }
-        catch (IOException e1)
-        {
+        catch (IOException e1) {
             e1.printStackTrace();
             return false;
         }
         return true;
     }
 
-    public boolean writeLine()
-    {
-        try
-        {
-            for (Map.Entry<String,String> e : fields.entrySet())
-            {
+    public boolean writeLine() {
+        try {
+            for (Map.Entry<String,String> e : fields.entrySet()) {
                 log.write(e.getValue() + ',');
             }
             log.write("\n");
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             return false;
         }
         return true;
     }
 
-    String Normalize(String str)
-    {
-        return str.toLowerCase();
-    }
-
-    public void addLoggable(Loggable l)
-    {
+    public void addLoggable(Loggable l) {
         loggables.add(l);
     }
 
-    public void setupLoggables()
-    {
-        for(Loggable l : loggables)
-        {
+    public void setupLoggables() {
+        for(Loggable l : loggables) {
             l.setupLogging(this);
         }
     }
 
-    public void log()
-    {
-        for(Loggable l : loggables)
-        {
+    public void log() {
+        for(Loggable l : loggables) {
             l.log(this);
         }
     }

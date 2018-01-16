@@ -19,7 +19,9 @@ public abstract class AutoFactory
      * @return AutoFactory class, for method chaining
      * @see #addMoveEnd(String, AutoMoveEndFactory)
      */
-    public static Class<AutoFactory> addMoveMove(String name, AutoMoveMoveFactory a) { ammf.put(name, a); return AutoFactory.class; }
+    public static Class<AutoFactory> addMoveMove(String name, AutoMoveMoveFactory a) {
+        ammf.put(name, a); return AutoFactory.class;
+    }
 
     /**
      * Adds an {@link AutoMoveEndFactory} to the static map
@@ -28,7 +30,9 @@ public abstract class AutoFactory
      * @return AutoFactory class, for method chaining
      * @see #addMoveMove(String, AutoMoveMoveFactory)
      */
-    public static Class<AutoFactory> addMoveEnd(String name, AutoMoveEndFactory a) { amef.put(name, a); return AutoFactory.class; }
+    public static Class<AutoFactory> addMoveEnd(String name, AutoMoveEndFactory a) {
+        amef.put(name, a); return AutoFactory.class;
+    }
 
     /**
      * Generates an autonomous given a file path.

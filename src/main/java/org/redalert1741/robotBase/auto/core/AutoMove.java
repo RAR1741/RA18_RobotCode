@@ -5,8 +5,7 @@ import java.util.Map;
 /**
  * Represents a single move within an {@link Autonomous}
  */
-public class AutoMove
-{
+public class AutoMove {
     private AutoMoveMove amm;
     private AutoMoveEnd ame;
     private boolean finished;
@@ -19,8 +18,7 @@ public class AutoMove
      * @param ame End
      * @param args Extra arguments
      */
-    public AutoMove(AutoMoveMove amm, AutoMoveEnd ame, Map<String, Object> args)
-    {
+    public AutoMove(AutoMoveMove amm, AutoMoveEnd ame, Map<String, Object> args) {
         this.amm = amm;
         this.ame = ame;
         this.args = args;
@@ -32,8 +30,7 @@ public class AutoMove
     public boolean isFinshed() { return finished; }
     public boolean isAsync() { return (args.containsKey("async") ? (boolean) args.get("async") : false); }
 
-    public void start()
-    {
+    public void start() {
         amm.start();
         ame.start();
     }
@@ -41,11 +38,9 @@ public class AutoMove
     /**
      * Iterative run. Also checks if the move is finished.
      */
-    public void run()
-    {
+    public void run() {
         amm.run();
-        if(ame.isFinished())
-        {
+        if(ame.isFinished()) {
             finished = true;
             amm.stop();
         }

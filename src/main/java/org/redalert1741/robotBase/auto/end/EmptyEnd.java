@@ -4,8 +4,7 @@ import java.util.Map;
 
 import org.redalert1741.robotBase.auto.core.AutoMoveEnd;
 
-public class EmptyEnd implements AutoMoveEnd
-{
+public class EmptyEnd implements AutoMoveEnd {
     @Override
     public void setArgs(Map<String, String> args) {}
 
