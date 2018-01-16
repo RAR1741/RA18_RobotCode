@@ -32,7 +32,6 @@ public class JsonAutoFactory extends AutoFactory
             for(JsonElement tmove : m)
             {
                 JsonObject move = tmove.getAsJsonObject();
-                System.out.println(move.get("type").getAsString());
                 AutoMoveMove amm = ammf.get(move.get("type").getAsString()).createAutoMoveMove();
                 Map<String, String> args = new HashMap<>();
                 for(Entry<String, JsonElement> arg : move.get("args").getAsJsonObject().entrySet())
