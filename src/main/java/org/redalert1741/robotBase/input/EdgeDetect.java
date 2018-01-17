@@ -7,6 +7,11 @@ public class EdgeDetect {
         state = false;
     }
 
+    /**
+     * Returns true when input has gone from false to true
+     * @param in input
+     * @return rising edge detection
+     */
     public boolean check(boolean in) {
         boolean out;
 

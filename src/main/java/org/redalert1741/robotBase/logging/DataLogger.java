@@ -10,7 +10,10 @@ import java.util.Map;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-
+/**
+ * Logs data to a file
+ * Also polls the state of a {@link Loggable}
+ */
 public class DataLogger {
     private String filename;
     private FileWriter log = null;
@@ -27,6 +30,11 @@ public class DataLogger {
         }
     }
 
+    /**
+     * Opens a file to write the log to
+     * @param filename Name of the file
+     * @return Success of opening the file
+     */
     public boolean open(String filename) {
         this.filename = filename;
         try {
@@ -38,6 +46,9 @@ public class DataLogger {
         return true;
     }
 
+    /**
+     * Closes the current log file
+     */
     public void close() {
         if(log!=null) {
             try {
@@ -49,17 +60,26 @@ public class DataLogger {
         }
     }
 
+    /**
+     * Closes the current log file and reopens it with the same attributes
+     * @return Success of reopening the file
+     */
     public boolean reset() {
         close();
-        open(this.filename);
+        boolean success = open(this.filename);
         writeAttributes();
-        return true;
+        return success;
     }
 
     public boolean hasAttribute(String name) {
         return fields.containsKey(name);
     }
 
+    /**
+     * Adds a new attribute to the logger
+     * @param field Attribute to add
+     * @return Whether the attribute was successfully added, fails if it already exists
+     */
     public boolean addAttribute(String field) {
         if (hasAttribute(field)) {
             // TODO: Output warning
@@ -71,11 +91,23 @@ public class DataLogger {
         return true;
     }
 
-    public boolean log(String field, double d) {
-        table.getEntry(field).setDouble(d);
-        return log(field, String.valueOf(d));
+    /**
+     * Log a double using
+     * @param field Attribute to log
+     * @param val Value to log
+     * @return Success of logging
+     */
+    public boolean log(String field, double val) {
+        table.getEntry(field).setDouble(val);
+        return log(field, String.valueOf(val));
     }
 
+    /**
+     * Logs a specified attribute
+     * @param field Attribute to log
+     * @param data String data to log
+     * @return Whether the value was successfully logged
+     */
     public boolean log(String field, String data) {
         if(!hasAttribute(field)) { return false; }
 
@@ -83,6 +115,12 @@ public class DataLogger {
         return true;
     }
 
+    /**
+     * Logs an object. Uses {@link #toString()}
+     * @param field Attribute to log
+     * @param data Object to log
+     * @return Whether the value was successfully logged
+     */
     public boolean log(String field, Object data) {
         if(!hasAttribute(field)) { return false; }
 
@@ -90,6 +128,10 @@ public class DataLogger {
         return true;
     }
 
+    /**
+     * Writes the attributes to the log file, should be called before starting to log
+     * @return Success of writing
+     */
     public boolean writeAttributes() {
         try {
             for (Map.Entry<String,String> e : fields.entrySet()) {
@@ -105,6 +147,10 @@ public class DataLogger {
         return true;
     }
 
+    /**
+     * Writes the current log values
+     * @return Success of writing
+     */
     public boolean writeLine() {
         try {
             for (Map.Entry<String,String> e : fields.entrySet()) {
@@ -118,16 +164,27 @@ public class DataLogger {
         return true;
     }
 
+    /**
+     * Adds a {@link Loggable}
+     * TODO descibe loggables
+     * @param l Loggable to add
+     */
     public void addLoggable(Loggable l) {
         loggables.add(l);
     }
 
+    /**
+     * Calls each {@link Loggable Loggable's} {@link Loggable#setupLogging(DataLogger)}
+     */
     public void setupLoggables() {
         for(Loggable l : loggables) {
             l.setupLogging(this);
         }
     }
 
+    /**
+     * Calls each {@link Loggable Loggable's} {@link Loggable#log(DataLogger)}
+     */
     public void log() {
         for(Loggable l : loggables) {
             l.log(this);
