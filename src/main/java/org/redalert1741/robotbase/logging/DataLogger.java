@@ -21,6 +21,9 @@ public class DataLogger {
     private List<Loggable> loggables;
     private NetworkTable table;
 
+    /**
+     * This is a constructor.
+     */
     public DataLogger() {
         fields = new LinkedHashMap<String,String>();
         loggables = new ArrayList<>();
@@ -92,30 +95,6 @@ public class DataLogger {
     }
 
     /**
-     * Log a double value.
-     * @param field Attribute to log
-     * @param val Value to log
-     * @return Success of logging
-     */
-    public boolean log(String field, double val) {
-        table.getEntry(field).setDouble(val);
-        return log(field, String.valueOf(val));
-    }
-
-    /**
-     * Logs a specified attribute.
-     * @param field Attribute to log
-     * @param data String data to log
-     * @return Whether the value was successfully logged
-     */
-    public boolean log(String field, String data) {
-        if(!hasAttribute(field)) { return false; }
-
-        fields.put(field, data);
-        return true;
-    }
-
-    /**
      * Logs an object. Uses {@link #toString()}.
      * @param field Attribute to log
      * @param data Object to log
@@ -169,8 +148,8 @@ public class DataLogger {
      * TODO descibe loggables
      * @param l Loggable to add
      */
-    public void addLoggable(Loggable l) {
-        loggables.add(l);
+    public void addLoggable(Loggable loggable) {
+        loggables.add(loggable);
     }
 
     /**
@@ -185,7 +164,7 @@ public class DataLogger {
     /**
      * Calls each {@link Loggable Loggable's} {@link Loggable#log(DataLogger)}.
      */
-    public void log() {
+    public void logAll() {
         for(Loggable l : loggables) {
             l.log(this);
         }
