@@ -146,7 +146,7 @@ public class DataLogger {
     /**
      * Adds a {@link Loggable}.
      * TODO descibe loggables
-     * @param l Loggable to add
+     * @param loggable Loggable to add
      */
     public void addLoggable(Loggable loggable) {
         loggables.add(loggable);

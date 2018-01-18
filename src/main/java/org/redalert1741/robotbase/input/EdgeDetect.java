@@ -8,7 +8,7 @@ public class EdgeDetect {
     }
 
     /**
-     * Returns true when input has gone from false to true
+     * Returns true when input has gone from false to true.
      * @param in input
      * @return rising edge detection
      */
