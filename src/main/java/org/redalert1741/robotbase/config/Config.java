@@ -7,11 +7,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class Config {
+    public static interface ConfigItem {
+        boolean testCorrectType(String input);
+    }
+    
+    public class DoubleItem implements ConfigItem {
+        private double value;
+        
+        DoubleItem() { value = 0; }
+
+        @Override
+        public boolean testCorrectType(String input) {
+            try {
+                value = Double.parseDouble(input);
+            } catch(NumberFormatException e) {
+                return false;
+            }
+            return true;
+        }
+
+        public double getValue() {
+            return value;
+        }
+    }
+
     private static Map<String, Double> doubleSettings;
     private static Map<String, Boolean> booleanSettings;
     private static Map<String, String> stringSettings;
