@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.redalert1741.robotBase.auto.core.AutoFactory;
-import org.redalert1741.robotBase.auto.core.AutoMoveEnd;
-import org.redalert1741.robotBase.auto.core.AutoMoveMove;
-import org.redalert1741.robotBase.auto.core.Autonomous;
-import org.redalert1741.robotBase.auto.core.JsonAutoFactory;
+import org.redalert1741.robotbase.auto.core.AutoFactory;
+import org.redalert1741.robotbase.auto.core.AutoMoveEnd;
+import org.redalert1741.robotbase.auto.core.AutoMoveMove;
+import org.redalert1741.robotbase.auto.core.Autonomous;
+import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 
 public class AutoTest {
     class CounterMove implements AutoMoveMove {

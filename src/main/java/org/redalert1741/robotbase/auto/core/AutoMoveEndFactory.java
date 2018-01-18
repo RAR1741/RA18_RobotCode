@@ -1,7 +1,6 @@
-package org.redalert1741.robotBase.auto.core;
+package org.redalert1741.robotbase.auto.core;
 
-public interface AutoMoveEndFactory
-{
+public interface AutoMoveEndFactory {
     /**
      * Create an {@link AutoMoveEnd}. Meant to be implemented by a lambda.
      * @return Generated AutoMoveEnd
