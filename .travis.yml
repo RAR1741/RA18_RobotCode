@@ -14,12 +14,15 @@ script:
   - ./gradlew check
   - ./gradlew cobertura
 after_script:
+  - cp build/cobertura/cobertura.ser /home/travis/build/RAR1741/RA18_RobotCode/cobertura.ser
+  - cp build/cobertura/coberturaInput.ser /home/travis/build/RAR1741/RA18_RobotCode/coberturaInput.ser
   - ls
   - ls build/
   - ls build/cobertura
-  - cp build/cobertura/cobertura.ser /home/travis/build/RAR1741/RA18_RobotCode
-  - cp build/cobertura/coberturaInput.ser /home/travis/build/RAR1741/RA18_RobotCode
-  - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/cobertura" --exit-code $TRAVIS_TEST_RESULT --debug
+  - ls build/RAR1741
+  - ls build/RAR1741/RA18_RobotCode
+  - ./cc-test-reporter after-build --coverage-input-type cobertura --exit-code $TRAVIS_TEST_RESULT --debug
+  # - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/cobertura" --exit-code $TRAVIS_TEST_RESULT --debug
 
 branches:
   only:
