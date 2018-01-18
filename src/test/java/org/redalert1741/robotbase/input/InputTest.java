@@ -3,7 +3,7 @@ package org.redalert1741.robotbase.input;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.redalert1741.robotBase.input.EdgeDetect;
+import org.redalert1741.robotbase.input.EdgeDetect;
 
 class InputTest {
     /**

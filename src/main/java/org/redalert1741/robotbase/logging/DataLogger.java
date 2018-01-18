@@ -1,4 +1,4 @@
-package org.redalert1741.robotBase.logging;
+package org.redalert1741.robotbase.logging;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
- * Logs data to a file
+ * Logs data to a file.
  * Also polls the state of a {@link Loggable}
  */
 public class DataLogger {
@@ -31,7 +31,7 @@ public class DataLogger {
     }
 
     /**
-     * Opens a file to write the log to
+     * Opens a file to write the log to.
      * @param filename Name of the file
      * @return Success of opening the file
      */
@@ -47,7 +47,7 @@ public class DataLogger {
     }
 
     /**
-     * Closes the current log file
+     * Closes the current log file.
      */
     public void close() {
         if(log!=null) {
@@ -61,7 +61,7 @@ public class DataLogger {
     }
 
     /**
-     * Closes the current log file and reopens it with the same attributes
+     * Closes the current log file and reopens it with the same attributes.
      * @return Success of reopening the file
      */
     public boolean reset() {
@@ -76,7 +76,7 @@ public class DataLogger {
     }
 
     /**
-     * Adds a new attribute to the logger
+     * Adds a new attribute to the logger.
      * @param field Attribute to add
      * @return Whether the attribute was successfully added, fails if it already exists
      */
@@ -92,7 +92,7 @@ public class DataLogger {
     }
 
     /**
-     * Log a double using
+     * Log a double value.
      * @param field Attribute to log
      * @param val Value to log
      * @return Success of logging
@@ -103,7 +103,7 @@ public class DataLogger {
     }
 
     /**
-     * Logs a specified attribute
+     * Logs a specified attribute.
      * @param field Attribute to log
      * @param data String data to log
      * @return Whether the value was successfully logged
@@ -116,7 +116,7 @@ public class DataLogger {
     }
 
     /**
-     * Logs an object. Uses {@link #toString()}
+     * Logs an object. Uses {@link #toString()}.
      * @param field Attribute to log
      * @param data Object to log
      * @return Whether the value was successfully logged
@@ -129,7 +129,7 @@ public class DataLogger {
     }
 
     /**
-     * Writes the attributes to the log file, should be called before starting to log
+     * Writes the attributes to the log file, should be called before starting to log.
      * @return Success of writing
      */
     public boolean writeAttributes() {
@@ -148,7 +148,7 @@ public class DataLogger {
     }
 
     /**
-     * Writes the current log values
+     * Writes the current log values.
      * @return Success of writing
      */
     public boolean writeLine() {
@@ -165,7 +165,7 @@ public class DataLogger {
     }
 
     /**
-     * Adds a {@link Loggable}
+     * Adds a {@link Loggable}.
      * TODO descibe loggables
      * @param l Loggable to add
      */
@@ -174,7 +174,7 @@ public class DataLogger {
     }
 
     /**
-     * Calls each {@link Loggable Loggable's} {@link Loggable#setupLogging(DataLogger)}
+     * Calls each {@link Loggable Loggable's} {@link Loggable#setupLogging(DataLogger)}.
      */
     public void setupLoggables() {
         for(Loggable l : loggables) {
@@ -183,7 +183,7 @@ public class DataLogger {
     }
 
     /**
-     * Calls each {@link Loggable Loggable's} {@link Loggable#log(DataLogger)}
+     * Calls each {@link Loggable Loggable's} {@link Loggable#log(DataLogger)}.
      */
     public void log() {
         for(Loggable l : loggables) {

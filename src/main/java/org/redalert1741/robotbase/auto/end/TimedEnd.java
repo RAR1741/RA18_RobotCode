@@ -1,8 +1,8 @@
-package org.redalert1741.robotBase.auto.end;
+package org.redalert1741.robotbase.auto.end;
 
 import java.util.Map;
 
-import org.redalert1741.robotBase.auto.core.AutoMoveEnd;
+import org.redalert1741.robotbase.auto.core.AutoMoveEnd;
 
 public class TimedEnd implements AutoMoveEnd {
     private long startTime;

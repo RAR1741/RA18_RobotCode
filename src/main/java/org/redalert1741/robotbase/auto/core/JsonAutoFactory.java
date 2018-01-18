@@ -1,4 +1,4 @@
-package org.redalert1741.robotBase.auto.core;
+package org.redalert1741.robotbase.auto.core;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

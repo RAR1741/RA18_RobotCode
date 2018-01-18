@@ -1,4 +1,4 @@
-package org.redalert1741.robotBase.input;
+package org.redalert1741.robotbase.input;
 
 public class EdgeDetect {
     private boolean state;

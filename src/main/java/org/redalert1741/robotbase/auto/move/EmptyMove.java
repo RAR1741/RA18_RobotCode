@@ -1,8 +1,8 @@
-package org.redalert1741.robotBase.auto.move;
+package org.redalert1741.robotbase.auto.move;
 
 import java.util.Map;
 
-import org.redalert1741.robotBase.auto.core.AutoMoveMove;
+import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 
 public class EmptyMove implements AutoMoveMove
 {

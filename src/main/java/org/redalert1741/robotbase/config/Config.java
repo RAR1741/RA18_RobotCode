@@ -1,4 +1,4 @@
-package org.redalert1741.robotBase.config;
+package org.redalert1741.robotbase.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
