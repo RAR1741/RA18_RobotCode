@@ -13,7 +13,7 @@ before_script:
 script:
   - ./gradlew check
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --coverage-input-type cobertura --exit-code $TRAVIS_TEST_RESULT
 
 branches:
   only:
