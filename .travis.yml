@@ -17,6 +17,8 @@ after_script:
   - ls
   - ls build/
   - ls build/cobertura
+  - cp build/cobertura/cobertura.ser /
+  - cp build/cobertura/coberturaInput.ser /
   - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/cobertura" --exit-code $TRAVIS_TEST_RESULT --debug
 
 branches:
