@@ -13,7 +13,8 @@ before_script:
 script:
   - ./gradlew check
 after_script:
-  - ./cc-test-reporter after-build --coverage-input-type cobertura --exit-code $TRAVIS_TEST_RESULT
+  - ls
+  - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/cobertura" --exit-code $TRAVIS_TEST_RESULT
 
 branches:
   only:
