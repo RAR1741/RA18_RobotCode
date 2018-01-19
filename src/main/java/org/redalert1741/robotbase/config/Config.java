@@ -13,13 +13,19 @@ import java.util.regex.Pattern;
 
 
 public class Config {
+    /**
+     * Used for finding a type and storage.
+     */
     public static interface ConfigItem {
         boolean testCorrectType(String input);
     }
-    
-    public class DoubleItem implements ConfigItem {
+
+    /**
+     * Parses and stores doubles
+     */
+    public static class DoubleItem implements ConfigItem {
         private double value;
-        
+
         DoubleItem() { value = 0; }
 
         @Override
@@ -37,71 +43,66 @@ public class Config {
         }
     }
 
-    private static Map<String, Double> doubleSettings;
-    private static Map<String, Boolean> booleanSettings;
-    private static Map<String, String> stringSettings;
-    private static List<Configurable> configurables;
+    /**
+     * Parses and stores booleans.
+     */
+    public static class BooleanItem implements ConfigItem {
+        private boolean value;
 
-    public static void dumpConfig() {
-        System.out.println("DUMP");
-        for(Map.Entry<String, Double> e : doubleSettings.entrySet()) {
-            System.out.println(e.getKey() + ": " + e.getValue());
+        BooleanItem() { value = false; }
+
+        @Override
+        public boolean testCorrectType(String input) {
+            if(input.equalsIgnoreCase("true") || input.equalsIgnoreCase("false")) {
+                value = Boolean.parseBoolean(input);
+                return true;
+            }
+            return false;
         }
-        System.out.println("END DUMP");
+
+        public boolean getValue() {
+            return value;
+        }
     }
 
-    public static boolean loadFromFile(String filename) {
+    /**
+     * Parses and stores Strings.
+     */
+    public static class StringItem implements ConfigItem {
+        private String value;
+
+        StringItem() { value = ""; }
+
+        @Override
+        public boolean testCorrectType(String input) {
+            String tmp = input.trim();
+            if(tmp.charAt(0) == '\"' && tmp.charAt(tmp.length()-1) == '\"') {
+                value = tmp.substring(1, tmp.length()-1);
+                return true;
+            }
+            return false;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+    private String filename;
+    private Map<String, ConfigItem> items;
+    private List<Configurable> configurables;
+
+    public boolean loadFromFile(String filename) {
+        this.filename = filename;
         return parse(filename);
     }
 
-    public static double getSetting(String name, double reasonable_default) {
-        double retval = reasonable_default;
-        name = name.toLowerCase();
-
-        if (doubleSettings.containsKey(name)) {
-            retval = doubleSettings.get(name);
-        }
-
-        return retval;
-    }
-
-    public static boolean getSetting(String name, boolean r_default) {
-        boolean retval = r_default;
-        name = name.toLowerCase();
-
-        if (booleanSettings.containsKey(name)) {
-            retval = booleanSettings.get(name);
-        }
-
-        return retval;
-    }
-
-    public static String getSetting(String name, String r_default) {
-        String retval = r_default;
-        name = name.toLowerCase();
-
-        if (stringSettings.containsKey(name)) {
-            retval = stringSettings.get(name);
-        }
-
-        return retval;
-    }
-
-    public static void setSetting(String name, double value) {
-        name = name.toLowerCase();
-        doubleSettings.put(name, value);
-    }
-
-    static boolean parse(String filename) {
-        doubleSettings = new HashMap<String,Double>();
-        booleanSettings = new HashMap<>();
-        stringSettings = new HashMap<>();
+    boolean parse(String filename) {
         Scanner infile;
         try {
             infile = new Scanner(new File(filename));
         }
         catch (FileNotFoundException e) {
-            System.out.println("Couldn't find config file \"" + filename + "\"");
             return false;
         }
 
@@ -109,46 +110,66 @@ public class Config {
          * Match exactly 0 '#'
          * Match as many alphanumeric characters + '_'
          * Optional ' ' around an '='
-         * Match a number, with an optional '.' and more numbers
+         * Match something
          */
-        Pattern doublepattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?(-?\\d*(?:\\.\\d+)?)$");
-        Pattern booleanpattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?= ?([Tt]rue|[Ff]alse)$");
-        Pattern stringpattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?\"([^\"]*)\"$");
+        Pattern itemPattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?(.+)$");
         Matcher t;
+        String in;
+        items = new HashMap<>();
         while(infile.hasNextLine()) {
-            String in = infile.nextLine();
-            if((t = doublepattern.matcher(in)).matches()) {
-                String key = t.group(1);
-                Double value = Double.parseDouble(t.group(2));
-                doubleSettings.put(key.toLowerCase(), value);
-                //System.out.println(key + ": " + value);
-            }
-            else if((t = booleanpattern.matcher(in)).matches()) {
-                String key = t.group(1);
-                Boolean value = Boolean.parseBoolean(t.group(2));
-                booleanSettings.put(key.toLowerCase(), value);
-                //System.out.println(key + ": " + value);
-            }
-            else if((t = stringpattern.matcher(in)).matches()) {
-                String key = t.group(1);
-                String value = t.group(2);
-                stringSettings.put(key.toLowerCase(), value);
-                //System.out.println(key + ": " + value);
+            in = infile.nextLine();
+            t = itemPattern.matcher(in);
+            if(t.matches()) {
+                ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
+                for(ConfigItem item : tmpItems) {
+                    if(item.testCorrectType(t.group(2))) {
+                        items.put(t.group(1), item);
+                    }
+                }
             }
         }
         infile.close();
         return true;
     }
 
-    public static void addConfigurable(Configurable c)
+    public void addConfigurable(Configurable c)
     {
         if(configurables == null) { configurables = new ArrayList<>(); }
         configurables.add(c);
     }
 
-    public static void reloadConfig() {
+    public void reloadConfig() {
+        parse(filename);
         for(Configurable c : configurables) {
             c.reloadConfig();
+        }
+    }
+
+    public ConfigItem getItem(String name) {
+        return items.get(name);
+    }
+
+    public String getSetting(String name, String reasonableDefault) {
+        if(items.containsKey(name) && items.get(name) instanceof StringItem) {
+            return ((StringItem) items.get(name)).getValue();
+        } else {
+            return reasonableDefault;
+        }
+    }
+
+    public boolean getSetting(String name, boolean reasonableDefault) {
+        if(items.containsKey(name) && items.get(name) instanceof BooleanItem) {
+            return ((BooleanItem) items.get(name)).getValue();
+        } else {
+            return reasonableDefault;
+        }
+    }
+
+    public double getSetting(String name, double reasonableDefault) {
+        if(items.containsKey(name) && items.get(name) instanceof DoubleItem) {
+            return ((DoubleItem) items.get(name)).getValue();
+        } else {
+            return reasonableDefault;
         }
     }
 }
