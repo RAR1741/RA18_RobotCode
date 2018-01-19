@@ -27,14 +27,12 @@ public class Scoring implements Loggable {
 
     @Override
     public void setupLogging(DataLogger logger) {
-        // TODO Auto-generated method stub
-        
+        logger.addAttribute("grabber_state");
     }
 
     @Override
     public void log(DataLogger logger) {
-        // TODO Auto-generated method stub
-
+        logger.log("grabber_state", grabber.get());
     }
     
     
