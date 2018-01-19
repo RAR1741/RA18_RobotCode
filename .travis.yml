@@ -21,9 +21,9 @@ after_script:
   - ls build/reports
   - ls build/reports/cobertura
   - ls build/cobertura
-  # - ./cc-test-reporter format-coverage -t cobertura build/cobertura/cobertura.ser
-  # - ./cc-test-reporter upload-coverage
-  - ./cc-test-reporter after-build --coverage-input-type cobertura --exit-code $TRAVIS_TEST_RESULT --debug
+  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
+  - ./cc-test-reporter upload-coverage
+  - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/reports/cobertura" --exit-code $TRAVIS_TEST_RESULT --debug
   # - ./cc-test-reporter after-build --coverage-input-type cobertura --prefix "/home/travis/build/RAR1741/RA18_RobotCode/build/cobertura" --exit-code $TRAVIS_TEST_RESULT --debug
 
 branches:
