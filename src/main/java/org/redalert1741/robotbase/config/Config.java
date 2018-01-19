@@ -17,6 +17,7 @@ public class Config {
      */
     public static interface ConfigItem {
         boolean testCorrectType(String input);
+
         Object getValue();
     }
 
@@ -26,7 +27,9 @@ public class Config {
     public static class DoubleItem implements ConfigItem {
         private double value;
 
-        DoubleItem() { value = 0; }
+        DoubleItem() {
+            value = 0;
+        }
 
         @Override
         public boolean testCorrectType(String input) {
@@ -50,7 +53,9 @@ public class Config {
     public static class BooleanItem implements ConfigItem {
         private boolean value;
 
-        BooleanItem() { value = false; }
+        BooleanItem() {
+            value = false;
+        }
 
         @Override
         public boolean testCorrectType(String input) {
@@ -73,7 +78,9 @@ public class Config {
     public static class StringItem implements ConfigItem {
         private String value;
 
-        StringItem() { value = ""; }
+        StringItem() {
+            value = "";
+        }
 
         @Override
         public boolean testCorrectType(String input) {
@@ -94,6 +101,10 @@ public class Config {
     private String filename;
     private Map<String, ConfigItem> items;
     private List<Configurable> configurables;
+
+    public Config() {
+        configurables = new ArrayList<>();
+    }
 
     public boolean loadFromFile(String filename) {
         this.filename = filename;
@@ -135,12 +146,22 @@ public class Config {
         return true;
     }
 
-    public void addConfigurable(Configurable c)
-    {
-        if(configurables == null) { configurables = new ArrayList<>(); }
-        configurables.add(c);
+    public void addConfigurable(Configurable configurable) {
+        configurables.add(configurable);
     }
 
+    public void removeConfigurable(Configurable configurable) {
+        configurables.remove(configurable);
+    }
+
+    public void removeAllConfigurables() {
+        configurables.removeAll(configurables);
+    }
+
+    /**
+     * Reloads the config from the last specified file from {@link #loadFromFile(String)}.
+     * Calls each {@link Configurable Configurable's} {@link Configurable#reloadConfig()}.
+     */
     public void reloadConfig() {
         parse(filename);
         for(Configurable c : configurables) {
@@ -152,9 +173,16 @@ public class Config {
         return items.get(name);
     }
     
+    /**
+     * Retrieves a setting. only supported reasonableDefault types are Boolean, Double, and String.
+     * Returns reasonableDefault if the setting is not found.
+     * @param name Setting to retrieve
+     * @param reasonableDefault Default value to use in event of missing value
+     * @return The requested value or the reasonableDefault
+     */
     @SuppressWarnings("unchecked")
-	public <T> T getSetting(String name, T reasonableDefault) {
-    	if(items.containsKey(name) && items.get(name) instanceof ConfigItem) {
+    public <T> T getSetting(String name, T reasonableDefault) {
+        if(items.containsKey(name) && items.get(name) instanceof ConfigItem) {
             return (T) ((ConfigItem) items.get(name)).getValue();
         }
         return reasonableDefault;
