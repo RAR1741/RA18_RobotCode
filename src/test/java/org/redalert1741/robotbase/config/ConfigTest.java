@@ -24,7 +24,7 @@ public class ConfigTest {
         Config config = new Config();
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertEquals("string", config.getSetting("string_value", "wrong string"));
-        assertEquals(5.5, config.getSetting("double_value", 1.0));
+        assertEquals(5.5, config.getSetting("double_value", 1.0), 0.0001);
         assertEquals(true, config.getSetting("boolean_value", false));
     }
 
@@ -35,7 +35,7 @@ public class ConfigTest {
     void configCommentTest() {
         Config config = new Config();
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
-        assertEquals(20, config.getSetting("comment_value", 30));
+        assertEquals(20.0, config.getSetting("comment_value", 30.0), 0.0001);
     }
 
     /**
@@ -56,7 +56,7 @@ public class ConfigTest {
         Config config = new Config();
         boolean[] success = {false};
         config.addConfigurable(()->{
-            assertEquals(5.5, config.getSetting("double_value", 1.0));
+            assertEquals(5.5, config.getSetting("double_value", 1.0), 0.0001);
             success[0]=true;
         });
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());

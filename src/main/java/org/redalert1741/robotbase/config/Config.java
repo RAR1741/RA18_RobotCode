@@ -17,6 +17,7 @@ public class Config {
      */
     public static interface ConfigItem {
         boolean testCorrectType(String input);
+        Object getValue();
     }
 
     /**
@@ -37,7 +38,8 @@ public class Config {
             return true;
         }
 
-        public double getValue() {
+        @Override
+        public Object getValue() {
             return value;
         }
     }
@@ -59,7 +61,8 @@ public class Config {
             return false;
         }
 
-        public boolean getValue() {
+        @Override
+        public Object getValue() {
             return value;
         }
     }
@@ -82,7 +85,8 @@ public class Config {
             return false;
         }
 
-        public String getValue() {
+        @Override
+        public Object getValue() {
             return value;
         }
     }
@@ -147,24 +151,11 @@ public class Config {
     public ConfigItem getItem(String name) {
         return items.get(name);
     }
-
-    public String getSetting(String name, String reasonableDefault) {
-        if(items.containsKey(name) && items.get(name) instanceof StringItem) {
-            return ((StringItem) items.get(name)).getValue();
-        }
-        return reasonableDefault;
-    }
-
-    public boolean getSetting(String name, boolean reasonableDefault) {
-        if(items.containsKey(name) && items.get(name) instanceof BooleanItem) {
-            return ((BooleanItem) items.get(name)).getValue();
-        }
-        return reasonableDefault;
-    }
-
-    public double getSetting(String name, double reasonableDefault) {
-        if(items.containsKey(name) && items.get(name) instanceof DoubleItem) {
-            return ((DoubleItem) items.get(name)).getValue();
+    
+    @SuppressWarnings("unchecked")
+	public <T> T getSetting(String name, T reasonableDefault) {
+    	if(items.containsKey(name) && items.get(name) instanceof ConfigItem) {
+            return (T) ((ConfigItem) items.get(name)).getValue();
         }
         return reasonableDefault;
     }
