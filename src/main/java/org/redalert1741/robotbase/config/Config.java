@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +20,7 @@ public class Config {
     }
 
     /**
-     * Parses and stores doubles
+     * Parses and stores doubles.
      */
     public static class DoubleItem implements ConfigItem {
         private double value;
@@ -152,24 +151,21 @@ public class Config {
     public String getSetting(String name, String reasonableDefault) {
         if(items.containsKey(name) && items.get(name) instanceof StringItem) {
             return ((StringItem) items.get(name)).getValue();
-        } else {
-            return reasonableDefault;
         }
+        return reasonableDefault;
     }
 
     public boolean getSetting(String name, boolean reasonableDefault) {
         if(items.containsKey(name) && items.get(name) instanceof BooleanItem) {
             return ((BooleanItem) items.get(name)).getValue();
-        } else {
-            return reasonableDefault;
         }
+        return reasonableDefault;
     }
 
     public double getSetting(String name, double reasonableDefault) {
         if(items.containsKey(name) && items.get(name) instanceof DoubleItem) {
             return ((DoubleItem) items.get(name)).getValue();
-        } else {
-            return reasonableDefault;
         }
+        return reasonableDefault;
     }
 }
