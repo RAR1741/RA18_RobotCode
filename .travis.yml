@@ -12,7 +12,6 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - ./gradlew check
-  - ./gradlew cobertura
 after_script:
   - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
   - ./cc-test-reporter upload-coverage
