@@ -1,11 +1,11 @@
 package org.redalert1741.powerup;
 
-import org.redalert1741.robotbase.logging.DataLogger;
-import org.redalert1741.robotbase.logging.Loggable;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Spark;
+
+import org.redalert1741.robotbase.logging.DataLogger;
+import org.redalert1741.robotbase.logging.Loggable;
 
 public class Scoring implements Loggable {
     Spark left, right;
