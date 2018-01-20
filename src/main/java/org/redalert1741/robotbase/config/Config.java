@@ -10,7 +10,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * A config file. Parses a file and gets the things.
+ */
 public class Config {
     /**
      * Used for finding a type and storage.
@@ -127,23 +129,41 @@ public class Config {
          * Match something
          */
         Pattern itemPattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?(.+)$");
-        Matcher t;
+        Matcher match;
         String in;
         items = new HashMap<>();
         while(infile.hasNextLine()) {
             in = infile.nextLine();
-            t = itemPattern.matcher(in);
-            if(t.matches()) {
-                ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
-                for(ConfigItem item : tmpItems) {
-                    if(item.testCorrectType(t.group(2))) {
-                        items.put(t.group(1), item);
-                    }
-                }
-            }
+            match = itemPattern.matcher(in);
+            parseLine(match);
         }
         infile.close();
         return true;
+    }
+
+    /**
+     * Finishes parsing a single line based on a Matcher.
+     * @param match line matcher
+     */
+    private void parseLine(Matcher match) {
+        if(match.matches()) {
+            ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
+            for(ConfigItem item : tmpItems) {
+                parseItem(item, match.group(1), match.group(2));
+            }
+        }
+    }
+
+    /**
+     * Parses a single item.
+     * @param item Item type
+     * @param name Name to store setting
+     * @param toParse String to parse for setting
+     */
+    private void parseItem(ConfigItem item, String name, String toParse) {
+        if(item.testCorrectType(toParse)) {
+            items.put(name, item);
+        }
     }
 
     public void addConfigurable(Configurable configurable) {
