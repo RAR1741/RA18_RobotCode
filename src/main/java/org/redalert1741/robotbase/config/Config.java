@@ -127,23 +127,31 @@ public class Config {
          * Match something
          */
         Pattern itemPattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?(.+)$");
-        Matcher t;
+        Matcher match;
         String in;
         items = new HashMap<>();
         while(infile.hasNextLine()) {
             in = infile.nextLine();
-            t = itemPattern.matcher(in);
-            if(t.matches()) {
-                ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
-                for(ConfigItem item : tmpItems) {
-                    if(item.testCorrectType(t.group(2))) {
-                        items.put(t.group(1), item);
-                    }
-                }
-            }
+            match = itemPattern.matcher(in);
+            parseLine(match);
         }
         infile.close();
         return true;
+    }
+
+    /**
+     * Finishes parsing a single line based on a Matcher
+     * @param match line matcher
+     */
+    private void parseLine(Matcher match) {
+        if(match.matches()) {
+            ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
+            for(ConfigItem item : tmpItems) {
+                if(item.testCorrectType(match.group(2))) {
+                    items.put(match.group(1), item);
+                }
+            }
+        }
     }
 
     public void addConfigurable(Configurable configurable) {
