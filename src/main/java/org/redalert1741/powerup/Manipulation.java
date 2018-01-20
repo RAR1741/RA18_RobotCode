@@ -13,15 +13,15 @@ public class Manipulation implements Loggable {
     Spark lift;
     
     /**
-     * Constructor for manipulation subsystem
+     * Constructor for manipulation subsystem.
      * @param liftID PWM channel of lift spark
      * @param in ID 1 for DoubleSolenoid
      * @param out ID 2 for DoubleSolenoid
      * @see Spark
      * @see DoubleSolenoid
      */
-    public Manipulation(int liftID, int in, int out) {
-        this.lift = new Spark(liftID);
+    public Manipulation(int liftId, int in, int out) {
+        this.lift = new Spark(liftId);
         this.tilt = new DoubleSolenoid(in, out);
     }
     
