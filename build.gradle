@@ -38,6 +38,8 @@ dependencies {
     compile openrio.powerup.matchData()
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
     compile group: 'org.junit.platform', name: 'junit-platform-gradle-plugin', version: '1.0.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
     // compile group: 'org.apache.logging.log4j.jul.LogManager'
     testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
