@@ -1,12 +1,12 @@
 package org.redalert1741.powerup;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.logging.Logger;
 
 public class Robot extends IterativeRobot
 {
-    private static final Logger logger = LogManager.getLogger(); // allocates logger for this class
+    private static final Logger logger = Logger.getLogger(Robot.class.getName()); // allocates logger for this class
 
     @Override
     public void robotInit() {
