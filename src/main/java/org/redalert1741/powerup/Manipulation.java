@@ -7,7 +7,6 @@ import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 
 public class Manipulation implements Loggable {
-    
     DoubleSolenoid tilt;
     Spark lift;
     
