@@ -14,7 +14,7 @@ public class Manipulation implements Loggable {
     
     /**
      * Constructor for manipulation subsystem.
-     * @param liftID PWM channel of lift spark
+     * @param liftId PWM channel of lift spark
      * @param in ID 1 for DoubleSolenoid
      * @param out ID 2 for DoubleSolenoid
      * @see Spark
