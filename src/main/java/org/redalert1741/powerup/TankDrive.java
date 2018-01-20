@@ -53,8 +53,8 @@ public class TankDrive {
 
     /**
      * Drive the tank drive in arcade style.
-     * @param xDrive drive steering
-     * @param yDrive drive power
+     * @param xdrive drive steering
+     * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
         tankDrive(ydrive+xdrive, ydrive-xdrive);
