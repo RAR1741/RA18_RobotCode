@@ -140,17 +140,27 @@ public class Config {
     }
 
     /**
-     * Finishes parsing a single line based on a Matcher
+     * Finishes parsing a single line based on a Matcher.
      * @param match line matcher
      */
     private void parseLine(Matcher match) {
         if(match.matches()) {
             ConfigItem[] tmpItems = { new DoubleItem(), new StringItem(), new BooleanItem() };
             for(ConfigItem item : tmpItems) {
-                if(item.testCorrectType(match.group(2))) {
-                    items.put(match.group(1), item);
-                }
+                parseItem(item, match.group(1), match.group(2));
             }
+        }
+    }
+
+    /**
+     * Parses a single item.
+     * @param item Item type
+     * @param name Name to store setting
+     * @param toParse String to parse for setting
+     */
+    private void parseItem(ConfigItem item, String name, String toParse) {
+        if(item.testCorrectType(toParse)) {
+            items.put(name, item);
         }
     }
 
