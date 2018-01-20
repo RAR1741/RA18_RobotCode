@@ -11,7 +11,6 @@ public class TimedEnd implements AutoMoveEnd {
     @Override
     public void setArgs(Map<String, String> args) {
         duration = Integer.parseInt(args.get("length"));
-        System.out.println(duration);
     }
 
     @Override
