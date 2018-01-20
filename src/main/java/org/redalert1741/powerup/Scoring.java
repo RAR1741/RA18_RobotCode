@@ -19,7 +19,7 @@ public class Scoring implements Loggable {
     public Scoring(int kOut, int kIn, int grab, int drop) {
         this.grabber = new DoubleSolenoid(grab, drop);
     }
-
+    
     public void open() {
         grabber.set(Value.kForward);
     }
