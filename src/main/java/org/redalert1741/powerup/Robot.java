@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class Robot extends IterativeRobot
 {
     private static final Logger logger = LogManager.getLogger(); // allocates logger for this class
+
     @Override
     public void robotInit() {
       logger.info("Robot startup started");
