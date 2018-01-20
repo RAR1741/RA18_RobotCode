@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 
 public class Robot extends IterativeRobot
 {
-    private static final Logger logger = Logger.getLogger(Robot.class.getName()); // allocates logger for this class
+    // allocates logger for this class
+    private static final Logger logger = Logger.getLogger(Robot.class.getName());
 
     @Override
     public void robotInit() {
