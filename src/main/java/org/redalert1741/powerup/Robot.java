@@ -23,12 +23,16 @@ public class Robot extends IterativeRobot
 
     @Override
     public void autonomousPeriodic() {
-
+      // TODO: Add code to be called during the autonomous period
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+      // TODO: Add code to be called during the teleop period
+    }
 
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic() {
+      // TODO: Add code to be called in test mode
+    }
 }
