@@ -56,19 +56,19 @@ public class TankDrive {
      * @param xDrive drive steering
      * @param yDrive drive power
      */
-    public void arcadeDrive(double xDrive, double yDrive) {
-        tankDrive(yDrive+xDrive, yDrive-xDrive);
+    public void arcadeDrive(double xdrive, double ydrive) {
+        tankDrive(ydrive+xdrive, ydrive-xdrive);
     }
 
     /**
-     * Shift to driving
+     * Shift to driving.
      */
     public void enableDriving() {
         shifter.set(Value.kForward);
     }
 
     /**
-     * Shift to climbing
+     * Shift to climbing.
      */
     public void enableClimbing() {
         shifter.set(Value.kReverse);
