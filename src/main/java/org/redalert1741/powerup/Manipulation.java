@@ -12,8 +12,29 @@ public class Manipulation implements Loggable {
     DoubleSolenoid tilt;
     Spark lift;
     
-    public Manipulation(int tilt, int lift) {
-        
+    /**
+     * Constructor for manipulation subsystem
+     * @param liftID PWM channel of lift spark
+     * @param in ID 1 for DoubleSolenoid
+     * @param out ID 2 for DoubleSolenoid
+     * @see Spark
+     * @see DoubleSolenoid
+     */
+    public Manipulation(int liftID, int in, int out) {
+        this.lift = new Spark(liftID);
+        this.tilt = new DoubleSolenoid(in, out);
+    }
+    
+    public void tiltIn() {
+        tilt.set(Value.kReverse);
+    }
+    
+    public void tiltOut() {
+        tilt.set(Value.kForward);
+    }
+    
+    public void setLift(double input) {
+        lift.set(input);
     }
     
     @Override
