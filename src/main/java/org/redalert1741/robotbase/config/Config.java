@@ -10,7 +10,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * A config file. Parses a file and gets the things.
+ */
 public class Config {
     /**
      * Used for finding a type and storage.
