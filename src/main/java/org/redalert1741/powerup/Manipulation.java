@@ -39,13 +39,11 @@ public class Manipulation implements Loggable {
     
     @Override
     public void setupLogging(DataLogger logger) {
-        // TODO Auto-generated method stub
-
+        logger.addAttribute("tilt_state");
     }
 
     @Override
     public void log(DataLogger logger) {
-        // TODO Auto-generated method stub
-
+        logger.log("tilt_state", tilt.get());
     }
 }
