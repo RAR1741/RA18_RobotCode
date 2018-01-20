@@ -8,16 +8,18 @@ import org.redalert1741.robotbase.logging.Loggable;
 public class Scoring implements Loggable {
     DoubleSolenoid grabber;
     DoubleSolenoid kicker;
+
     /**
      * Constructor for scoring subsystem.
-     * @param kIn ID 1 for DoubleSolenoid kicker
-     * @param kOut ID 2 for DoubleSolenoid kicker
+     * @param kickIn ID 1 for DoubleSolenoid kicker
+     * @param kickOut ID 2 for DoubleSolenoid kicker
      * @param grab ID 1 for DoubleSolenoid grabber
      * @param drop ID 2 for DoubleSolenoid grabber
      * @see DoubleSolenoid
      */
-    public Scoring(int kOut, int kIn, int grab, int drop) {
+    public Scoring(int kickIn, int kickOut, int grab, int drop) {
         this.grabber = new DoubleSolenoid(grab, drop);
+        this.kicker = new DoubleSolenoid(kickIn, kickOut);
     }
     
     public void open() {
@@ -39,10 +41,12 @@ public class Scoring implements Loggable {
     @Override
     public void setupLogging(DataLogger logger) {
         logger.addAttribute("grabber_state");
+        logger.addAttribute("kicker_state");
     }
 
     @Override
     public void log(DataLogger logger) {
         logger.log("grabber_state", grabber.get());
+        logger.log("kicker_state", kicker.get());
     }
 }
