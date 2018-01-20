@@ -48,5 +48,4 @@ public class Manipulation implements Loggable {
         // TODO Auto-generated method stub
 
     }
-
 }
