@@ -2,28 +2,21 @@ package org.redalert1741.powerup;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Spark;
-
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 
 public class Scoring implements Loggable {
-    Spark left;
-    Spark right;
     DoubleSolenoid grabber;
-    
+    DoubleSolenoid kicker;
     /**
      * Constructor for scoring subsystem.
-     * @param leftP PWM channel of left spark
-     * @param rightP PWM channel of right spark
-     * @param grab ID 1 for DoubleSolenoid
-     * @param drop ID 2 for DoubleSolenoid
-     * @see Spark
+     * @param kIn ID 1 for DoubleSolenoid kicker
+     * @param kOut ID 2 for DoubleSolenoid kicker
+     * @param grab ID 1 for DoubleSolenoid grabber
+     * @param drop ID 2 for DoubleSolenoid grabber
      * @see DoubleSolenoid
      */
-    public Scoring(int leftP, int rightP, int grab, int drop) {
-        this.left = new Spark(leftP);
-        this.right = new Spark(rightP);
+    public Scoring(int kOut, int kIn, int grab, int drop) {
         this.grabber = new DoubleSolenoid(grab, drop);
     }
 
@@ -35,11 +28,14 @@ public class Scoring implements Loggable {
         grabber.set(Value.kReverse);
     }
     
-    public void setIntake(double input) {
-        left.set(input);
-        right.set(-input);
+    public void kick() {
+        kicker.set(Value.kForward);
     }
 
+    public void retract() {
+        kicker.set(Value.kReverse);
+    }
+    
     @Override
     public void setupLogging(DataLogger logger) {
         logger.addAttribute("grabber_state");
