@@ -49,7 +49,4 @@ public class Scoring implements Loggable {
     public void log(DataLogger logger) {
         logger.log("grabber_state", grabber.get());
     }
-    
-    
-    
 }
