@@ -20,6 +20,13 @@ deploy {
         artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
             targets << "roborio"
         }
+
+        fileArtifact('logging.properties') {
+            file = file('logging.properties')
+            filename = 'logging.properties'
+            targets << "roborio"
+        }
+
     }
 }
 

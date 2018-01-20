@@ -2,7 +2,10 @@ package org.redalert1741.powerup;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
-import java.util.logging.Logger;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.*;
 
 public class Robot extends IterativeRobot
 {
@@ -11,6 +14,9 @@ public class Robot extends IterativeRobot
 
     @Override
     public void robotInit() {
+      // Set up global logger
+      setupLogging();
+
       logger.info("Robot startup started");
 
       logger.info("Robot startup complete");
@@ -36,5 +42,20 @@ public class Robot extends IterativeRobot
     @Override
     public void testPeriodic() {
       // TODO: Add code to be called in test mode
+    }
+
+    // Set logging up for the rest of the application
+    private void setupLogging() {
+      try {
+        FileInputStream fis = new FileInputStream("/home/lvuser/logging.properties");
+        LogManager.getLogManager().readConfiguration(fis);
+        fis.close();
+      } catch (FileNotFoundException ex) {
+        // Ignore exceptions
+        System.err.printf("No such file found: %s", ex.getMessage());
+      } catch (IOException ex) {
+        // Ignore exceptions
+        System.err.printf("IOException: %s", ex.getMessage());
+      }
     }
 }
