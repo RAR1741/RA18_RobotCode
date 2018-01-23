@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;;
 
 public class Robot extends IterativeRobot
 {
@@ -51,11 +52,11 @@ public class Robot extends IterativeRobot
         LogManager.getLogManager().readConfiguration(fis);
         fis.close();
       } catch (FileNotFoundException ex) {
-        // Ignore exceptions
-        System.err.printf("No such file found: %s", ex.getMessage());
+          // Ignore exceptions
+          ex.printStackTrace();
       } catch (IOException ex) {
-        // Ignore exceptions
-        System.err.printf("IOException: %s", ex.getMessage());
+          // Ignore exceptions
+          ex.printStackTrace();
       }
     }
 }
