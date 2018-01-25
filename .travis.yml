@@ -14,7 +14,7 @@ script:
   - ./gradlew check
 after_script:
   - ./gradlew cobertura
-  - ./cc-test-reporter format-coverage -d -t cobertura build/reports/cobertura/coverage.xml
+  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
   - ./cc-test-reporter upload-coverage
 
 branches:
