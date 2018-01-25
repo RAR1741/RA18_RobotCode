@@ -13,7 +13,7 @@ before_script:
 script:
   - ./gradlew check
 after_script:
-  - ./gradlew jacocoTestReport
+  - ./gradlew jacocoFix
   - ./cc-test-reporter format-coverage -t jacoco build/jacocoReportDir/test/jacocoTestReport.xml
   - ./cc-test-reporter upload-coverage
 
