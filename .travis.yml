@@ -12,10 +12,11 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - ./gradlew check
-after_script:
   - ./gradlew cobertura
-  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
-  - ./cc-test-reporter upload-coverage
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  # - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
+  # - ./cc-test-reporter upload-coverage
 
 branches:
   only:
