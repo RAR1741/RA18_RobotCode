@@ -42,13 +42,4 @@ public class InputTest {
             assertEquals(i%2!=0, edge.check(i%2!=0));
         }
     }
-    
-    /**
-     * This just fails... #JustTestingThings
-     */
-    @Test
-    public void justFail() {
-//        assertEquals(false, true);
-    	assertEquals(true, true);
-    }
 }
