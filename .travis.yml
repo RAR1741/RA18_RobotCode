@@ -13,7 +13,8 @@ before_script:
 script:
   - ./gradlew check
 after_script:
-  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
+  - ./gradlew jacocoTestReport
+  - ./cc-test-reporter format-coverage build/jacocoReportDir/test/jacocoTestReport.xml
   - ./cc-test-reporter upload-coverage
 
 branches:

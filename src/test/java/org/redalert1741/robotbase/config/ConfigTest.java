@@ -1,8 +1,10 @@
 package org.redalert1741.robotbase.config;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.redalert1741.robotbase.config.Config;
 
 public class ConfigTest {
@@ -10,17 +12,17 @@ public class ConfigTest {
      * Tests whether {@link Config} can load a file
      */
     @Test
-    void configLoadTest() {
+    public void configLoadTest() {
         Config config = new Config();
         boolean success = config.loadFromFile(getClass().getResource("test_config.txt").getPath());
-        assertTrue(success, "Could not open test_config.txt");
+        assertTrue(success);
     }
 
     /**
      * Tests whether {@link Config} values are parsed and returned as the correct types
      */
     @Test
-    void configTypeTest() {
+    public void configTypeTest() {
         Config config = new Config();
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertEquals("string", config.getSetting("string_value", "wrong string"));
@@ -32,7 +34,7 @@ public class ConfigTest {
      * Tests whether comments are ignored in {@link Config}
      */
     @Test
-    void configCommentTest() {
+    public void configCommentTest() {
         Config config = new Config();
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertEquals(20.0, config.getSetting("comment_value", 30.0), 0.0001);
@@ -42,7 +44,7 @@ public class ConfigTest {
      * Tests whether default values are properly returned for nonexistant {@link Config} values
      */
     @Test
-    void configDefaultValueTest() {
+    public void configDefaultValueTest() {
         Config config = new Config();
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertEquals("default value", config.getSetting("nonexistant_value", "default value"));
@@ -52,7 +54,7 @@ public class ConfigTest {
      * Tests that {@link Configurable Configurables} are called after {@link Config#reloadConfig()}
      */
     @Test
-    void configurableTest() {
+    public void configurableTest() {
         Config config = new Config();
         boolean[] success = {false};
         config.addConfigurable(()->{
