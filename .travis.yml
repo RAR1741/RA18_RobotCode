@@ -16,7 +16,7 @@ after_script:
   - ./gradlew jacocoTestReport
   - ./gradlew jacocoFix
   - ls build/jacoco
-  - ./cc-test-reporter format-coverage -t jacoco build/jacoco/test/jacoco.xml
+  - ./cc-test-reporter format-coverage -t jacoco
   - ./cc-test-reporter upload-coverage
 
 branches:
