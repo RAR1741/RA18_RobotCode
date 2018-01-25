@@ -58,7 +58,6 @@ task wrapper(type: Wrapper) {
 
 jacoco {
     toolVersion = "0.7.9"
-    reportsDir = file("$buildDir/jacocoReportDir")
 }
 
 jacocoTestReport {

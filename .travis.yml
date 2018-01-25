@@ -14,6 +14,7 @@ script:
   - ./gradlew check
 after_script:
   - ./gradlew jacocoFix
+  - ls build/jacoco
   - ./cc-test-reporter format-coverage -t jacoco build/jacoco/test/jacoco.xml
   - ./cc-test-reporter upload-coverage
 
