@@ -1,10 +1,11 @@
 package org.redalert1741.robotbase.auto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.redalert1741.robotbase.auto.core.AutoFactory;
 import org.redalert1741.robotbase.auto.core.AutoMoveEnd;
 import org.redalert1741.robotbase.auto.core.AutoMoveMove;
@@ -50,7 +51,7 @@ public class AutoTest {
     }
     
     @Test
-    void jsonAutoEmptyTest() {
+    public void jsonAutoEmptyTest() {
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("empty-test.json").getPath());
         auto.start();
         auto.run();
@@ -58,7 +59,7 @@ public class AutoTest {
     }
 
     @Test
-    void jsonAutoSyncTest() {
+    public void jsonAutoSyncTest() {
         CounterMove counter = new CounterMove();
         AutoFactory.addMoveMove("counter", () -> counter);
         ManualEnd manual = new ManualEnd();
@@ -103,7 +104,7 @@ public class AutoTest {
     }
 
     @Test
-    void jsonAutoAsyncTest() {
+    public void jsonAutoAsyncTest() {
         CounterMove counter = new CounterMove();
         CounterMove asyncCounter1 = new CounterMove();
         CounterMove asyncCounter2 = new CounterMove();
