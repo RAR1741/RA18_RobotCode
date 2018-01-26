@@ -14,10 +14,10 @@ script:
   - ./gradlew check
   - ./gradlew cobertura
 after_script:
-  - cp build/reports/cobertura/coverage.xml cobertura.xml
-  - ./cc-test-reporter after-build -t cobertura --exit-code $TRAVIS_TEST_RESULT
-  # - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
-  # - ./cc-test-reporter upload-coverage
+  # - cp build/reports/cobertura/coverage.xml cobertura.xml
+  # - ./cc-test-reporter after-build -t cobertura --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
+  - ./cc-test-reporter upload-coverage
 
 branches:
   only:
