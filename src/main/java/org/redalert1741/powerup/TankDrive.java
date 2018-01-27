@@ -25,8 +25,7 @@ public class TankDrive implements Loggable {
      * @param l2 CAN ID of a left TalonSRX
      * @param r1 CAN ID of a right TalonSRX
      * @param r2 CAN ID of a right TalonSRX
-     * @param s1 PCM ID of piston open
-     * @param s2 PCM ID of piston close
+     * @param s1 PCM ID of shifter
      * @see TalonSRX
      * @see Solenoid
      */
@@ -72,14 +71,14 @@ public class TankDrive implements Loggable {
      * Shift to driving.
      */
     public void enableDriving() {
-        shifter.set(true);
+        shifter.set(false);
     }
 
     /**
      * Shift to climbing.
      */
     public void enableClimbing() {
-        shifter.set(false);
+        shifter.set(true);
     }
 
 	@Override
