@@ -91,6 +91,10 @@ public class TankDrive implements Loggable {
 		logger.addAttribute("left2current");
 		logger.addAttribute("right1current");
 		logger.addAttribute("right2current");
+		logger.addAttribute("right1voltage");
+		logger.addAttribute("right2voltage");
+		logger.addAttribute("left1voltage");
+		logger.addAttribute("left2voltage");
 	}
 
 	@Override
@@ -101,5 +105,9 @@ public class TankDrive implements Loggable {
 		logger.log("left2current", left2.getOutputCurrent());
 		logger.log("r1current", right1.getOutputCurrent());
 		logger.log("r2current", right2.getOutputCurrent());
+		logger.log("right1voltage", right1.getBusVoltage());
+		logger.log("right2voltage", right2.getBusVoltage());
+		logger.log("left1voltage", left1.getBusVoltage());
+		logger.log("left2voltage", left2.getBusVoltage());
 	}
 }
