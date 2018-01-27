@@ -1,18 +1,24 @@
 package org.redalert1741.powerup;
 
+import org.redalert1741.robotbase.logging.DataLogger;
+import org.redalert1741.robotbase.logging.Loggable;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class TankDrive {
+public class TankDrive implements Loggable {
     TalonSRX left1;
     TalonSRX left2;
     TalonSRX right1;
     TalonSRX right2;
 
     DoubleSolenoid shifter;
+    
+    double leftPercent;
+    double rightPercent;
 
     /**
      * Initializes the drivetrain.
@@ -49,6 +55,9 @@ public class TankDrive {
 
         right1.set(ControlMode.PercentOutput, right);
         right2.set(ControlMode.PercentOutput, right);
+        
+        leftPercent = left;
+        rightPercent = right;
     }
 
     /**
@@ -73,4 +82,24 @@ public class TankDrive {
     public void enableClimbing() {
         shifter.set(Value.kReverse);
     }
+
+	@Override
+	public void setupLogging(DataLogger logger) {
+		logger.addAttribute("leftSpeed");
+		logger.addAttribute("rightSpeed");
+		logger.addAttribute("left1current");
+		logger.addAttribute("left2current");
+		logger.addAttribute("right1current");
+		logger.addAttribute("right2current");
+	}
+
+	@Override
+	public void log(DataLogger logger) {
+		logger.log("leftSpeed", leftPercent);
+		logger.log("rightSpeed", rightPercent);
+		logger.log("left1current", left1.getOutputCurrent());
+		logger.log("left2current", left2.getOutputCurrent());
+		logger.log("r1current", right1.getOutputCurrent());
+		logger.log("r2current", right2.getOutputCurrent());
+	}
 }
