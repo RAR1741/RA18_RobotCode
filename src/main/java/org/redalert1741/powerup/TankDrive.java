@@ -3,8 +3,7 @@ package org.redalert1741.powerup;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
@@ -15,7 +14,7 @@ public class TankDrive implements Loggable {
     TalonSRX right1;
     TalonSRX right2;
 
-    DoubleSolenoid shifter;
+    Solenoid shifter;
 
     double leftPercent;
     double rightPercent;
@@ -29,9 +28,9 @@ public class TankDrive implements Loggable {
      * @param s1 PCM ID of piston open
      * @param s2 PCM ID of piston close
      * @see TalonSRX
-     * @see DoubleSolenoid
+     * @see Solenoid
      */
-    public TankDrive(int l1, int l2, int r1, int r2, int s1, int s2) {
+    public TankDrive(int l1, int l2, int r1, int r2, int s1) {
         left1 = new TalonSRX(l1);
         left2 = new TalonSRX(l2);
 
@@ -41,7 +40,7 @@ public class TankDrive implements Loggable {
         left1.setInverted(true);
         left2.setInverted(true);
 
-        shifter = new DoubleSolenoid(s1, s2);
+        shifter = new Solenoid(s1);
     }
 
     /**
@@ -73,14 +72,14 @@ public class TankDrive implements Loggable {
      * Shift to driving.
      */
     public void enableDriving() {
-        shifter.set(Value.kForward);
+        shifter.set(true);
     }
 
     /**
      * Shift to climbing.
      */
     public void enableClimbing() {
-        shifter.set(Value.kReverse);
+        shifter.set(false);
     }
 
 	@Override
@@ -95,6 +94,7 @@ public class TankDrive implements Loggable {
 		logger.addAttribute("right2voltage");
 		logger.addAttribute("left1voltage");
 		logger.addAttribute("left2voltage");
+		logger.addAttribute("shifterState");
 	}
 
 	@Override
@@ -109,5 +109,6 @@ public class TankDrive implements Loggable {
 		logger.log("right2voltage", right2.getBusVoltage());
 		logger.log("left1voltage", left1.getBusVoltage());
 		logger.log("left2voltage", left2.getBusVoltage());
+		logger.log("shifterState", shifter.get());
 	}
 }
