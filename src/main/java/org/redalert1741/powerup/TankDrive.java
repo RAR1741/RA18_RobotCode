@@ -1,13 +1,13 @@
 package org.redalert1741.powerup;
 
-import org.redalert1741.robotbase.logging.DataLogger;
-import org.redalert1741.robotbase.logging.Loggable;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
+import org.redalert1741.robotbase.logging.DataLogger;
+import org.redalert1741.robotbase.logging.Loggable;
 
 public class TankDrive implements Loggable {
     TalonSRX left1;
