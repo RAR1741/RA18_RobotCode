@@ -16,7 +16,7 @@ public class TankDrive implements Loggable {
     TalonSRX right2;
 
     DoubleSolenoid shifter;
-    
+
     double leftPercent;
     double rightPercent;
 
@@ -55,7 +55,7 @@ public class TankDrive implements Loggable {
 
         right1.set(ControlMode.PercentOutput, right);
         right2.set(ControlMode.PercentOutput, right);
-        
+
         leftPercent = left;
         rightPercent = right;
     }
