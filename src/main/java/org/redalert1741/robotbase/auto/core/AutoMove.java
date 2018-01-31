@@ -1,5 +1,6 @@
 package org.redalert1741.robotbase.auto.core;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public class AutoMove {
     public AutoMove(AutoMoveMove amm, AutoMoveEnd ame, Map<String, Object> args) {
         this.amm = amm;
         this.ame = ame;
-        this.args = args;
+        this.args = args == null ? new HashMap<String, Object>() : args;
         finished = false;
     }
 

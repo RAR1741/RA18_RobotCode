@@ -2,6 +2,7 @@ package org.redalert1741.robotbase.auto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.util.Map;
 
@@ -30,12 +31,12 @@ public class AutoTest {
         }
 
         @Override
-        public void stop() {}    
+        public void stop() {}
     }
 
     class ManualEnd implements AutoMoveEnd {
         public boolean completed;
-        
+
         @Override
         public void setArgs(Map<String, String> args) {}
 
@@ -49,7 +50,7 @@ public class AutoTest {
             return completed;
         }
     }
-    
+
     @Test
     public void jsonAutoEmptyTest() {
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("empty-test.json").getPath());
@@ -91,7 +92,7 @@ public class AutoTest {
         assertEquals(2, counter.count);
         auto.run();
         assertEquals(3, counter.count);
-        
+
         //start finishing
         manual.completed = true;
         auto.run();
@@ -176,7 +177,7 @@ public class AutoTest {
         assertEquals(4, counter.count);
         assertEquals(9, asyncCounter2.count);
         assertEquals(5, asyncCounter3.count);
-        
+
         //end remaining async
         manual2.completed = true;
         manual4.completed = true;
@@ -186,5 +187,11 @@ public class AutoTest {
         auto.run();
         assertEquals(10, asyncCounter2.count);
         assertEquals(6, asyncCounter3.count);
+    }
+
+    @Test
+    public void noFileTest() {
+        Autonomous auto = new JsonAutoFactory().makeAuto("bad path that i hope never exists");
+        assertNull(auto);
     }
 }
