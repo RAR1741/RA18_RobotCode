@@ -50,7 +50,9 @@ public abstract class AutoFactory
      */
     public AutoMove parseMove(AutoPojo.MovePojo move) {
         AutoMoveMove amm = ammf.get(move.type).createAutoMoveMove();
+        amm.setArgs(move.args);
         AutoMoveEnd ame = amef.get(move.end.type).createAutoMoveEnd();
+        ame.setArgs(move.end.args);
         return new AutoMove(amm, ame, move.moveargs);
     }
 
