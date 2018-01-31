@@ -14,7 +14,7 @@ public class JsonAutoFactory extends AutoFactory {
     @Override
     public Autonomous makeAuto(String in) {
         try {
-            AutoPOJO pojo = new Gson().fromJson(new FileReader(in), AutoPOJO.class);
+            AutoPojo pojo = new Gson().fromJson(new FileReader(in), AutoPojo.class);
             return parseAutonomous(pojo);
         }
         catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {

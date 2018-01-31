@@ -48,7 +48,7 @@ public abstract class AutoFactory
      * @param move Move to parse
      * @return Parsed AutoMove
      */
-    public AutoMove parseMove(AutoPOJO.MovePOJO move) {
+    public AutoMove parseMove(AutoPojo.MovePojo move) {
         AutoMoveMove amm = ammf.get(move.type).createAutoMoveMove();
         AutoMoveEnd ame = amef.get(move.end.type).createAutoMoveEnd();
         return new AutoMove(amm, ame, move.moveargs);
@@ -59,9 +59,9 @@ public abstract class AutoFactory
      * @param pojo Auto to parse
      * @return Runnable autonomous
      */
-    public Autonomous parseAutonomous(AutoPOJO pojo) {
+    public Autonomous parseAutonomous(AutoPojo pojo) {
         List<AutoMove> moves = new ArrayList<>();
-        for (AutoPOJO.MovePOJO move : pojo.auto) {
+        for (AutoPojo.MovePojo move : pojo.auto) {
             moves.add(parseMove(move));
         }
         return new Autonomous(moves);
