@@ -1,6 +1,8 @@
 package org.redalert1741.robotbase.auto.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,4 +42,28 @@ public abstract class AutoFactory
      * @return The generated {@link Autonomous}
      */
     public abstract Autonomous makeAuto(String in);
+
+    /**
+     * Parses a single POJO move.
+     * @param move Move to parse
+     * @return Parsed AutoMove
+     */
+    public AutoMove parseMove(AutoPOJO.MovePOJO move) {
+        AutoMoveMove amm = ammf.get(move.type).createAutoMoveMove();
+        AutoMoveEnd ame = amef.get(move.end.type).createAutoMoveEnd();
+        return new AutoMove(amm, ame, move.moveargs);
+    }
+
+    /**
+     * Parses a full autonomous from POJO.
+     * @param pojo Auto to parse
+     * @return Runnable autonomous
+     */
+    public Autonomous parseAutonomous(AutoPOJO pojo) {
+        List<AutoMove> moves = new ArrayList<>();
+        for (AutoPOJO.MovePOJO move : pojo.auto) {
+            moves.add(parseMove(move));
+        }
+        return new Autonomous(moves);
+    }
 }
