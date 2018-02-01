@@ -66,6 +66,21 @@ public class AutoTest {
         ManualEnd manual = new ManualEnd();
         AutoFactory.addMoveEnd("manual", () -> manual);
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("sync-test.json").getPath());
+        runAutoSyncTest(auto, counter, manual);
+    }
+
+    @Test
+    public void jsonAutoRestartTest() {
+        CounterMove counter = new CounterMove();
+        AutoFactory.addMoveMove("counter", () -> counter);
+        ManualEnd manual = new ManualEnd();
+        AutoFactory.addMoveEnd("manual", () -> manual);
+        Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("sync-test.json").getPath());
+        runAutoSyncTest(auto, counter, manual);
+        runAutoSyncTest(auto, counter, manual);
+    }
+
+    public void runAutoSyncTest(Autonomous auto, CounterMove counter, ManualEnd manual) {
         auto.start();
 
         //no code should have run besides start, so count is zero

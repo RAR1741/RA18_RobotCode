@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a single move within an {@link Autonomous}
+ * Represents a single move within an {@link Autonomous}.
  */
 public class AutoMove {
     private AutoMoveMove amm;
@@ -14,7 +14,8 @@ public class AutoMove {
 
     /**
      * Create an AutoMove
-     * An AutoMove consists of three parts, the {@link AutoMoveMove move}, the {@link AutoMoveEnd end condition}, and any extra arguments.
+     * An AutoMove consists of three parts, the {@link AutoMoveMove move}, 
+     * the {@link AutoMoveEnd end condition}, and any extra arguments.
      * @param amm Movement
      * @param ame End
      * @param args Extra arguments
@@ -26,14 +27,29 @@ public class AutoMove {
         finished = false;
     }
 
-    public AutoMoveMove getMove() { return amm; }
-    public AutoMoveEnd getEnd() { return ame; }
-    public boolean isFinshed() { return finished; }
-    public boolean isAsync() { return (args.containsKey("async") ? (boolean) args.get("async") : false); }
+    public AutoMoveMove getMove() {
+        return amm;
+    }
 
+    public AutoMoveEnd getEnd() {
+        return ame;
+    }
+
+    public boolean isFinshed() {
+        return finished;
+    }
+
+    public boolean isAsync() {
+        return (args.containsKey("async") && (boolean) args.get("async"));
+    }
+
+    /**
+     * Starts (and restarts) the move.
+     */
     public void start() {
         amm.start();
         ame.start();
+        finished = false;
     }
 
     /**

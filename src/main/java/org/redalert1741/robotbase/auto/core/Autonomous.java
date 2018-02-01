@@ -20,6 +20,7 @@ public class Autonomous {
 
     public void start() {
         i = 0;
+        active.removeAll(active);
         if(!moves.isEmpty()) {
             moves.get(i).start();
         }
