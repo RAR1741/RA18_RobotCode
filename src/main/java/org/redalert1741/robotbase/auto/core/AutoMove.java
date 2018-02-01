@@ -34,6 +34,7 @@ public class AutoMove {
     public void start() {
         amm.start();
         ame.start();
+        finished = false;
     }
 
     /**
