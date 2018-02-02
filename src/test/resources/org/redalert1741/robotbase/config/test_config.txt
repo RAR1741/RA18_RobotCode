@@ -3,6 +3,8 @@
 string_value="string"
 double_value=5.5
 boolean_value=true
+second_boolean=false
+bad_string="ouch
 
 # comment test
 

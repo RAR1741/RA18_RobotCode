@@ -185,7 +185,7 @@ public class Config {
     public void reloadConfig() {
         parse(filename);
         for(Configurable c : configurables) {
-            c.reloadConfig();
+            c.reloadConfig(this);
         }
     }
 
@@ -202,8 +202,8 @@ public class Config {
      */
     @SuppressWarnings("unchecked")
     public <T> T getSetting(String name, T reasonableDefault) {
-        if(items.containsKey(name) && items.get(name) instanceof ConfigItem) {
-            return (T) ((ConfigItem) items.get(name)).getValue();
+        if(getItem(name) != null) {
+            return (T) ((ConfigItem) getItem(name)).getValue();
         }
         return reasonableDefault;
     }
