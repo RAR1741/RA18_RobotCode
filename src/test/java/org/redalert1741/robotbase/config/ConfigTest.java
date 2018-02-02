@@ -27,7 +27,9 @@ public class ConfigTest {
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertEquals("string", config.getSetting("string_value", "wrong string"));
         assertEquals(5.5, config.getSetting("double_value", 1.0), 0.0001);
-        assertEquals(true, config.getSetting("boolean_value", false));
+        assertTrue(config.getSetting("boolean_value", false));
+        assertFalse(config.getSetting("second_boolean", true));
+        assertEquals("wrong string", config.getSetting("bad_string", "wrong string"));
     }
 
     /**
