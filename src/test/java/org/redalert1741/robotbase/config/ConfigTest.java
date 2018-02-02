@@ -57,13 +57,33 @@ public class ConfigTest {
     public void configurableTest() {
         Config config = new Config();
         boolean[] success = {false};
-        config.addConfigurable(()->{
-            assertEquals(5.5, config.getSetting("double_value", 1.0), 0.0001);
+        Configurable configurable = (inConfig)->{
+            assertEquals(5.5, inConfig.getSetting("double_value", 1.0), 0.0001);
             success[0]=true;
-        });
+        };
+        config.addConfigurable(configurable);
         config.loadFromFile(getClass().getResource("test_config.txt").getPath());
         assertFalse(success[0]);
         config.reloadConfig();
         assertTrue(success[0]);
+        //remove configurable
+        success[0] = false;
+        config.removeConfigurable(configurable);
+        config.reloadConfig();
+        assertFalse(success[0]);
+        //use removeAllConfigurables instead
+        config.addConfigurable(configurable);
+        config.reloadConfig();
+        assertTrue(success[0]);
+        config.removeAllConfigurables();
+        success[0] = false;
+        config.reloadConfig();
+        assertFalse(success[0]);
+    }
+
+    @Test
+    public void noConfigTest() {
+        Config config = new Config();
+        assertFalse(config.loadFromFile("file that i hope never exists"));
     }
 }

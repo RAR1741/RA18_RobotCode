@@ -185,7 +185,7 @@ public class Config {
     public void reloadConfig() {
         parse(filename);
         for(Configurable c : configurables) {
-            c.reloadConfig();
+            c.reloadConfig(this);
         }
     }
 
