@@ -174,13 +174,13 @@ public class FakeMotorController implements IMotorController {
     public ErrorCode configRemoteFeedbackFilter(int deviceID, RemoteSensorSource remoteSensorSource, int remoteOrdinal,
             int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode configSensorTerm(SensorTerm sensorTerm, FeedbackDevice feedbackDevice, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
@@ -197,19 +197,19 @@ public class FakeMotorController implements IMotorController {
     @Override
     public ErrorCode setSelectedSensorPosition(int sensorPos, int pidIdx, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode setControlFramePeriod(ControlFrame frame, int periodMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode setStatusFramePeriod(StatusFrame frame, int periodMs, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
@@ -222,14 +222,14 @@ public class FakeMotorController implements IMotorController {
     public ErrorCode configForwardLimitSwitchSource(RemoteLimitSwitchSource type, LimitSwitchNormal normalOpenOrClose,
             int deviceID, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode configReverseLimitSwitchSource(RemoteLimitSwitchSource type, LimitSwitchNormal normalOpenOrClose,
             int deviceID, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
@@ -241,79 +241,88 @@ public class FakeMotorController implements IMotorController {
     @Override
     public ErrorCode configForwardSoftLimitThreshold(int forwardSensorLimit, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode configReverseSoftLimitThreshold(int reverseSensorLimit, int timeoutMs) {
         // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
+    public boolean forwardSoftLimit;
     @Override
     public ErrorCode configForwardSoftLimitEnable(boolean enable, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        forwardSoftLimit = enable;
+        return ErrorCode.OK;
     }
 
+    public boolean reverseSoftLimit;
     @Override
     public ErrorCode configReverseSoftLimitEnable(boolean enable, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        reverseSoftLimit = enable;
+        return ErrorCode.OK;
     }
 
     @Override
     public void overrideSoftLimitsEnable(boolean enable) {
         // TODO Auto-generated method stub
-
     }
 
+    public double pValue;
     @Override
     public ErrorCode config_kP(int slotIdx, double value, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        pValue = value;
+        return ErrorCode.OK;
     }
 
+    public double iValue;
     @Override
     public ErrorCode config_kI(int slotIdx, double value, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        iValue = value;
+        return ErrorCode.OK;
     }
 
+    public double dValue;
     @Override
     public ErrorCode config_kD(int slotIdx, double value, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        dValue = value;
+        return ErrorCode.OK;
     }
 
+    public double fValue;
     @Override
     public ErrorCode config_kF(int slotIdx, double value, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        fValue = value;
+        return ErrorCode.OK;
     }
 
+    public double integralZone;
     @Override
     public ErrorCode config_IntegralZone(int slotIdx, int izone, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        integralZone = izone;
+        return ErrorCode.OK;
     }
 
+    public int allowableCloseLoopError;
     @Override
     public ErrorCode configAllowableClosedloopError(int slotIdx, int allowableCloseLoopError, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        this.allowableCloseLoopError = allowableCloseLoopError;
+        return ErrorCode.OK;
     }
 
+    public double maxI;
     @Override
     public ErrorCode configMaxIntegralAccumulator(int slotIdx, double iaccum, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        maxI = iaccum;
+        return ErrorCode.OK;
     }
 
+    public double iAccumulator;
     @Override
     public ErrorCode setIntegralAccumulator(double iaccum, int pidIdx, int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        iAccumulator = iaccum;
+        return ErrorCode.OK;
     }
 
     @Override
@@ -323,8 +332,7 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public double getIntegralAccumulator(int pidIdx) {
-        // TODO Auto-generated method stub
-        return 0;
+        return iAccumulator;
     }
 
     @Override
