@@ -35,3 +35,6 @@ sysProps.xml
 #gradle files
 .gradle/
 build/
+
+#ignore doc
+doc/*
