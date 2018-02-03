@@ -35,6 +35,12 @@ public class AutoMove {
         return ame;
     }
 
+    /**
+     * Uses {@link AutoMoveEnd#isFinished()} to mark a move
+     * as finished. Once a move is finished, it stays finished, ignoring
+     * the state of the {@link AutoMoveEnd}.
+     * @return move finished state
+     */
     public boolean isFinshed() {
         return finished;
     }

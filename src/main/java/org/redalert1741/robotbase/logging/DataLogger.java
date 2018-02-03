@@ -74,6 +74,11 @@ public class DataLogger {
         return success;
     }
 
+    /**
+     * Checks whether an attribute already exists in the logger.
+     * @param name attribute to check for
+     * @return existence of attribute
+     */
     public boolean hasAttribute(String name) {
         return fields.containsKey(name);
     }
@@ -145,7 +150,8 @@ public class DataLogger {
 
     /**
      * Adds a {@link Loggable}.
-     * TODO descibe loggables
+     * A Loggable is an object that can set up its own logging
+     * and log itself through a passed DataLogger.
      * @param loggable Loggable to add
      */
     public void addLoggable(Loggable loggable) {

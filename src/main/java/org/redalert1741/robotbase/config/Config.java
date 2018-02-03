@@ -11,7 +11,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A config file. Parses a file and gets the things.
+ * A config file. Parses a file and gets values.
+ * <br><br>
+ * A configuration item in a file is defined as a variable
+ * and value. A configuration item name matches this regex:
+ * <pre><code>
+ * [\w\d_]+
+ * </code></pre>
+ * A value is parse to one of the following types:
+ * <br><br>
+ * String, requiring two {@code "}s on either side
+ * <br>
+ * Double, based on {@link Double#parseDouble(String)}
+ * <br>
+ * Boolean, based on {@link Boolean#parseBoolean(String)}
+ * <br><br>
+ * Any other format will not be loaded into the Config and
+ * attempted access with {@link #getSetting(String, Object)} will return
+ * the reasonable default.
  */
 public class Config {
     /**
@@ -104,10 +121,18 @@ public class Config {
     private Map<String, ConfigItem> items;
     private List<Configurable> configurables;
 
+    /**
+     * Initializes the Config.
+     */
     public Config() {
         configurables = new ArrayList<>();
     }
 
+    /**
+     * Loads configuration from a file.
+     * @param filename name of the configuration file
+     * @return success loading the file
+     */
     public boolean loadFromFile(String filename) {
         this.filename = filename;
         return parse(filename);
@@ -166,21 +191,43 @@ public class Config {
         }
     }
 
+    /**
+     * Adds a configurable.
+     * Calls {@link Configurable#reloadConfig(Config)} when {@link #reloadConfig()}
+     * is called.
+     * @param configurable configurable to add
+     * @see Configurable
+     * @see #removeConfigurable(Configurable)
+     * @see #removeAllConfigurables()
+     */
     public void addConfigurable(Configurable configurable) {
         configurables.add(configurable);
     }
 
+    /**
+     * Removes a specific configurable.
+     * @param configurable configurable to remove
+     * @see Configurable
+     * @see #addConfigurable(Configurable)
+     * @see #removeAllConfigurables()
+     */
     public void removeConfigurable(Configurable configurable) {
         configurables.remove(configurable);
     }
 
+    /**
+     * Removes all configurables.
+     * @see Configurable
+     * @see #addConfigurable(Configurable)
+     * @see #removeConfigurable(Configurable)
+     */
     public void removeAllConfigurables() {
         configurables.removeAll(configurables);
     }
 
     /**
      * Reloads the config from the last specified file from {@link #loadFromFile(String)}.
-     * Calls each {@link Configurable Configurable's} {@link Configurable#reloadConfig()}.
+     * Calls each {@link Configurable Configurable's} {@link Configurable#reloadConfig(Config)}.
      */
     public void reloadConfig() {
         parse(filename);
@@ -189,6 +236,13 @@ public class Config {
         }
     }
 
+    /**
+     * Retrieves the ConfigItem form of a configuration.
+     * If you actually want the value, use {@link #getSetting(String, Object)}.
+     * @param name configuration to get
+     * @return specified item
+     * @see #getSetting(String, Object)
+     */
     public ConfigItem getItem(String name) {
         return items.get(name);
     }
@@ -198,6 +252,7 @@ public class Config {
      * Returns reasonableDefault if the setting is not found.
      * @param name Setting to retrieve
      * @param reasonableDefault Default value to use in event of missing value
+     * @param <T> return type, matches type of reasonableDefault
      * @return The requested value or the reasonableDefault
      */
     @SuppressWarnings("unchecked")
