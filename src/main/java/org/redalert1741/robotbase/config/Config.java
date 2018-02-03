@@ -227,7 +227,7 @@ public class Config {
 
     /**
      * Reloads the config from the last specified file from {@link #loadFromFile(String)}.
-     * Calls each {@link Configurable Configurable's} {@link Configurable#reloadConfig()}.
+     * Calls each {@link Configurable Configurable's} {@link Configurable#reloadConfig(Config)}.
      */
     public void reloadConfig() {
         parse(filename);
@@ -252,6 +252,7 @@ public class Config {
      * Returns reasonableDefault if the setting is not found.
      * @param name Setting to retrieve
      * @param reasonableDefault Default value to use in event of missing value
+     * @param <T> return type, matches type of reasonableDefault
      * @return The requested value or the reasonableDefault
      */
     @SuppressWarnings("unchecked")
