@@ -185,13 +185,12 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int getSelectedSensorPosition(int pidIdx) {
-        // TODO Auto-generated method stub
+     // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public int getSelectedSensorVelocity(int pidIdx) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -319,7 +318,6 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int getClosedLoopError(int pidIdx) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -331,7 +329,6 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public double getErrorDerivative(int pidIdx) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -343,19 +340,16 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int getActiveTrajectoryPosition() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public int getActiveTrajectoryVelocity() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public double getActiveTrajectoryHeading() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -379,7 +373,6 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int getMotionProfileTopLevelBufferCount() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -391,25 +384,19 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public boolean isMotionProfileTopLevelBufferFull() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public void processMotionProfileBuffer() {
-        // TODO Auto-generated method stub
-
-    }
+    public void processMotionProfileBuffer() { /* who knows */ }
 
     @Override
     public ErrorCode getMotionProfileStatus(MotionProfileStatus statusToFill) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public ErrorCode clearMotionProfileHasUnderrun(int timeoutMs) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -421,37 +408,31 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public ErrorCode getLastError() {
-        // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode getFaults(Faults toFill) {
-        // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode getStickyFaults(StickyFaults toFill) {
-        // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public ErrorCode clearStickyFaults(int timeoutMs) {
-        // TODO Auto-generated method stub
-        return null;
+        return ErrorCode.OK;
     }
 
     @Override
     public int getFirmwareVersion() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public boolean hasResetOccurred() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -463,7 +444,7 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int configGetCustomParam(int paramIndex, int timoutMs) {
-        // TODO Auto-generated method stub
+        //i don't even know
         return 0;
     }
 
@@ -493,13 +474,11 @@ public class FakeMotorController implements IMotorController {
 
     @Override
     public int getBaseID() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public int getDeviceID() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
