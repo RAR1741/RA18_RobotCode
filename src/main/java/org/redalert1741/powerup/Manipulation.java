@@ -17,15 +17,15 @@ public class Manipulation implements Loggable {
      * @param liftId PWM channel of lift spark
      * @param in ID 1 for DoubleSolenoid
      * @param out ID 2 for DoubleSolenoid
-     * @param b1 PCM ID of brake
+     * @param brakeID PCM ID of brake
      * @see Spark
      * @see DoubleSolenoid
      * @see Solenoid
      */
-    public Manipulation(int liftId, int in, int out, int b1) {
+    public Manipulation(int liftId, int in, int out, int brakeID) {
         this.lift = new Spark(liftId);
         this.tilt = new DoubleSolenoid(in, out);
-        this.brake = new Solenoid(b1);
+        this.brake = new Solenoid(brakeID);
     }
     
     public void tiltIn() {
@@ -40,11 +40,11 @@ public class Manipulation implements Loggable {
         lift.set(input);
     }
     
-    public void stop() {
+    public void enableBrake() {
         brake.set(true);
     }
     
-    public void go() {
+    public void disableBrake() {
         brake.set(false);
     }
     
