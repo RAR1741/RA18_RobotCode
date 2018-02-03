@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the entirety of an Autonomous program, consisting of a set of {@link AutoMove moves} to be run one after the other.
+ * Represents the entirety of an Autonomous program, consisting of a set of
+ * {@link AutoMove moves} to be run one after the other.
  * @see AutoFactory
  */
 public class Autonomous {
@@ -12,12 +13,19 @@ public class Autonomous {
     private List<AutoMove> active;
     private int i;
 
+    /**
+     * Creates an Autonomous from list of {@link AutoMove AutoMoves}.
+     * @param m list of moves
+     */
     public Autonomous(List<AutoMove> m) {
         moves = m;
         i = 0;
         active = new ArrayList<>();
     }
 
+    /**
+     * Starts and restarts the autonomous.
+     */
     public void start() {
         i = 0;
         active.removeAll(active);
@@ -39,7 +47,7 @@ public class Autonomous {
         }
     }
     
-    public void addMoves() {
+    private void addMoves() {
         // only add more moves if the previous active sync move has finished
         if(active.isEmpty() || active.get(active.size()-1).isAsync()) {
             do {
@@ -50,13 +58,13 @@ public class Autonomous {
         }
     }
     
-    public void executeActiveMoves() {
+    private void executeActiveMoves() {
         for(AutoMove move : active) {
             move.run();
         }
     }
     
-    public void finishActiveMoves() {
+    private void finishActiveMoves() {
         List<AutoMove> toRemove = new ArrayList<>();
         for(AutoMove move : active) {
             if(move.isFinshed()) {
