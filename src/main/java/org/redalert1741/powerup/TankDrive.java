@@ -39,6 +39,9 @@ public class TankDrive implements Loggable {
         left1.setInverted(true);
         left2.setInverted(true);
 
+        left2.follow(left1);
+        right2.follow(right1);
+
         shifter = new Solenoid(s1);
     }
 
@@ -49,10 +52,8 @@ public class TankDrive implements Loggable {
      */
     public void tankDrive(double left, double right) {
         left1.set(ControlMode.PercentOutput, left);
-        left2.set(ControlMode.PercentOutput, left);
 
         right1.set(ControlMode.PercentOutput, right);
-        right2.set(ControlMode.PercentOutput, right);
 
         leftPercent = left;
         rightPercent = right;
