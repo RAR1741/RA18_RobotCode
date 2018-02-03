@@ -2,8 +2,8 @@ package org.redalert1741.powerup;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Spark;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 
@@ -51,12 +51,12 @@ public class Manipulation implements Loggable {
     @Override
     public void setupLogging(DataLogger logger) {
         logger.addAttribute("tilt_state");
-        logger.addAttribute("brakeState");
+        logger.addAttribute("brake_state");
     }
 
     @Override
     public void log(DataLogger logger) {
         logger.log("tilt_state", tilt.get());
-        logger.log("brakeState", brake.get());
+        logger.log("brake_state", brake.get());
     }
 }
