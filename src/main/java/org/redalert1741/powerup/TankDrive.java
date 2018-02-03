@@ -38,7 +38,7 @@ public class TankDrive implements Loggable {
 
         left1.setInverted(true);
         left2.setInverted(true);
-        
+
         left2.follow(left1);
         right2.follow(right1);
 
