@@ -55,12 +55,15 @@ public class Manipulation implements Loggable {
     public void setupLogging(DataLogger logger) {
         logger.addAttribute("tilt_state");
         logger.addAttribute("brake_state");
-        logger.addAttribute("");
+        logger.addAttribute("Imotor_current");
+        logger.addAttribute("Imotor_voltage");
     }
 
     @Override
     public void log(DataLogger logger) {
         logger.log("tilt_state", tilt.get());
         logger.log("brake_state", brake.get());
+        logger.log("Imotor_current", lift.getOutputCurrent());
+        logger.log("Imotor_voltage", lift.getBusVoltage());
     }
 }
