@@ -1,23 +1,20 @@
 package org.redalert1741.powerup;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Solenoid;
 
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
+import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.TalonSRXWrapper;
 
 public class TankDrive implements Loggable {
-    TalonSRX left1;
-    TalonSRX left2;
-    TalonSRX right1;
-    TalonSRX right2;
+    private TalonSRXWrapper left1;
+    private TalonSRXWrapper left2;
+    private TalonSRXWrapper right1;
+    private TalonSRXWrapper right2;
 
-    Solenoid shifter;
-
-    double leftPercent;
-    double rightPercent;
+    private SolenoidWrapper shifter;
 
     /**
      * Initializes the drivetrain.
@@ -29,12 +26,13 @@ public class TankDrive implements Loggable {
      * @see TalonSRX
      * @see Solenoid
      */
-    public TankDrive(int l1, int l2, int r1, int r2, int s1) {
-        left1 = new TalonSRX(l1);
-        left2 = new TalonSRX(l2);
+    public TankDrive(TalonSRXWrapper l1, TalonSRXWrapper l2,
+            TalonSRXWrapper r1, TalonSRXWrapper r2, SolenoidWrapper s1) {
+        left1 = l1;
+        left2 = l2;
 
-        right1 = new TalonSRX(r1);
-        right2 = new TalonSRX(r2);
+        right1 = r1;
+        right2 = r2;
 
         left1.setInverted(true);
         left2.setInverted(true);
@@ -42,7 +40,7 @@ public class TankDrive implements Loggable {
         left2.follow(left1);
         right2.follow(right1);
 
-        shifter = new Solenoid(s1);
+        shifter = s1;
     }
 
     /**
@@ -54,9 +52,6 @@ public class TankDrive implements Loggable {
         left1.set(ControlMode.PercentOutput, left);
 
         right1.set(ControlMode.PercentOutput, right);
-
-        leftPercent = left;
-        rightPercent = right;
     }
 
     /**
@@ -99,8 +94,8 @@ public class TankDrive implements Loggable {
 
 	@Override
 	public void log(DataLogger logger) {
-		logger.log("leftSpeed", leftPercent);
-		logger.log("rightSpeed", rightPercent);
+		logger.log("leftSpeed", left1.get());
+		logger.log("rightSpeed", right1.get());
 		logger.log("left1current", left1.getOutputCurrent());
 		logger.log("left2current", left2.getOutputCurrent());
 		logger.log("r1current", right1.getOutputCurrent());
