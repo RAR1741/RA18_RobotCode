@@ -3,11 +3,11 @@ package org.redalert1741.robotbase.wrapper;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class RealTalonSRXWrapper implements TalonSRXWrapper {
+public class RealTalonSrxWrapper implements TalonSrxWrapper {
     private TalonSRX talon;
     private double value;
 
-    public RealTalonSRXWrapper(int id) {
+    public RealTalonSrxWrapper(int id) {
         talon = new TalonSRX(id);
         value = 0;
     }
@@ -24,9 +24,9 @@ public class RealTalonSRXWrapper implements TalonSRXWrapper {
     }
 
     @Override
-    public void follow(TalonSRXWrapper toFollow) {
-        if(toFollow instanceof RealTalonSRXWrapper) {
-            talon.follow(((RealTalonSRXWrapper)toFollow).talon);
+    public void follow(TalonSrxWrapper toFollow) {
+        if(toFollow instanceof RealTalonSrxWrapper) {
+            talon.follow(((RealTalonSrxWrapper)toFollow).talon);
         }
     }
 

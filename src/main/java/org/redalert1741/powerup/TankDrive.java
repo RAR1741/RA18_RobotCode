@@ -6,13 +6,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
-import org.redalert1741.robotbase.wrapper.TalonSRXWrapper;
+import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class TankDrive implements Loggable {
-    private TalonSRXWrapper left1;
-    private TalonSRXWrapper left2;
-    private TalonSRXWrapper right1;
-    private TalonSRXWrapper right2;
+    private TalonSrxWrapper left1;
+    private TalonSrxWrapper left2;
+    private TalonSrxWrapper right1;
+    private TalonSrxWrapper right2;
 
     private SolenoidWrapper shifter;
 
@@ -26,8 +26,8 @@ public class TankDrive implements Loggable {
      * @see TalonSRX
      * @see Solenoid
      */
-    public TankDrive(TalonSRXWrapper l1, TalonSRXWrapper l2,
-            TalonSRXWrapper r1, TalonSRXWrapper r2, SolenoidWrapper s1) {
+    public TankDrive(TalonSrxWrapper l1, TalonSrxWrapper l2,
+            TalonSrxWrapper r1, TalonSrxWrapper r2, SolenoidWrapper s1) {
         left1 = l1;
         left2 = l2;
 

@@ -2,8 +2,8 @@ package org.redalert1741.robotbase.wrapper;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-public class FakeTalonSRXWrapper implements TalonSRXWrapper {
-    public FakeTalonSRXWrapper() {
+public class FakeTalonSrxWrapper implements TalonSrxWrapper {
+    public FakeTalonSrxWrapper() {
         mode = ControlMode.PercentOutput;
         value = 0;
         inverted = false;
@@ -31,13 +31,13 @@ public class FakeTalonSRXWrapper implements TalonSRXWrapper {
         this.inverted = inverted;
     }
 
-    public TalonSRXWrapper toFollow;
-    public TalonSRXWrapper follower;
+    public TalonSrxWrapper toFollow;
+    public TalonSrxWrapper follower;
 
     @Override
-    public void follow(TalonSRXWrapper toFollow) {
+    public void follow(TalonSrxWrapper toFollow) {
         this.toFollow = toFollow;
-        ((FakeTalonSRXWrapper) toFollow).follower = this;
+        ((FakeTalonSrxWrapper) toFollow).follower = this;
     }
 
     @Override
