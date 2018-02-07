@@ -2,9 +2,9 @@ package org.redalert1741.powerup;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
+
 import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 

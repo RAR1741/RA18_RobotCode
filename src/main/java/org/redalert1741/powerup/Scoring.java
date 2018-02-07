@@ -12,10 +12,8 @@ public class Scoring implements Loggable {
 
     /**
      * Constructor for scoring subsystem.
-     * @param kickIn ID 1 for DoubleSolenoid kicker
-     * @param kickOut ID 2 for DoubleSolenoid kicker
-     * @param grab ID 1 for DoubleSolenoid grabber
-     * @param drop ID 2 for DoubleSolenoid grabber
+     * @param kick piston for the kicker
+     * @param grab piston for the grabber
      * @see DoubleSolenoid
      */
     public Scoring(DoubleSolenoidWrapper kick, DoubleSolenoidWrapper grab) {
