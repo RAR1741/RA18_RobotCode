@@ -8,6 +8,7 @@ public class FakeTalonSRXWrapper implements TalonSRXWrapper {
         value = 0;
         inverted = false;
         toFollow = null;
+        follower = null;
     }
     
     public ControlMode mode;
@@ -15,10 +16,11 @@ public class FakeTalonSRXWrapper implements TalonSRXWrapper {
 
     @Override
     public void set(ControlMode mode, double value) {
+        value = Math.max(-1, Math.min(1, value)); //clamp
         this.mode = mode;
         this.value = value;
-        if(toFollow != null) {
-            toFollow.set(mode, value);
+        if(follower != null) {
+            follower.set(mode, value);
         }
     }
 
@@ -30,10 +32,12 @@ public class FakeTalonSRXWrapper implements TalonSRXWrapper {
     }
 
     public TalonSRXWrapper toFollow;
+    public TalonSRXWrapper follower;
 
     @Override
     public void follow(TalonSRXWrapper toFollow) {
         this.toFollow = toFollow;
+        ((FakeTalonSRXWrapper) toFollow).follower = this;
     }
 
     @Override
