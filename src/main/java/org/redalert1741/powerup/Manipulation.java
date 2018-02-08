@@ -1,34 +1,35 @@
 package org.redalert1741.powerup;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.IMotorController;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
+import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Manipulation implements Loggable {
-    DoubleSolenoid tilt;
-    IMotorController lift;
-    Solenoid brake;
+    DoubleSolenoidWrapper tilt;
+    TalonSrxWrapper lift;
+    SolenoidWrapper brake;
     
     /**
      * Constructor for manipulation subsystem.
-     * @param liftId PWM channel of lift spark
-     * @param in ID 1 for DoubleSolenoid
-     * @param out ID 2 for DoubleSolenoid
-     * @param brakeId PCM ID of brake
+     * @param lift lift motor
+     * @param tilt manipulation tilt
+     * @param brake manipulation brake
      * @see Spark
      * @see DoubleSolenoid
      * @see Solenoid
      */
-    public Manipulation(int liftId, int in, int out, int brakeId) {
-        this.lift = new TalonSRX(liftId);
-        this.tilt = new DoubleSolenoid(in, out);
-        this.brake = new Solenoid(brakeId);
+    public Manipulation(TalonSrxWrapper lift, DoubleSolenoidWrapper tilt,
+            SolenoidWrapper brake) {
+        this.lift = lift;
+        this.tilt = tilt;
+        this.brake = brake;
     }
     
     public void tiltIn() {
