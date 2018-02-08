@@ -26,9 +26,8 @@ public class TankDriveTest {
     
     @Test
     public void driveTest() {
-        drive.enableDriving();
-        assertFalse(shifter.get());
         drive.arcadeDrive(0, 0);
+        assertFalse(shifter.get());
         assertEquals(0, left1.get(), 0.001);
         assertEquals(0, left2.get(), 0.001);
         assertEquals(0, right1.get(), 0.001);
@@ -43,5 +42,15 @@ public class TankDriveTest {
         assertEquals(1, left2.get(), 0.001);
         assertEquals(-1, right1.get(), 0.001);
         assertEquals(-1, right2.get(), 0.001);
+    }
+
+    @Test
+    public void climbTest() {
+        drive.climb(1);
+        assertTrue(shifter.get());
+        assertEquals(1, left1.get(), 0.001);
+        assertEquals(1, left2.get(), 0.001);
+        assertEquals(1, right1.get(), 0.001);
+        assertEquals(1, right2.get(), 0.001);
     }
 }

@@ -7,8 +7,8 @@ import org.redalert1741.robotbase.logging.Loggable;
 import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
 
 public class Scoring implements Loggable {
-    DoubleSolenoidWrapper grabber;
-    DoubleSolenoidWrapper kicker;
+    private DoubleSolenoidWrapper grabber;
+    private DoubleSolenoidWrapper kicker;
 
     /**
      * Constructor for scoring subsystem.
@@ -17,8 +17,8 @@ public class Scoring implements Loggable {
      * @see DoubleSolenoid
      */
     public Scoring(DoubleSolenoidWrapper kick, DoubleSolenoidWrapper grab) {
-        this.grabber = kick;
-        this.kicker = grab;
+        this.kicker = kick;
+        this.grabber = grab;
     }
     
     public void open() {
