@@ -12,9 +12,9 @@ import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Manipulation implements Loggable {
-    DoubleSolenoidWrapper tilt;
-    TalonSrxWrapper lift;
-    SolenoidWrapper brake;
+    private DoubleSolenoidWrapper tilt;
+    private TalonSrxWrapper lift;
+    private SolenoidWrapper brake;
     
     /**
      * Constructor for manipulation subsystem.
