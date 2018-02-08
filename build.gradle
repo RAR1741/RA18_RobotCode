@@ -66,4 +66,5 @@ task wrapper(type: Wrapper) {
 
 cobertura {
     coverageFormats = [ 'xml', 'html' ]
+    coverageExcludes = ['.*org.redalert1741.robotbase.wrapper.*', '.*org.redalert1741.powerup.Robot.*']
 }

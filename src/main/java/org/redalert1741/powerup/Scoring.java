@@ -4,22 +4,21 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
+import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
 
 public class Scoring implements Loggable {
-    DoubleSolenoid grabber;
-    DoubleSolenoid kicker;
+    private DoubleSolenoidWrapper grabber;
+    private DoubleSolenoidWrapper kicker;
 
     /**
      * Constructor for scoring subsystem.
-     * @param kickIn ID 1 for DoubleSolenoid kicker
-     * @param kickOut ID 2 for DoubleSolenoid kicker
-     * @param grab ID 1 for DoubleSolenoid grabber
-     * @param drop ID 2 for DoubleSolenoid grabber
+     * @param kick piston for the kicker
+     * @param grab piston for the grabber
      * @see DoubleSolenoid
      */
-    public Scoring(int kickIn, int kickOut, int grab, int drop) {
-        this.grabber = new DoubleSolenoid(grab, drop);
-        this.kicker = new DoubleSolenoid(kickIn, kickOut);
+    public Scoring(DoubleSolenoidWrapper kick, DoubleSolenoidWrapper grab) {
+        this.kicker = kick;
+        this.grabber = grab;
     }
     
     public void open() {
