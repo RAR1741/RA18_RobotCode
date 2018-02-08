@@ -48,8 +48,7 @@ public class TankDrive implements Loggable {
      * @param left Power for left side
      * @param right Power for right side
      */
-    public void tankDrive(double left, double right) {
-        enableDriving();
+    private void driveMotors(double left, double right) {
         left1.set(ControlMode.PercentOutput, left);
         right1.set(ControlMode.PercentOutput, right);
     }
@@ -60,17 +59,17 @@ public class TankDrive implements Loggable {
      * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
-        tankDrive(ydrive+xdrive, ydrive-xdrive);
+        enableDriving();
+        driveMotors(ydrive+xdrive, ydrive-xdrive);
     }
 
     /**
      * Climbs at a speed.
-     * @param speed
+     * @param speed Speed to run climb motors at
      */
     public void climb(double speed) {
         enableClimbing();
-        left1.set(ControlMode.PercentOutput, speed);
-        right1.set(ControlMode.PercentOutput, speed);
+        driveMotors(speed, speed);
     }
 
     /**
