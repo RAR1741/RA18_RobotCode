@@ -2,7 +2,7 @@ package org.redalert1741.robotbase.wrapper;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class FakeDoubleSolenoidWrapper implements DoubleSolenoidWrapper {
+public class FakeDoubleSolenoidWrapper extends DoubleSolenoidWrapper {
     public Value value;
     
     public FakeDoubleSolenoidWrapper() {
