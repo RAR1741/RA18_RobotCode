@@ -5,13 +5,16 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
+
+import org.redalert1741.robotbase.config.Config;
+import org.redalert1741.robotbase.config.Configurable;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
-public class Manipulation implements Loggable {
+public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
     private TalonSrxWrapper lift;
     private SolenoidWrapper brake;
@@ -64,5 +67,10 @@ public class Manipulation implements Loggable {
         logger.log("tilt_state", tilt.get());
         logger.log("brake_state", brake.get());
         lift.log(logger);
+    }
+
+    @Override
+    public void reloadConfig(Config config) {
+        lift.reloadConfig(config);
     }
 }

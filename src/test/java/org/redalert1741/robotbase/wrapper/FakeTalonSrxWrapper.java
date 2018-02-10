@@ -3,9 +3,6 @@ package org.redalert1741.robotbase.wrapper;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import org.redalert1741.robotbase.config.Config;
-import org.redalert1741.robotbase.logging.DataLogger;
-
 public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public FakeTalonSrxWrapper() {
         mode = ControlMode.PercentOutput;
@@ -57,21 +54,6 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     @Override
     public double get() {
         return value;
-    }
-
-    @Override
-    public void setupLogging(DataLogger logger) {
-        // nope
-    }
-
-    @Override
-    public void log(DataLogger logger) {
-        // nope
-    }
-
-    @Override
-    public void reloadConfig(Config config) {
-        // nah
     }
 
     public double pValue;
@@ -130,4 +112,7 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
         return ErrorCode.OK;
     }
 
+    public int getTimeout() {
+        return timeout;
+    }
 }

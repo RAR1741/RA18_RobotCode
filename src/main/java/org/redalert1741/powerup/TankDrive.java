@@ -2,13 +2,15 @@ package org.redalert1741.powerup;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import org.redalert1741.robotbase.config.Config;
+import org.redalert1741.robotbase.config.Configurable;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 
 import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
-public class TankDrive implements Loggable {
+public class TankDrive implements Loggable, Configurable {
     private TalonSrxWrapper left1;
     private TalonSrxWrapper left2;
     private TalonSrxWrapper right1;
@@ -102,4 +104,12 @@ public class TankDrive implements Loggable {
 		right2.log(logger);
 		logger.log("shifterState", shifter.get());
 	}
+
+    @Override
+    public void reloadConfig(Config config) {
+        left1.reloadConfig(config);
+        left2.reloadConfig(config);
+        right1.reloadConfig(config);
+        right2.reloadConfig(config);
+    }
 }

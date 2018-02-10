@@ -3,10 +3,15 @@ package org.redalert1741.robotbase.wrapper;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.config.Configurable;
+import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 
-public abstract class TalonSrxWrapper implements Loggable, Configurable  {
+public abstract class TalonSrxWrapper implements Loggable, Configurable {
+    protected String logname;
+    protected int timeout;
+    
     public abstract void set(ControlMode mode, double value);
 
     public abstract void setInverted(boolean inverted);
@@ -34,4 +39,23 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable  {
     public abstract ErrorCode configPeakOutputForward(double value);
 
     public abstract ErrorCode configPeakOutputReverse(double value);
+    
+    @Override
+    public void setupLogging(DataLogger logger) {
+        logger.addAttribute(logname+"_current");
+        logger.addAttribute(logname+"_voltage");
+        logger.addAttribute(logname+"_value");
+    }
+
+    @Override
+    public void log(DataLogger logger) {
+        logger.log(logname+"_current", getOutputCurrent());
+        logger.log(logname+"_voltage", getBusVoltage());
+        logger.log(logname+"_value", get());
+    }
+
+    @Override
+    public void reloadConfig(Config config) {
+        timeout = config.getSetting("can_timeout", 10.0).intValue();
+    }
 }
