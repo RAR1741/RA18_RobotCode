@@ -7,20 +7,21 @@ public class RealSolenoidWrapper extends SolenoidWrapper {
 
     /**
      * A real solenoid. Logging name is "solenoid_{id}"
-     * @param id PCM ID
+     * @param pcm CAN ID of the PCM
+     * @param id PCM ID of the solenoid
      */
-    public RealSolenoidWrapper(int id) {
-        solenoid = new Solenoid(id);
-        logname = "solenoid_"+id;
+    public RealSolenoidWrapper(int pcm, int id) {
+        this(pcm, id, "solenoid_"+id);
     }
 
     /**
      * A real solenoid.
-     * @param id PCM ID
+     * @param pcm CAN ID of the PCM
+     * @param id PCM ID of the solenoid
      * @param name logging name
      */
-    public RealSolenoidWrapper(int id, String name) {
-        solenoid = new Solenoid(id);
+    public RealSolenoidWrapper(int pcm, int id, String name) {
+        solenoid = new Solenoid(pcm, id);
         logname = name;
     }
 
