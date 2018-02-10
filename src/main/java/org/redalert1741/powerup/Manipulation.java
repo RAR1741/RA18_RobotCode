@@ -57,15 +57,15 @@ public class Manipulation implements Loggable, Configurable {
     
     @Override
     public void setupLogging(DataLogger logger) {
-        logger.addAttribute("tilt_state");
         brake.setupLogging(logger);
+        tilt.setupLogging(logger);
         lift.setupLogging(logger);
     }
 
     @Override
     public void log(DataLogger logger) {
-        logger.log("tilt_state", tilt.get());
         brake.log(logger);
+        tilt.log(logger);
         lift.log(logger);
     }
 

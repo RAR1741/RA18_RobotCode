@@ -39,13 +39,13 @@ public class Scoring implements Loggable {
     
     @Override
     public void setupLogging(DataLogger logger) {
-        logger.addAttribute("grabber_state");
-        logger.addAttribute("kicker_state");
+        kicker.setupLogging(logger);
+        grabber.setupLogging(logger);
     }
 
     @Override
     public void log(DataLogger logger) {
-        logger.log("grabber_state", grabber.get());
-        logger.log("kicker_state", kicker.get());
+        kicker.log(logger);
+        grabber.log(logger);
     }
 }
