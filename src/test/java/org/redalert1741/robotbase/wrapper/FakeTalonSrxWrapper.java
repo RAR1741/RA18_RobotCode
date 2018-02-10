@@ -1,8 +1,12 @@
 package org.redalert1741.robotbase.wrapper;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-public class FakeTalonSrxWrapper implements TalonSrxWrapper {
+import org.redalert1741.robotbase.config.Config;
+import org.redalert1741.robotbase.logging.DataLogger;
+
+public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public FakeTalonSrxWrapper() {
         mode = ControlMode.PercentOutput;
         value = 0;
@@ -53,6 +57,77 @@ public class FakeTalonSrxWrapper implements TalonSrxWrapper {
     @Override
     public double get() {
         return value;
+    }
+
+    @Override
+    public void setupLogging(DataLogger logger) {
+        // nope
+    }
+
+    @Override
+    public void log(DataLogger logger) {
+        // nope
+    }
+
+    @Override
+    public void reloadConfig(Config config) {
+        // nah
+    }
+
+    public double pValue;
+    @Override
+    public ErrorCode setP(double pValue) {
+        this.pValue = pValue;
+        return ErrorCode.OK;
+    }
+
+    public double iValue;
+    @Override
+    public ErrorCode setI(double iValue) {
+        this.iValue = iValue;
+        return ErrorCode.OK;
+    }
+
+    public double dValue;
+    @Override
+    public ErrorCode setD(double dValue) {
+        this.dValue = dValue;
+        return ErrorCode.OK;
+    }
+
+    public double fValue;
+    @Override
+    public ErrorCode setF(double fValue) {
+        this.fValue = fValue;
+        return ErrorCode.OK;
+    }
+
+    public double nomOutForward;
+    @Override
+    public ErrorCode configNominalOutputForward(double value) {
+        nomOutForward = value;
+        return ErrorCode.OK;
+    }
+
+    public double nomOutReverse;
+    @Override
+    public ErrorCode configNominalOutputReverse(double value) {
+        nomOutReverse = value;
+        return ErrorCode.OK;
+    }
+
+    public double peakOutForward;
+    @Override
+    public ErrorCode configPeakOutputForward(double value) {
+        peakOutForward = value;
+        return ErrorCode.OK;
+    }
+
+    public double peakOutReverse;
+    @Override
+    public ErrorCode configPeakOutputReverse(double value) {
+        peakOutReverse = value;
+        return ErrorCode.OK;
     }
 
 }
