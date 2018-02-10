@@ -2,7 +2,7 @@ package org.redalert1741.robotbase.wrapper;
 
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class RealSolenoidWrapper implements SolenoidWrapper {
+public class RealSolenoidWrapper extends SolenoidWrapper {
     private Solenoid solenoid;
 
     public RealSolenoidWrapper(int id) {
@@ -18,5 +18,4 @@ public class RealSolenoidWrapper implements SolenoidWrapper {
     public boolean get() {
         return solenoid.get();
     }
-
 }
