@@ -19,13 +19,13 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable  {
 
     public abstract double get();
 
-    public abstract ErrorCode setP(double pValue);
+    public abstract ErrorCode setP(double pvalue);
 
-    public abstract ErrorCode setI(double iValue);
+    public abstract ErrorCode setI(double ivalue);
 
-    public abstract ErrorCode setD(double dValue);
+    public abstract ErrorCode setD(double dvalue);
 
-    public abstract ErrorCode setF(double fValue);
+    public abstract ErrorCode setF(double fvalue);
 
     public abstract ErrorCode configNominalOutputForward(double value);
 

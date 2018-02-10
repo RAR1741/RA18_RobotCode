@@ -13,12 +13,21 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     private String logname;
     private int timeout;
 
+    /**
+     * A real TalonSRX. Logging name is "talon_{id}"
+     * @param id CAN ID of the Talon
+     */
     public RealTalonSrxWrapper(int id) {
         talon = new TalonSRX(id);
         value = 0;
         logname = "talon_" + id;
     }
 
+    /**
+     * A real TalonSRX.
+     * @param id CAN ID of the Talon
+     * @param name Logging name
+     */
     public RealTalonSrxWrapper(int id, String name) {
         talon = new TalonSRX(id);
         value = 0;
@@ -59,23 +68,23 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     }
 
     @Override
-    public ErrorCode setP(double pValue) {
-        return talon.config_kP(0, pValue, timeout);
+    public ErrorCode setP(double pvalue) {
+        return talon.config_kP(0, pvalue, timeout);
     }
 
     @Override
-    public ErrorCode setI(double iValue) {
-        return talon.config_kI(0, iValue, timeout);
+    public ErrorCode setI(double ivalue) {
+        return talon.config_kI(0, ivalue, timeout);
     }
 
     @Override
-    public ErrorCode setD(double dValue) {
-        return talon.config_kD(0, dValue, timeout);
+    public ErrorCode setD(double dvalue) {
+        return talon.config_kD(0, dvalue, timeout);
     }
 
     @Override
-    public ErrorCode setF(double kValue) {
-        return talon.config_kF(0, kValue, timeout);
+    public ErrorCode setF(double kvalue) {
+        return talon.config_kF(0, kvalue, timeout);
     }
 
     @Override
