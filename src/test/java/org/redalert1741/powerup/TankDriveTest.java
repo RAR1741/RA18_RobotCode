@@ -7,12 +7,11 @@ import org.junit.Test;
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.wrapper.FakeSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.FakeTalonSrxWrapper;
-import org.redalert1741.robotbase.wrapper.SolenoidWrapper;
 
 public class TankDriveTest {
     TankDrive drive;
     FakeTalonSrxWrapper left1, left2, right1, right2;
-    SolenoidWrapper shifter;
+    FakeSolenoidWrapper shifter;
     Config config;
     
     @Before

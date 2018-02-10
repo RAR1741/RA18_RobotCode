@@ -94,6 +94,7 @@ public class TankDrive implements Loggable, Configurable {
 		left2.setupLogging(logger);
 		right1.setupLogging(logger);
 		right2.setupLogging(logger);
+		shifter.setupLogging(logger);
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class TankDrive implements Loggable, Configurable {
 		left2.log(logger);
 		right1.log(logger);
 		right2.log(logger);
-		logger.log("shifterState", shifter.get());
+		shifter.log(logger);
 	}
 
     @Override

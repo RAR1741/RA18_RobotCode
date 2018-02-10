@@ -1,6 +1,6 @@
 package org.redalert1741.robotbase.wrapper;
 
-public class FakeSolenoidWrapper implements SolenoidWrapper {
+public class FakeSolenoidWrapper extends SolenoidWrapper {
     public boolean value;
 
     public FakeSolenoidWrapper() {
