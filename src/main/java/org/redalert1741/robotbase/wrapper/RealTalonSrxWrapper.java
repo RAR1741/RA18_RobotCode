@@ -4,14 +4,9 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import org.redalert1741.robotbase.config.Config;
-import org.redalert1741.robotbase.logging.DataLogger;
-
 public class RealTalonSrxWrapper extends TalonSrxWrapper {
     private TalonSRX talon;
     private double value;
-    private String logname;
-    private int timeout;
 
     /**
      * A real TalonSRX. Logging name is "talon_{id}"
@@ -105,24 +100,5 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     @Override
     public ErrorCode configPeakOutputReverse(double value) {
         return talon.configPeakOutputReverse(value, timeout);
-    }
-
-    @Override
-    public void setupLogging(DataLogger logger) {
-        logger.addAttribute(logname+"_current");
-        logger.addAttribute(logname+"_voltage");
-        logger.addAttribute(logname+"_value");
-    }
-
-    @Override
-    public void log(DataLogger logger) {
-        logger.log(logname+"_current", getOutputCurrent());
-        logger.log(logname+"_voltage", getBusVoltage());
-        logger.log(logname+"_value", get());
-    }
-
-    @Override
-    public void reloadConfig(Config config) {
-        timeout = config.getSetting("can_timeout", 10.0).intValue();
     }
 }
