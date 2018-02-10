@@ -86,3 +86,16 @@ public class TalonMove implements AutoMoveMove {
     }
 }
 ```
+To add it to the robot and control a talon called
+`autoTalon`, add the following line in `Robot.java`:
+```java
+public class Robot extends IterativeRobot {
+    ...
+    @Override
+    public void robotInit() {
+        ...
+        AutoFactory.addMoveMove(() -> new TalonMove(autoTalon));
+        ...
+    }
+}
+```
