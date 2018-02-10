@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class RealDoubleSolenoidWrapper extends DoubleSolenoidWrapper {
     private DoubleSolenoid doublesolenoid;
     
-    public RealDoubleSolenoidWrapper(int id1, int id2) {
-        doublesolenoid = new DoubleSolenoid(id1, id2);
+    public RealDoubleSolenoidWrapper(int pcm, int id1, int id2) {
+        doublesolenoid = new DoubleSolenoid(pcm, id1, id2);
     }
     
     @Override
