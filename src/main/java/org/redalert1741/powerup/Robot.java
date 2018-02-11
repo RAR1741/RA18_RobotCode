@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot
 
     @Override
     public void teleopPeriodic() {
-        drive.arcadeDrive(driver.getX(Hand.kRight), -driver.getY(Hand.kLeft));
+        drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
         manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
     }
 
