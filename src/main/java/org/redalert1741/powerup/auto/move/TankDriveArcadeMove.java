@@ -32,5 +32,4 @@ public class TankDriveArcadeMove implements AutoMoveMove {
     public void stop() {
         drive.arcadeDrive(0, 0);
     }
-
 }

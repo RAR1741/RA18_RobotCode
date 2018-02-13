@@ -8,11 +8,11 @@ import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 public class ScoringKickerMove implements AutoMoveMove {
     private Scoring score;
     private boolean kick;
-    
+
     public ScoringKickerMove(Scoring score) {
         this.score = score;
     }
-    
+
     @Override
     public void setArgs(Map<String, String> args) {
         kick = Boolean.parseBoolean(args.get("kick"));
