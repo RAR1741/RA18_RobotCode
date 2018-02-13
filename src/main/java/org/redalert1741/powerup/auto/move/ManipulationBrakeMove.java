@@ -8,11 +8,10 @@ import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 public class ManipulationBrakeMove implements AutoMoveMove {
     private Manipulation manip;
     private boolean brake;
-    
     public ManipulationBrakeMove(Manipulation manip) {
         this.manip = manip;
     }
-    
+
     @Override
     public void setArgs(Map<String, String> args) {
         brake = Boolean.parseBoolean(args.get("brake"));
@@ -32,5 +31,4 @@ public class ManipulationBrakeMove implements AutoMoveMove {
 
     @Override
     public void stop() {/*doesn't need init*/}
-    
 }
