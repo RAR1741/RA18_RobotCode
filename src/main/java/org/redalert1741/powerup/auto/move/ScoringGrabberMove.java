@@ -8,11 +8,10 @@ import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 public class ScoringGrabberMove implements AutoMoveMove {
     private Scoring score;
     private boolean grab;
-    
     public ScoringGrabberMove(Scoring score) {
         this.score = score;
     }
-    
+
     @Override
     public void setArgs(Map<String, String> args) {
         grab = Boolean.parseBoolean(args.get("grab"));
@@ -32,5 +31,4 @@ public class ScoringGrabberMove implements AutoMoveMove {
 
     @Override
     public void stop() {/*doesn't need init*/}
-
 }
