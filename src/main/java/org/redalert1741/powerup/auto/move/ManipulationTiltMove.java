@@ -32,5 +32,4 @@ public class ManipulationTiltMove implements AutoMoveMove {
 
     @Override
     public void stop() {/*doesn't need init*/}
-
 }
