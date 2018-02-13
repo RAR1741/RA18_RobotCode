@@ -12,7 +12,7 @@ public class ManipulationTiltMove implements AutoMoveMove {
     public ManipulationTiltMove(Manipulation manip) {
         this.manip = manip;
     }
-    
+
     @Override
     public void setArgs(Map<String, String> args) {
         tilt = Boolean.parseBoolean(args.get("tilt"));
