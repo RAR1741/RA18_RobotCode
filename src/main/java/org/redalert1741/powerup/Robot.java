@@ -7,15 +7,20 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
 
 public class Robot extends IterativeRobot
 {
     // allocates logger for this class
     private static final Logger logger = Logger.getLogger(Robot.class.getName());
+
+    private DataLogger data;
 
     private TankDrive drive;
     private Manipulation manip;
@@ -38,11 +43,22 @@ public class Robot extends IterativeRobot
                 null);
 
         logger.info("Robot startup complete");
+        logger.info("Initialize DataLogger");
+
+        data = new DataLogger();
+        data.addLoggable(drive);
+        data.addLoggable(manip);
+
+        data.setupLoggables();
+
+        logger.info("DataLogger initialized");
     }
 
     @Override
     public void autonomousInit() {
         logger.info("Autonomous init started");
+
+        startLogging(data, "auto");
 
         logger.info("Autonomous init complete");
     }
@@ -50,17 +66,34 @@ public class Robot extends IterativeRobot
     @Override
     public void autonomousPeriodic() {
         // TODO: Add code to be called during the autonomous period
+        data.logAll();
+    }
+
+    @Override
+    public void teleopInit() {
+        logger.info("Teleop init started");
+
+        startLogging(data, "teleop");
+
+        logger.info("Teleop init complete");
     }
 
     @Override
     public void teleopPeriodic() {
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
         manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+
+        data.logAll();
     }
 
     @Override
     public void testPeriodic() {
         // TODO: Add code to be called in test mode
+    }
+
+    private void startLogging(DataLogger data, String type) {
+        data.open("/home/lvuser/logs/log-"+type+new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())+".csv");
+        data.writeAttributes();
     }
 
     // Set logging up for the rest of the application
