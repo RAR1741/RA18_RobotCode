@@ -7,8 +7,8 @@ import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 
 public class TankDriveArcadeMove implements AutoMoveMove {
     private TankDrive drive;
-    private double x;
-    private double y;
+    private double xdrive;
+    private double ydrive;
 
     public TankDriveArcadeMove(TankDrive drive) {
         this.drive = drive;
@@ -16,8 +16,8 @@ public class TankDriveArcadeMove implements AutoMoveMove {
 
     @Override
     public void setArgs(Map<String, String> args) {
-        x = Double.parseDouble(args.get("x"));
-        y = Double.parseDouble(args.get("y"));
+        xdrive = Double.parseDouble(args.get("xdrive"));
+        ydrive = Double.parseDouble(args.get("ydrive"));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TankDriveArcadeMove implements AutoMoveMove {
 
     @Override
     public void run() {
-        drive.arcadeDrive(x, y);
+        drive.arcadeDrive(xdrive, ydrive);
     }
 
     @Override
