@@ -39,6 +39,7 @@ public class DataLogger {
      * @return Success of opening the file
      */
     public boolean open(String filename) {
+        //System.out.println(filename);
         this.filename = filename;
         try {
             log = new FileWriter(filename);
@@ -109,6 +110,11 @@ public class DataLogger {
         if(!hasAttribute(field)) { return false; }
 
         fields.put(field, data.toString());
+        if(data instanceof Number) {
+            table.getEntry(field).setNumber((Number)data);
+        } else {
+            table.getEntry(field).setString(data.toString());
+        }
         return true;
     }
 
@@ -141,6 +147,7 @@ public class DataLogger {
                 log.write(e.getValue() + ',');
             }
             log.write("\n");
+            log.flush();
         }
         catch (IOException e) {
             return false;
@@ -174,5 +181,6 @@ public class DataLogger {
         for(Loggable l : loggables) {
             l.log(this);
         }
+        writeLine();
     }
 }

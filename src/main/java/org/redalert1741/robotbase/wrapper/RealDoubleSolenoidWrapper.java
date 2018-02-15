@@ -7,7 +7,7 @@ public class RealDoubleSolenoidWrapper extends DoubleSolenoidWrapper {
     private DoubleSolenoid doublesolenoid;
     
     public RealDoubleSolenoidWrapper(int id1, int id2) {
-        doublesolenoid = new DoubleSolenoid(id1, id2);
+        doublesolenoid = new DoubleSolenoid(6, id1, id2);
     }
     
     @Override

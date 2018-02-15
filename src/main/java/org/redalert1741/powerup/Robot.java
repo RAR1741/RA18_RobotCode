@@ -10,15 +10,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import org.redalert1741.robotbase.logging.DataLogger;
+import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
 
 public class Robot extends IterativeRobot
 {
     // allocates logger for this class
-    private static final Logger logger = Logger.getLogger(Robot.class.getName());
+    //private static final Logger logger = Logger.getLogger(Robot.class.getName());
 
     private DataLogger data;
 
@@ -32,18 +33,18 @@ public class Robot extends IterativeRobot
         // Set up global logger
         setupLogging();
 
-        logger.info("Robot startup started");
+        //logger.info("Robot startup started");
 
         driver = new XboxController(0);
 
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
                 new RealTalonSrxWrapper(2), new RealTalonSrxWrapper(3),
-                null);
-        manip = new Manipulation(new RealTalonSrxWrapper(1), null,
-                null);
+                new RealSolenoidWrapper(6));
+        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealDoubleSolenoidWrapper(2, 7),
+                new RealSolenoidWrapper(4));
 
-        logger.info("Robot startup complete");
-        logger.info("Initialize DataLogger");
+        //logger.info("Robot startup complete");
+        //logger.info("Initialize DataLogger");
 
         data = new DataLogger();
         data.addLoggable(drive);
@@ -51,16 +52,16 @@ public class Robot extends IterativeRobot
 
         data.setupLoggables();
 
-        logger.info("DataLogger initialized");
+        //logger.info("DataLogger initialized");
     }
 
     @Override
     public void autonomousInit() {
-        logger.info("Autonomous init started");
+        //logger.info("Autonomous init started");
 
         startLogging(data, "auto");
 
-        logger.info("Autonomous init complete");
+        //logger.info("Autonomous init complete");
     }
 
     @Override
@@ -71,17 +72,24 @@ public class Robot extends IterativeRobot
 
     @Override
     public void teleopInit() {
-        logger.info("Teleop init started");
+        //logger.info("Teleop init started");
 
         startLogging(data, "teleop");
 
-        logger.info("Teleop init complete");
+        //logger.info("Teleop init complete");
     }
 
     @Override
     public void teleopPeriodic() {
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
         manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+
+        if(driver.getAButton()) {
+            manip.tiltOut();
+        }
+        if(driver.getBButton()) {
+            manip.tiltIn();
+        }
 
         data.logAll();
     }

@@ -10,7 +10,7 @@ public class RealSolenoidWrapper extends SolenoidWrapper {
      * @param id PCM ID
      */
     public RealSolenoidWrapper(int id) {
-        solenoid = new Solenoid(id);
+        solenoid = new Solenoid(6, id);
         logname = "solenoid_"+id;
     }
 
