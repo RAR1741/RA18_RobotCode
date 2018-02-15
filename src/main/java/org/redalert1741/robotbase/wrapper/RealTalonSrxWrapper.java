@@ -101,4 +101,9 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     public ErrorCode configPeakOutputReverse(double value) {
         return talon.configPeakOutputReverse(value, timeout);
     }
+
+    @Override
+    public int getPosition() {
+        return talon.getSensorCollection().getQuadraturePosition();
+    }
 }

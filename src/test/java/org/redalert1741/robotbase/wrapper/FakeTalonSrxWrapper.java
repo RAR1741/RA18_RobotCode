@@ -115,4 +115,10 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public int getTimeout() {
         return timeout;
     }
+
+    public int position;
+    @Override
+    public int getPosition() {
+        return position;
+    }
 }
