@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot
 
     private TankDrive drive;
     private Manipulation manip;
+    private Scoring score;
 
     private XboxController driver;
 
@@ -42,6 +43,7 @@ public class Robot extends IterativeRobot
                 new RealSolenoidWrapper(6));
         manip = new Manipulation(new RealTalonSrxWrapper(1), new RealDoubleSolenoidWrapper(2, 7),
                 new RealSolenoidWrapper(4));
+        score = new Scoring(new RealDoubleSolenoidWrapper(3, 0), new RealDoubleSolenoidWrapper(5, 1));
 
         //logger.info("Robot startup complete");
         //logger.info("Initialize DataLogger");
@@ -89,6 +91,18 @@ public class Robot extends IterativeRobot
         }
         if(driver.getBButton()) {
             manip.tiltIn();
+        }
+
+        if(driver.getYButton()) {
+            score.kick();
+        } else {
+            score.retract();
+        }
+        if(driver.getBumper(Hand.kLeft)) {
+            score.close();
+        }
+        if(driver.getBumper(Hand.kRight)) {
+            score.open();
         }
 
         data.logAll();
