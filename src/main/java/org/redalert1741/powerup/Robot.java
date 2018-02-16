@@ -84,7 +84,9 @@ public class Robot extends IterativeRobot
     @Override
     public void teleopPeriodic() {
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
-        manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+        if(driver.getStartButton()) {
+            manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+        }
 
         if(driver.getAButton()) {
             manip.tiltOut();
@@ -103,6 +105,16 @@ public class Robot extends IterativeRobot
         }
         if(driver.getBumper(Hand.kRight)) {
             score.open();
+        }
+
+        if(driver.getBackButton()) {
+            manip.resetPosition();
+        }
+
+        if(driver.getPOV() == 0) {
+            manip.setLiftPosition(-7000);
+        } else if(driver.getPOV() == 180) {
+            manip.setLiftPosition(0);
         }
 
         data.logAll();

@@ -106,4 +106,15 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     public int getPosition() {
         return talon.getSensorCollection().getQuadraturePosition();
     }
+
+    @Override
+    public void setPosition(int pos) {
+        talon.getSensorCollection().setQuadraturePosition(pos, timeout);
+    }
+
+    @Override
+    public void setPhase(boolean phase) {
+        talon.setSensorPhase(phase);
+        talon.getSensorCollection().
+    }
 }

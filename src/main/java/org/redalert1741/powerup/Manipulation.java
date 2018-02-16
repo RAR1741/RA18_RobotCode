@@ -18,6 +18,8 @@ public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
     private TalonSrxWrapper lift;
     private SolenoidWrapper brake;
+    private double forwardSpeed;
+    private double reverseSpeed;
     
     /**
      * Constructor for manipulation subsystem.
@@ -33,6 +35,17 @@ public class Manipulation implements Loggable, Configurable {
         this.lift = lift;
         this.tilt = tilt;
         this.brake = brake;
+
+        forwardSpeed = 0.5;
+        reverseSpeed = -0.4;
+        lift.configPeakOutputForward(forwardSpeed);
+        lift.configPeakOutputReverse(reverseSpeed);
+        lift.configNominalOutputForward(0);
+        lift.configNominalOutputReverse(0);
+        lift.setP(2);
+        lift.setI(0);
+        lift.setD(0);
+        lift.setPhase(true);
     }
     
     public void tiltIn() {
@@ -46,6 +59,10 @@ public class Manipulation implements Loggable, Configurable {
     public void setLift(double input) {
         lift.set(ControlMode.PercentOutput, input);
     }
+
+    public void setLiftPosition(int pos) {
+        lift.set(ControlMode.Position, pos);
+    }
     
     public void enableBrake() {
         brake.set(true);
@@ -53,6 +70,10 @@ public class Manipulation implements Loggable, Configurable {
     
     public void disableBrake() {
         brake.set(false);
+    }
+
+    public void resetPosition() {
+        lift.setPosition(0);
     }
     
     @Override

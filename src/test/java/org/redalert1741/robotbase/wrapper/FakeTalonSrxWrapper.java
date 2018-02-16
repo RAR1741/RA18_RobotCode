@@ -121,4 +121,15 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public int getPosition() {
         return position;
     }
+
+    @Override
+    public void setPosition(int pos) {
+        position = pos;
+    }
+
+    public boolean phase;
+    @Override
+    public void setPhase(boolean phase) {
+        this.phase = phase;
+    }
 }

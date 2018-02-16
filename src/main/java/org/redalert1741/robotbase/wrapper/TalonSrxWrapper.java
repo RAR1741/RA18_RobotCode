@@ -42,6 +42,10 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
 
     public abstract int getPosition();
 
+    public abstract void setPosition(int pos);
+
+    public abstract void setPhase(boolean phase);
+
     @Override
     public void setupLogging(DataLogger logger) {
         logger.addAttribute(logname+"_current");
