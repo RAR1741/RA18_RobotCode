@@ -115,6 +115,5 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     @Override
     public void setPhase(boolean phase) {
         talon.setSensorPhase(phase);
-        talon.getSensorCollection().
     }
 }
