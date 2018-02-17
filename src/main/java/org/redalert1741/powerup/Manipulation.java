@@ -63,7 +63,7 @@ public class Manipulation implements Loggable, Configurable {
     }
 
     /**
-     * Runs the second (up) motor if it hasn't hit the limit
+     * Runs the second (up) motor if it hasn't hit the limit.
      * @param input speed to set {@link ControlMode#PercentOutput}
      */
     public void setSecond(double input) {
@@ -75,7 +75,7 @@ public class Manipulation implements Loggable, Configurable {
     }
 
     /**
-     * Experimental unused position control
+     * Experimental unused position control.
      * @param pos position to go to (-7000-0)
      */
     public void setLiftPosition(int pos) {
