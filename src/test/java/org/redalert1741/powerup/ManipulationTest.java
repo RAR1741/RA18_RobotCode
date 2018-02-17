@@ -22,6 +22,7 @@ public class ManipulationTest {
     @Before
     public void initManipulation() {
         lift = new FakeTalonSrxWrapper();
+        up = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
         brake = new FakeSolenoidWrapper();
         manipulation = new Manipulation(lift, up, tilt, brake);
