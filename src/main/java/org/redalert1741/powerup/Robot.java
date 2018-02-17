@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.LogManager;
 
+import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
@@ -22,6 +23,7 @@ public class Robot extends IterativeRobot
     //private static final Logger logger = Logger.getLogger(Robot.class.getName());
 
     private DataLogger data;
+    private Config config;
 
     private TankDrive drive;
     private Manipulation manip;
@@ -32,7 +34,7 @@ public class Robot extends IterativeRobot
     @Override
     public void robotInit() {
         // Set up global logger
-        setupLogging();
+        setupLogging(); //this is not real
 
         //logger.info("Robot startup started");
 
@@ -45,25 +47,30 @@ public class Robot extends IterativeRobot
                 new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
         score = new Scoring(new RealDoubleSolenoidWrapper(3, 0), new RealDoubleSolenoidWrapper(5, 1));
 
-        //logger.info("Robot startup complete");
-        //logger.info("Initialize DataLogger");
+        //logging
 
         data = new DataLogger();
+
         data.addLoggable(drive);
         data.addLoggable(manip);
+        data.addLoggable(score);
 
         data.setupLoggables();
 
-        //logger.info("DataLogger initialized");
+        //config
+
+        config = new Config();
+
+        config.addConfigurable(drive);
+        config.addConfigurable(manip);
+
+        reloadConfig();
     }
 
     @Override
     public void autonomousInit() {
-        //logger.info("Autonomous init started");
-
         startLogging(data, "auto");
-
-        //logger.info("Autonomous init complete");
+        reloadConfig();
     }
 
     @Override
@@ -74,20 +81,27 @@ public class Robot extends IterativeRobot
 
     @Override
     public void teleopInit() {
-        //logger.info("Teleop init started");
-
         startLogging(data, "teleop");
-
-        //logger.info("Teleop init complete");
+        reloadConfig();
     }
 
     @Override
     public void teleopPeriodic() {
+        //driving
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
+
+        //manual manipulation controls
+//        if(driver.getStartButton()) {
+//            manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+//        } else if(driver.getXButton()) {
+//            manip.setSecond(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+//        }
         if(driver.getStartButton()) {
-            manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+            manip.setLift(driver.getTriggerAxis(Hand.kRight));
+            manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
         }
 
+        //tilt manipulation
         if(driver.getAButton()) {
             manip.tiltOut();
         }
@@ -95,6 +109,7 @@ public class Robot extends IterativeRobot
             manip.tiltIn();
         }
 
+        //scoring controls
         if(driver.getYButton()) {
             score.kick();
         } else {
@@ -107,15 +122,19 @@ public class Robot extends IterativeRobot
             score.open();
         }
 
+        //reset manipulation
         if(driver.getBackButton()) {
             manip.resetPosition();
         }
 
-        if(driver.getPOV() == 0) {
-            manip.setLiftPosition(-7000);
-        } else if(driver.getPOV() == 180) {
-            manip.setLiftPosition(0);
-        }
+        //pid manipulation controls
+//        if(driver.getPOV() == 0) {
+//            manip.setLiftPosition(-7000);
+//        } else if(driver.getPOV() == 180) {
+//            manip.setLiftPosition(0);
+//        }
+
+        //climbing controls (just drive backwards to climb)
         if(driver.getPOV() == 90) {
             drive.enableClimbing();
         } else if(driver.getPOV() == 270) {
@@ -148,5 +167,10 @@ public class Robot extends IterativeRobot
             // Ignore exceptions
             ex.printStackTrace();
         }
+    }
+
+    private void reloadConfig() {
+        config.loadFromFile("/home/lvuser/config.txt");
+        config.reloadConfig();
     }
 }

@@ -62,6 +62,14 @@ public class Manipulation implements Loggable, Configurable {
         down.set(ControlMode.PercentOutput, input);
     }
 
+    public void setSecond(double input) {
+        if(!down.getReverseLimit()) {
+            up.set(ControlMode.PercentOutput, input);
+        } else {
+            up.set(ControlMode.PercentOutput, 0);
+        }
+    }
+
     public void setLiftPosition(int pos) {
         if(down.getPosition() < pos) {
             down.set(ControlMode.Position, pos);
@@ -92,6 +100,7 @@ public class Manipulation implements Loggable, Configurable {
         brake.setupLogging(logger);
         tilt.setupLogging(logger);
         down.setupLogging(logger);
+        up.setupLogging(logger);
     }
 
     @Override
@@ -99,10 +108,12 @@ public class Manipulation implements Loggable, Configurable {
         brake.log(logger);
         tilt.log(logger);
         down.log(logger);
+        up.log(logger);
     }
 
     @Override
     public void reloadConfig(Config config) {
         down.reloadConfig(config);
+        up.reloadConfig(config);
     }
 }
