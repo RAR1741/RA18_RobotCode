@@ -57,11 +57,15 @@ public class Manipulation implements Loggable, Configurable {
     public void tiltOut() {
         tilt.set(Value.kForward);
     }
-    
+
     public void setLift(double input) {
         down.set(ControlMode.PercentOutput, input);
     }
 
+    /**
+     * Runs the second (up) motor if it hasn't hit the limit
+     * @param input speed to set {@link ControlMode#PercentOutput}
+     */
     public void setSecond(double input) {
         if(!down.getReverseLimit()) {
             up.set(ControlMode.PercentOutput, input);
@@ -70,13 +74,16 @@ public class Manipulation implements Loggable, Configurable {
         }
     }
 
+    /**
+     * Experimental unused position control
+     * @param pos position to go to (-7000-0)
+     */
     public void setLiftPosition(int pos) {
         if(down.getPosition() < pos) {
             down.set(ControlMode.Position, pos);
             up.set(ControlMode.PercentOutput, 0);
         } else if (!down.getReverseLimit()) {
             down.set(ControlMode.PercentOutput, 0);
-            up.set(ControlMode.PercentOutput, 0.2);
         } else {
             down.set(ControlMode.PercentOutput, 0);
             up.set(ControlMode.PercentOutput, 0);

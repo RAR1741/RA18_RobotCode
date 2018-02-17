@@ -126,8 +126,8 @@ public class Robot extends IterativeRobot {
     }
 
     private void startLogging(DataLogger data, String type) {
-        data.open("/home/lvuser/logs/log-"+
-                new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())
+        data.open("/home/lvuser/logs/log-"
+                +new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())
                 +type+".csv");
         data.writeAttributes();
     }
