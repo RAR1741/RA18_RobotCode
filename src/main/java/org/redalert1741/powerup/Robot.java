@@ -23,6 +23,8 @@ public class Robot extends IterativeRobot {
 
     private XboxController driver;
 
+    private long enableStart;
+
     @Override
     public void robotInit() {
         driver = new XboxController(0);
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
         //logging
 
         data = new DataLogger();
+
+        data.addAttribute("time");
 
         data.addLoggable(drive);
         data.addLoggable(manip);
@@ -59,6 +63,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         startLogging(data, "auto");
         reloadConfig();
+
+        score.close();
+        score.retract();
     }
 
     @Override
@@ -117,6 +124,7 @@ public class Robot extends IterativeRobot {
             drive.enableDriving();
         }
 
+        data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
     }
 
@@ -130,6 +138,8 @@ public class Robot extends IterativeRobot {
                 +new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())
                 +type+".csv");
         data.writeAttributes();
+
+        enableStart = System.currentTimeMillis();
     }
 
     private void reloadConfig() {
