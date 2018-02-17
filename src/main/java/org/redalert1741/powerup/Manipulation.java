@@ -16,7 +16,8 @@ import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
-    private TalonSrxWrapper lift;
+    private TalonSrxWrapper down;
+    private TalonSrxWrapper up;
     private SolenoidWrapper brake;
     private double forwardSpeed;
     private double reverseSpeed;
@@ -30,11 +31,12 @@ public class Manipulation implements Loggable, Configurable {
      * @see DoubleSolenoid
      * @see Solenoid
      */
-    public Manipulation(TalonSrxWrapper lift, DoubleSolenoidWrapper tilt,
-            SolenoidWrapper brake) {
-        this.lift = lift;
+    public Manipulation(TalonSrxWrapper lift, TalonSrxWrapper up, 
+            DoubleSolenoidWrapper tilt, SolenoidWrapper brake) {
+        this.down = lift;
         this.tilt = tilt;
         this.brake = brake;
+        this.up = up;
 
         forwardSpeed = 0.5;
         reverseSpeed = -0.4;
@@ -57,11 +59,20 @@ public class Manipulation implements Loggable, Configurable {
     }
     
     public void setLift(double input) {
-        lift.set(ControlMode.PercentOutput, input);
+        down.set(ControlMode.PercentOutput, input);
     }
 
     public void setLiftPosition(int pos) {
-        lift.set(ControlMode.Position, pos);
+        if(down.getPosition() < pos) {
+            down.set(ControlMode.Position, pos);
+            up.set(ControlMode.PercentOutput, 0);
+        } else if (!down.getReverseLimit()) {
+            down.set(ControlMode.PercentOutput, 0);
+            up.set(ControlMode.PercentOutput, 0.2);
+        } else {
+            down.set(ControlMode.PercentOutput, 0);
+            up.set(ControlMode.PercentOutput, 0);
+        }
     }
     
     public void enableBrake() {
@@ -73,25 +84,25 @@ public class Manipulation implements Loggable, Configurable {
     }
 
     public void resetPosition() {
-        lift.setPosition(0);
+        down.setPosition(0);
     }
     
     @Override
     public void setupLogging(DataLogger logger) {
         brake.setupLogging(logger);
         tilt.setupLogging(logger);
-        lift.setupLogging(logger);
+        down.setupLogging(logger);
     }
 
     @Override
     public void log(DataLogger logger) {
         brake.log(logger);
         tilt.log(logger);
-        lift.log(logger);
+        down.log(logger);
     }
 
     @Override
     public void reloadConfig(Config config) {
-        lift.reloadConfig(config);
+        down.reloadConfig(config);
     }
 }

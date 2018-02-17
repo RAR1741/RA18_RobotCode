@@ -14,6 +14,7 @@ import org.redalert1741.robotbase.wrapper.FakeTalonSrxWrapper;
 public class ManipulationTest {
     Manipulation manipulation;
     FakeTalonSrxWrapper lift;
+    FakeTalonSrxWrapper up;
     FakeDoubleSolenoidWrapper tilt;
     FakeSolenoidWrapper brake;
     Config config;
@@ -23,7 +24,7 @@ public class ManipulationTest {
         lift = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
         brake = new FakeSolenoidWrapper();
-        manipulation = new Manipulation(lift, tilt, brake);
+        manipulation = new Manipulation(lift, up, tilt, brake);
         config = new Config();
         config.loadFromFile(getClass().getResource("manipulationconfig.txt").getPath());
         config.addConfigurable(manipulation);

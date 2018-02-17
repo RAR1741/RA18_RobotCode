@@ -41,8 +41,8 @@ public class Robot extends IterativeRobot
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
                 new RealTalonSrxWrapper(2), new RealTalonSrxWrapper(3),
                 new RealSolenoidWrapper(6));
-        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealDoubleSolenoidWrapper(2, 7),
-                new RealSolenoidWrapper(4));
+        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(6),
+                new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
         score = new Scoring(new RealDoubleSolenoidWrapper(3, 0), new RealDoubleSolenoidWrapper(5, 1));
 
         //logger.info("Robot startup complete");
@@ -115,6 +115,11 @@ public class Robot extends IterativeRobot
             manip.setLiftPosition(-7000);
         } else if(driver.getPOV() == 180) {
             manip.setLiftPosition(0);
+        }
+        if(driver.getPOV() == 90) {
+            drive.enableClimbing();
+        } else if(driver.getPOV() == 270) {
+            drive.enableDriving();
         }
 
         data.logAll();

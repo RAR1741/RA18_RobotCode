@@ -8,6 +8,7 @@ public class RealDoubleSolenoidWrapper extends DoubleSolenoidWrapper {
     
     public RealDoubleSolenoidWrapper(int id1, int id2) {
         doublesolenoid = new DoubleSolenoid(6, id1, id2);
+        logname = "doublesolenoid_"+id1+"-"+id2;
     }
     
     @Override

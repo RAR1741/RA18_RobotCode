@@ -116,4 +116,14 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     public void setPhase(boolean phase) {
         talon.setSensorPhase(phase);
     }
+
+    @Override
+    public boolean getReverseLimit() {
+        return talon.getSensorCollection().isRevLimitSwitchClosed();
+    }
+
+    @Override
+    public boolean getForwardLimit() {
+        return talon.getSensorCollection().isFwdLimitSwitchClosed();
+    }
 }

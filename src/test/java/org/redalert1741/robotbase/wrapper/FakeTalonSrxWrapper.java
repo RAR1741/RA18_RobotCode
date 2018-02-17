@@ -132,4 +132,16 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public void setPhase(boolean phase) {
         this.phase = phase;
     }
+
+    @Override
+    public boolean getReverseLimit() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean getForwardLimit() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
