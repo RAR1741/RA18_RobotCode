@@ -147,7 +147,7 @@ public class TalonRotations implements AutoMoveEnd {
 
     @Override
     public void start() {
-        startPosition = talon.getSensorCollection().getQuadraturePosition();
+        startPosition = talon.getPosition();
         direction = distance > startPosition;
     }
 
@@ -182,7 +182,7 @@ public class TalonRotations implements AutoMoveEnd {
 
     @Override
     public void start() {
-        startPosition = talon.getSensorCollection().getQuadraturePosition();
+        startPosition = talon.getPosition();
         direction = distance > startPosition;
     }
 
