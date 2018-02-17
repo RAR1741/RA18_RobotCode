@@ -39,7 +39,6 @@ public class DataLogger {
      * @return Success of opening the file
      */
     public boolean open(String filename) {
-        //System.out.println(filename);
         this.filename = filename;
         try {
             log = new FileWriter(filename);

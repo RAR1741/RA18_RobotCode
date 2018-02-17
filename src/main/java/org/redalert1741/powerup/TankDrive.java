@@ -61,17 +61,7 @@ public class TankDrive implements Loggable, Configurable {
      * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
-        //enableDriving();
         driveMotors(ydrive+xdrive, ydrive-xdrive);
-    }
-
-    /**
-     * Climbs at a speed.
-     * @param speed Speed to run climb motors at
-     */
-    public void climb(double speed) {
-        enableClimbing();
-        driveMotors(speed, speed);
     }
 
     /**

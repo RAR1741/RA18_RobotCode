@@ -1,15 +1,11 @@
 package org.redalert1741.powerup;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.LogManager;
 
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
@@ -17,11 +13,7 @@ import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
 
-public class Robot extends IterativeRobot
-{
-    // allocates logger for this class
-    //private static final Logger logger = Logger.getLogger(Robot.class.getName());
-
+public class Robot extends IterativeRobot {
     private DataLogger data;
     private Config config;
 
@@ -33,11 +25,6 @@ public class Robot extends IterativeRobot
 
     @Override
     public void robotInit() {
-        // Set up global logger
-        setupLogging(); //this is not real
-
-        //logger.info("Robot startup started");
-
         driver = new XboxController(0);
 
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
@@ -45,7 +32,8 @@ public class Robot extends IterativeRobot
                 new RealSolenoidWrapper(6));
         manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(6),
                 new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
-        score = new Scoring(new RealDoubleSolenoidWrapper(3, 0), new RealDoubleSolenoidWrapper(5, 1));
+        score = new Scoring(new RealDoubleSolenoidWrapper(3, 0),
+                new RealDoubleSolenoidWrapper(5, 1));
 
         //logging
 
@@ -91,11 +79,6 @@ public class Robot extends IterativeRobot
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
 
         //manual manipulation controls
-//        if(driver.getStartButton()) {
-//            manip.setLift(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
-//        } else if(driver.getXButton()) {
-//            manip.setSecond(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
-//        }
         if(driver.getStartButton()) {
             manip.setLift(driver.getTriggerAxis(Hand.kRight));
             manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
@@ -127,13 +110,6 @@ public class Robot extends IterativeRobot
             manip.resetPosition();
         }
 
-        //pid manipulation controls
-//        if(driver.getPOV() == 0) {
-//            manip.setLiftPosition(-7000);
-//        } else if(driver.getPOV() == 180) {
-//            manip.setLiftPosition(0);
-//        }
-
         //climbing controls (just drive backwards to climb)
         if(driver.getPOV() == 90) {
             drive.enableClimbing();
@@ -150,23 +126,10 @@ public class Robot extends IterativeRobot
     }
 
     private void startLogging(DataLogger data, String type) {
-        data.open("/home/lvuser/logs/log-"+type+new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())+".csv");
+        data.open("/home/lvuser/logs/log-"+
+                new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())
+                +type+".csv");
         data.writeAttributes();
-    }
-
-    // Set logging up for the rest of the application
-    private void setupLogging() {
-        try {
-            FileInputStream fis = new FileInputStream("/home/lvuser/logging.properties");
-            LogManager.getLogManager().readConfiguration(fis);
-            fis.close();
-        } catch (FileNotFoundException ex) {
-            // Ignore exceptions
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            // Ignore exceptions
-            ex.printStackTrace();
-        }
     }
 
     private void reloadConfig() {
