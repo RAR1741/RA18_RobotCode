@@ -7,15 +7,22 @@ import edu.wpi.first.wpilibj.XboxController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
+import org.redalert1741.powerup.auto.move.TankDriveArcadeMove;
+import org.redalert1741.robotbase.auto.core.AutoFactory;
+import org.redalert1741.robotbase.auto.core.Autonomous;
+import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
+import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Robot extends IterativeRobot {
     private DataLogger data;
     private Config config;
+    private Autonomous auto;
 
     private TankDrive drive;
     private Manipulation manip;
@@ -28,9 +35,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         driver = new XboxController(0);
+        
+        TalonSrxWrapper rightDrive = new RealTalonSrxWrapper(2);
 
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
-                new RealTalonSrxWrapper(2), new RealTalonSrxWrapper(3),
+                rightDrive, new RealTalonSrxWrapper(3),
                 new RealSolenoidWrapper(6));
         manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(6),
                 new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
@@ -57,6 +66,11 @@ public class Robot extends IterativeRobot {
         config.addConfigurable(manip);
 
         reloadConfig();
+
+        //auto moves
+
+        AutoFactory.addMoveMove("drive", () -> new TankDriveArcadeMove(drive));
+        AutoFactory.addMoveEnd("driveDist", () -> new TalonDistanceEnd(rightDrive));
     }
 
     @Override
@@ -66,11 +80,14 @@ public class Robot extends IterativeRobot {
 
         score.close();
         score.retract();
+
+        auto = new JsonAutoFactory().makeAuto("/home/lvuser/min-auto.json");
+        auto.start();
     }
 
     @Override
     public void autonomousPeriodic() {
-        // TODO: Add code to be called during the autonomous period
+        auto.run();
         data.logAll();
     }
 
@@ -78,6 +95,8 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
         startLogging(data, "teleop");
         reloadConfig();
+
+        score.grabOff();
     }
 
     @Override
@@ -110,6 +129,9 @@ public class Robot extends IterativeRobot {
         }
         if(driver.getBumper(Hand.kRight)) {
             score.open();
+        }
+        if(driver.getXButton()) {
+            score.grabOff();
         }
 
         //reset manipulation

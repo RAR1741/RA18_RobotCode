@@ -28,6 +28,10 @@ public class Scoring implements Loggable {
     public void close() {
         grabber.set(Value.kReverse);
     }
+
+    public void grabOff() {
+        grabber.set(Value.kOff);
+    }
     
     public void kick() {
         kicker.set(Value.kForward);
