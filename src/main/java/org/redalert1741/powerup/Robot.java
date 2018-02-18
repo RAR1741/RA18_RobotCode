@@ -16,6 +16,7 @@ import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.auto.end.EmptyEnd;
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
+import org.redalert1741.robotbase.logging.LoggablePdp;
 import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
     private TankDrive drive;
     private Manipulation manip;
     private Scoring score;
+    private LoggablePdp pdp;
 
     private XboxController driver;
 
@@ -37,7 +39,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         driver = new XboxController(0);
-        
+
+        pdp = new LoggablePdp();
+
         TalonSrxWrapper rightDrive = new RealTalonSrxWrapper(2);
 
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
@@ -54,6 +58,7 @@ public class Robot extends IterativeRobot {
 
         data.addAttribute("time");
 
+        data.addLoggable(pdp);
         data.addLoggable(drive);
         data.addLoggable(manip);
         data.addLoggable(score);
