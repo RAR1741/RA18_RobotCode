@@ -4,53 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
-import java.util.Map;
-
 import org.junit.Test;
 import org.redalert1741.robotbase.auto.core.AutoFactory;
-import org.redalert1741.robotbase.auto.core.AutoMoveEnd;
-import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 
 public class AutoTest {
-    class CounterMove implements AutoMoveMove {
-        public int count;
-
-        @Override
-        public void setArgs(Map<String, String> args) {}
-
-        @Override
-        public void start() {
-            count = 0;
-        }
-
-        @Override
-        public void run() {
-            count++;
-        }
-
-        @Override
-        public void stop() {}
-    }
-
-    class ManualEnd implements AutoMoveEnd {
-        public boolean completed;
-
-        @Override
-        public void setArgs(Map<String, String> args) {}
-
-        @Override
-        public void start() {
-            completed = false;
-        }
-
-        @Override
-        public boolean isFinished() {
-            return completed;
-        }
-    }
-
     @Test
     public void jsonAutoEmptyTest() {
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("empty-test.json").getPath());
