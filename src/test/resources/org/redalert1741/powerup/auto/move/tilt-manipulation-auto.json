@@ -1,0 +1,6 @@
+{
+    "auto": [
+        {"type":"tilt","args":{"tilt":true},"end":{"type":"manual1","args":{}}},
+        {"type":"tilt","args":{"tilt":false},"end":{"type":"manual2","args":{}}}
+    ]
+}
