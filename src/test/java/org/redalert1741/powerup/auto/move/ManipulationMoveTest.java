@@ -18,7 +18,7 @@ import org.redalert1741.robotbase.wrapper.FakeTalonSrxWrapper;
 
 public class ManipulationMoveTest {
     static Manipulation manipulation;
-    static FakeTalonSrxWrapper lift;
+    static FakeTalonSrxWrapper lift, up;
     static FakeDoubleSolenoidWrapper tilt;
     static FakeSolenoidWrapper brake;
     static ManualEnd manual1, manual2;
@@ -27,8 +27,9 @@ public class ManipulationMoveTest {
     public static void initManipulation() {
         lift = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
+        up = new FakeTalonSrxWrapper();
         brake = new FakeSolenoidWrapper();
-        manipulation = new Manipulation(lift, tilt, brake);
+        manipulation = new Manipulation(lift, up, tilt, brake);
         AutoFactory.addMoveMove("tilt", () -> new ManipulationTiltMove(manipulation));
 
         manual1 = new ManualEnd();
