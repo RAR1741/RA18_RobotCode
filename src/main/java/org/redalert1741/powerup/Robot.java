@@ -9,9 +9,11 @@ import java.util.Date;
 
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
 import org.redalert1741.powerup.auto.move.TankDriveArcadeMove;
+import org.redalert1741.powerup.auto.move.TankDriveBrakeMove;
 import org.redalert1741.robotbase.auto.core.AutoFactory;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
+import org.redalert1741.robotbase.auto.end.EmptyEnd;
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
@@ -70,7 +72,9 @@ public class Robot extends IterativeRobot {
         //auto moves
 
         AutoFactory.addMoveMove("drive", () -> new TankDriveArcadeMove(drive));
+        AutoFactory.addMoveMove("drivebrake", () -> new TankDriveBrakeMove(drive));
         AutoFactory.addMoveEnd("driveDist", () -> new TalonDistanceEnd(rightDrive));
+        AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
     }
 
     @Override
@@ -80,14 +84,18 @@ public class Robot extends IterativeRobot {
 
         score.close();
         score.retract();
+        drive.setBrakes(false);
 
         auto = new JsonAutoFactory().makeAuto("/home/lvuser/min-auto.json");
         auto.start();
+
+        enableStart = System.currentTimeMillis();
     }
 
     @Override
     public void autonomousPeriodic() {
         auto.run();
+        data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
     }
 
@@ -97,6 +105,7 @@ public class Robot extends IterativeRobot {
         reloadConfig();
 
         score.grabOff();
+        drive.setBrakes(false);
     }
 
     @Override
@@ -156,8 +165,8 @@ public class Robot extends IterativeRobot {
     }
 
     private void startLogging(DataLogger data, String type) {
-        data.open("/home/lvuser/logs/log-"
-                +new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss").format(new Date())
+        data.open("/home/lvuser/logs/log"
+                +new SimpleDateFormat("-yyyy-MM-dd_HH-mm-ss-").format(new Date())
                 +type+".csv");
         data.writeAttributes();
 
