@@ -78,6 +78,13 @@ public class TankDrive implements Loggable, Configurable {
         shifter.set(true);
     }
 
+    public void setBrakes(boolean brake) {
+        left1.setBrake(brake);
+        left2.setBrake(brake);
+        right1.setBrake(brake);
+        right2.setBrake(brake);
+    }
+
 	@Override
 	public void setupLogging(DataLogger logger) {
 		left1.setupLogging(logger);

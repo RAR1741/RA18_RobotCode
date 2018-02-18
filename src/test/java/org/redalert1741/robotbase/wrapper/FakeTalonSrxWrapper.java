@@ -144,4 +144,10 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    public void setBrake(boolean brake) {
+        // TODO Auto-generated method stub
+        
+    }
 }
