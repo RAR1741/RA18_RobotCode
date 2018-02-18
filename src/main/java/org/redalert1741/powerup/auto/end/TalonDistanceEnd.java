@@ -17,14 +17,15 @@ public class TalonDistanceEnd implements AutoMoveEnd {
     
     @Override
     public void setArgs(Map<String, String> args) {
-        distance = (int)Math.round(Double.parseDouble(args.get("distance")));
+        double distarg = Double.parseDouble(args.get("distance"));
+        distance = (int)Math.round(distarg);
         if(args.containsKey("unit")) {
             if(args.get("unit").equals("inches")) {
-                distance = (int) Math.round(Double.parseDouble(args.get("distance"))
-                        /(28*(625/49.0)*6*Math.PI));
+                distance = (int) Math.round(distarg
+                        *(28*(49.0/625)*6*Math.PI));
+                System.out.println("this is dist: "+distance);
             }
         }
-        
     }
 
     @Override
@@ -36,7 +37,6 @@ public class TalonDistanceEnd implements AutoMoveEnd {
     @Override
     public boolean isFinished() {
         int pos = talon.getPosition();
-        System.out.println(pos + " ? "+start+distance);
         return (dir ? pos > start + distance :
             pos < start + distance);
     }
