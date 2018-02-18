@@ -2,37 +2,18 @@ package org.redalert1741.powerup.auto.move;
 
 import static org.junit.Assert.*;
 
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.redalert1741.powerup.TankDrive;
+import org.redalert1741.robotbase.auto.ManualEnd;
 import org.redalert1741.robotbase.auto.core.AutoFactory;
-import org.redalert1741.robotbase.auto.core.AutoMoveEnd;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.wrapper.FakeSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.FakeTalonSrxWrapper;
 
 public class TankDriveMoveTest {
-    static class ManualEnd implements AutoMoveEnd {
-        public boolean completed;
-
-        @Override
-        public void setArgs(Map<String, String> args) {}
-
-        @Override
-        public void start() {
-            completed = false;
-        }
-
-        @Override
-        public boolean isFinished() {
-            return completed;
-        }
-    }
-
     static ManualEnd manual1, manual2;
     static TankDrive drive;
     static FakeTalonSrxWrapper left1, left2, right1, right2;
