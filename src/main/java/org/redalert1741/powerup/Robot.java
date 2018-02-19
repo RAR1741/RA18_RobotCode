@@ -91,7 +91,7 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        auto = new JsonAutoFactory().makeAuto("/home/lvuser/min-auto.json");
+        auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/min-auto.json");
         auto.start();
 
         enableStart = System.currentTimeMillis();
