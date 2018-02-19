@@ -67,11 +67,12 @@ public class Manipulation implements Loggable, Configurable {
      * @param input speed to set {@link ControlMode#PercentOutput}
      */
     public void setSecond(double input) {
-        if(!down.getReverseLimit()) {
-            up.set(ControlMode.PercentOutput, input);
-        } else {
-            up.set(ControlMode.PercentOutput, 0);
-        }
+        up.set(ControlMode.PercentOutput, input);
+//        if(!down.getReverseLimit()) {
+//            up.set(ControlMode.PercentOutput, input);
+//        } else {
+//            up.set(ControlMode.PercentOutput, 0);
+//        }
     }
 
     /**

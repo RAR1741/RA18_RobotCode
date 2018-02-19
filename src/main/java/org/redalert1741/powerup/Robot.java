@@ -119,10 +119,11 @@ public class Robot extends IterativeRobot {
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
 
         //manual manipulation controls
-        if(driver.getStartButton()) {
-            manip.setLift(driver.getTriggerAxis(Hand.kRight));
-            manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
-        }
+        manip.setSecond(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+//        if(driver.getStartButton()) {
+//            manip.setLift(driver.getTriggerAxis(Hand.kRight));
+//            manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
+//        }
 
         //tilt manipulation
         if(driver.getAButton()) {
