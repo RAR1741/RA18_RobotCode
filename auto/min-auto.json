@@ -1,5 +1,5 @@
 {
-    "auto" = [
+    "auto":[
         {"type":"drivebrake","args":{"brake":true},"end":{"type":"empty","args":{}}},
         {"type":"drive","args":{"xdrive":0,"ydrive":0.3},"end":{"type":"driveDist","args":{"unit":"inches","distance":60}}}
     ]
