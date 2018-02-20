@@ -25,6 +25,7 @@ public class ManipulationTest {
         lift = new FakeTalonSrxWrapper();
         up = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
+        down = new FakeTalonSrxWrapper();
         brake = new FakeSolenoidWrapper();
         manipulation = new Manipulation(down, up, lift, tilt, brake);
         config = new Config();
