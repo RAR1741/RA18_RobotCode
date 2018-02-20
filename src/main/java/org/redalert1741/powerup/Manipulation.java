@@ -16,8 +16,9 @@ import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
-    private TalonSrxWrapper down;
-    private TalonSrxWrapper up;
+    private TalonSrxWrapper firstDown;
+    private TalonSrxWrapper firstUp;
+    private TalonSrxWrapper top;
     private SolenoidWrapper brake;
     private double forwardSpeed;
     private double reverseSpeed;
@@ -31,23 +32,25 @@ public class Manipulation implements Loggable, Configurable {
      * @see DoubleSolenoid
      * @see Solenoid
      */
-    public Manipulation(TalonSrxWrapper lift, TalonSrxWrapper up, 
+    public Manipulation(TalonSrxWrapper firstDown, TalonSrxWrapper firstUp,
+            TalonSrxWrapper top,
             DoubleSolenoidWrapper tilt, SolenoidWrapper brake) {
-        this.down = lift;
+        this.firstUp = firstUp;
+        this.firstDown = firstDown;
+        this.top = top;
         this.tilt = tilt;
         this.brake = brake;
-        this.up = up;
 
-        forwardSpeed = 0.5;
-        reverseSpeed = -0.4;
-        lift.configPeakOutputForward(forwardSpeed);
-        lift.configPeakOutputReverse(reverseSpeed);
-        lift.configNominalOutputForward(0);
-        lift.configNominalOutputReverse(0);
-        lift.setP(2);
-        lift.setI(0);
-        lift.setD(0);
-        lift.setPhase(true);
+        forwardSpeed = 1;
+        reverseSpeed = -1;
+        firstDown.configNominalOutputForward(0);
+        firstDown.configNominalOutputReverse(0);
+        firstDown.configPeakOutputForward(forwardSpeed);
+        firstDown.configPeakOutputReverse(reverseSpeed);
+        firstDown.setP(2);
+        firstDown.setI(0);
+        firstDown.setD(0);
+        firstDown.setPhase(true);
     }
     
     public void tiltIn() {
@@ -58,36 +61,25 @@ public class Manipulation implements Loggable, Configurable {
         tilt.set(Value.kForward);
     }
 
-    public void setLift(double input) {
-        down.set(ControlMode.PercentOutput, input);
+    public void setSecondStage(double input) {
+        top.set(ControlMode.PercentOutput, input);
     }
 
-    /**
-     * Runs the second (up) motor if it hasn't hit the limit.
-     * @param input speed to set {@link ControlMode#PercentOutput}
-     */
-    public void setSecond(double input) {
-        up.set(ControlMode.PercentOutput, input);
-//        if(!down.getReverseLimit()) {
-//            up.set(ControlMode.PercentOutput, input);
-//        } else {
-//            up.set(ControlMode.PercentOutput, 0);
-//        }
-    }
-
-    /**
-     * Experimental unused position control.
-     * @param pos position to go to (-7000-0)
-     */
-    public void setLiftPosition(int pos) {
-        if(down.getPosition() < pos) {
-            down.set(ControlMode.Position, pos);
-            up.set(ControlMode.PercentOutput, 0);
-        } else if (!down.getReverseLimit()) {
-            down.set(ControlMode.PercentOutput, 0);
+    public void setFirstStage(double input) {
+        if(input > 0) {
+            firstUp.set(ControlMode.PercentOutput, 0.5*input);
+            firstDown.set(ControlMode.PercentOutput, 0);
         } else {
-            down.set(ControlMode.PercentOutput, 0);
-            up.set(ControlMode.PercentOutput, 0);
+            firstUp.set(ControlMode.PercentOutput, 0);
+            firstDown.set(ControlMode.PercentOutput, input);
+        }
+    }
+
+    public void setFirstStagePosition(int pos) {
+        if(Math.abs(pos-firstDown.getPosition()) > 50) {
+            setFirstStage(-0.001*(pos-firstDown.getPosition()));
+        } else {
+            setFirstStage(0);
         }
     }
     
@@ -100,28 +92,31 @@ public class Manipulation implements Loggable, Configurable {
     }
 
     public void resetPosition() {
-        down.setPosition(0);
+        firstDown.setPosition(0);
     }
     
     @Override
     public void setupLogging(DataLogger logger) {
         brake.setupLogging(logger);
         tilt.setupLogging(logger);
-        down.setupLogging(logger);
-        up.setupLogging(logger);
+        firstDown.setupLogging(logger);
+        firstUp.setupLogging(logger);
+        top.setupLogging(logger);
     }
 
     @Override
     public void log(DataLogger logger) {
         brake.log(logger);
         tilt.log(logger);
-        down.log(logger);
-        up.log(logger);
+        firstDown.log(logger);
+        firstUp.log(logger);
+        top.log(logger);
     }
 
     @Override
     public void reloadConfig(Config config) {
-        down.reloadConfig(config);
-        up.reloadConfig(config);
+        firstDown.reloadConfig(config);
+        firstUp.reloadConfig(config);
+        top.reloadConfig(config);
     }
 }

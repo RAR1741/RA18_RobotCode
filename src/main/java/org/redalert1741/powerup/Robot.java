@@ -33,12 +33,14 @@ public class Robot extends IterativeRobot {
     private LoggablePdp pdp;
 
     private XboxController driver;
+    private XboxController operator;
 
     private long enableStart;
 
     @Override
     public void robotInit() {
         driver = new XboxController(0);
+        operator = new XboxController(1);
 
         pdp = new LoggablePdp();
 
@@ -47,7 +49,8 @@ public class Robot extends IterativeRobot {
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
                 rightDrive, new RealTalonSrxWrapper(3),
                 new RealSolenoidWrapper(6));
-        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(6),
+        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(7),
+                new RealTalonSrxWrapper(6),
                 new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
         score = new Scoring(new RealDoubleSolenoidWrapper(3, 0),
                 new RealDoubleSolenoidWrapper(5, 1));
@@ -119,7 +122,8 @@ public class Robot extends IterativeRobot {
         drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
 
         //manual manipulation controls
-        manip.setSecond(driver.getTriggerAxis(Hand.kRight)-driver.getTriggerAxis(Hand.kLeft));
+        manip.setFirstStage(-operator.getY(Hand.kLeft));
+        manip.setSecondStage(-operator.getY(Hand.kRight));
 //        if(driver.getStartButton()) {
 //            manip.setLift(driver.getTriggerAxis(Hand.kRight));
 //            manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
@@ -150,7 +154,7 @@ public class Robot extends IterativeRobot {
         }
 
         //reset manipulation
-        if(driver.getBackButton()) {
+        if(operator.getBackButton()) {
             manip.resetPosition();
         }
 
@@ -159,6 +163,12 @@ public class Robot extends IterativeRobot {
             drive.enableClimbing();
         } else if(driver.getPOV() == 270) {
             drive.enableDriving();
+        }
+
+        if(operator.getPOV() == 180) {
+            manip.setFirstStagePosition(0);
+        } else if(operator.getPOV() == 90) {
+            manip.setFirstStagePosition(-4100);
         }
 
         data.log("time", System.currentTimeMillis()-enableStart);
