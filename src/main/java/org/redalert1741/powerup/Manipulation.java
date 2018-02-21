@@ -73,6 +73,7 @@ public class Manipulation implements Loggable, Configurable {
             firstUp.set(ControlMode.PercentOutput, 0);
             firstDown.set(ControlMode.PercentOutput, input);
         }
+//        firstDown.set(ControlMode.PercentOutput, -input);
     }
 
     public void setFirstStagePosition(int pos) {

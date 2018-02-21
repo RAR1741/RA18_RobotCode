@@ -172,11 +172,11 @@ public class Robot extends IterativeRobot {
             drive.enableDriving();
         }
 
-        if(operator.getPOV() == 180) {
-            manip.setFirstStagePosition(0);
-        } else if(operator.getPOV() == 90) {
-            manip.setFirstStagePosition(-4100);
-        }
+//        if(operator.getPOV() == 180) {
+//            manip.setFirstStagePosition(0);
+//        } else if(operator.getPOV() == 90) {
+//            manip.setFirstStagePosition(-4100);
+//        }
 
         data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
