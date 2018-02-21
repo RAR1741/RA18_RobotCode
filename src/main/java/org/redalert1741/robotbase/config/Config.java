@@ -139,6 +139,7 @@ public class Config {
     }
 
     boolean parse(String filename) {
+        items = new HashMap<>();
         Scanner infile;
         try {
             infile = new Scanner(new File(filename));
@@ -156,7 +157,6 @@ public class Config {
         Pattern itemPattern = Pattern.compile("^#{0}([\\w\\d_]+)\\s*?=\\s*?(.+)$");
         Matcher match;
         String in;
-        items = new HashMap<>();
         while(infile.hasNextLine()) {
             in = infile.nextLine();
             match = itemPattern.matcher(in);
