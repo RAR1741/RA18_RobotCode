@@ -27,6 +27,12 @@ public class Robot extends IterativeRobot {
     private Config config;
     private Autonomous auto;
 
+    private RealDoubleSolenoidWrapper tilt;
+    private RealDoubleSolenoidWrapper grab;
+    private RealDoubleSolenoidWrapper kick;
+    private RealSolenoidWrapper driveBrake;
+    private RealSolenoidWrapper manipBrake;
+
     private TankDrive drive;
     private Manipulation manip;
     private Scoring score;
@@ -46,14 +52,15 @@ public class Robot extends IterativeRobot {
 
         TalonSrxWrapper rightDrive = new RealTalonSrxWrapper(2);
 
+        setupSolenoids();
+
         drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
                 rightDrive, new RealTalonSrxWrapper(3),
-                new RealSolenoidWrapper(6));
+                driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(7),
                 new RealTalonSrxWrapper(6),
-                new RealDoubleSolenoidWrapper(2, 7), new RealSolenoidWrapper(4));
-        score = new Scoring(new RealDoubleSolenoidWrapper(3, 0),
-                new RealDoubleSolenoidWrapper(5, 1));
+                tilt, manipBrake);
+        score = new Scoring(kick, grab);
 
         //logging
 
@@ -192,5 +199,16 @@ public class Robot extends IterativeRobot {
     private void reloadConfig() {
         config.loadFromFile("/home/lvuser/config.txt");
         config.reloadConfig();
+    }
+
+    private void setupSolenoids() {
+        Config solenoidconfig = new Config();
+        solenoidconfig.loadFromFile("/home/lvuser/solenoids.txt");
+        String solenoids = solenoidconfig.getSetting("solenoids", "62743051");
+        driveBrake = new RealSolenoidWrapper(solenoids.charAt(0)-'0');
+        tilt = new RealDoubleSolenoidWrapper(solenoids.charAt(1)-'0', solenoids.charAt(2)-'0');
+        manipBrake = new RealSolenoidWrapper(solenoids.charAt(3)-'0');
+        kick = new RealDoubleSolenoidWrapper(solenoids.charAt(4)-'0', solenoids.charAt(5)-'0');
+        grab = new RealDoubleSolenoidWrapper(solenoids.charAt(6)-'0', solenoids.charAt(7)-'0');
     }
 }
