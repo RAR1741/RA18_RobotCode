@@ -48,16 +48,6 @@ public class TankDriveTest {
     }
 
     @Test
-    public void climbTest() {
-        drive.climb(1);
-        assertTrue(shifter.get());
-        assertEquals(1, left1.get(), 0.001);
-        assertEquals(1, left2.get(), 0.001);
-        assertEquals(1, right1.get(), 0.001);
-        assertEquals(1, right2.get(), 0.001);
-    }
-
-    @Test
     public void configTest() {
         config.reloadConfig();
         assertEquals(15, left1.getTimeout());

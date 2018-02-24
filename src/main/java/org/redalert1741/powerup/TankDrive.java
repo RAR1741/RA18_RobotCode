@@ -61,17 +61,7 @@ public class TankDrive implements Loggable, Configurable {
      * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
-        enableDriving();
         driveMotors(ydrive+xdrive, ydrive-xdrive);
-    }
-
-    /**
-     * Climbs at a speed.
-     * @param speed Speed to run climb motors at
-     */
-    public void climb(double speed) {
-        enableClimbing();
-        driveMotors(speed, speed);
     }
 
     /**
@@ -88,23 +78,35 @@ public class TankDrive implements Loggable, Configurable {
         shifter.set(true);
     }
 
-	@Override
-	public void setupLogging(DataLogger logger) {
-		left1.setupLogging(logger);
-		left2.setupLogging(logger);
-		right1.setupLogging(logger);
-		right2.setupLogging(logger);
-		shifter.setupLogging(logger);
-	}
+    /**
+     * Sets the brakes on the drive {@link TalonSrxWrapper talons} to be in
+     * brake (true) or coast (false).
+     * @param brake whether brakes should be enabled
+     */
+    public void setBrakes(boolean brake) {
+        left1.setBrake(brake);
+        left2.setBrake(brake);
+        right1.setBrake(brake);
+        right2.setBrake(brake);
+    }
 
-	@Override
-	public void log(DataLogger logger) {
-		left1.log(logger);
-		left2.log(logger);
-		right1.log(logger);
-		right2.log(logger);
-		shifter.log(logger);
-	}
+    @Override
+    public void setupLogging(DataLogger logger) {
+    	left1.setupLogging(logger);
+    	left2.setupLogging(logger);
+    	right1.setupLogging(logger);
+    	right2.setupLogging(logger);
+    	shifter.setupLogging(logger);
+    }
+
+    @Override
+    public void log(DataLogger logger) {
+    	left1.log(logger);
+    	left2.log(logger);
+    	right1.log(logger);
+    	right2.log(logger);
+    	shifter.log(logger);
+    }
 
     @Override
     public void reloadConfig(Config config) {

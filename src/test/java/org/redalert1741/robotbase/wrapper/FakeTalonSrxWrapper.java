@@ -115,4 +115,39 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
     public int getTimeout() {
         return timeout;
     }
+
+    public int position;
+    @Override
+    public int getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(int pos) {
+        position = pos;
+    }
+
+    public boolean phase;
+    @Override
+    public void setPhase(boolean phase) {
+        this.phase = phase;
+    }
+
+    @Override
+    public boolean getReverseLimit() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean getForwardLimit() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setBrake(boolean brake) {
+        // TODO Auto-generated method stub
+        
+    }
 }

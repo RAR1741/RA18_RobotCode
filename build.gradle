@@ -27,6 +27,11 @@ deploy {
             targets << "roborio"
         }
 
+        fileCollectionArtifact('autoFiles') {
+            directory = 'auto'
+            files = fileTree(dir: 'auto')
+            targets << "roborio"
+        }
     }
 }
 

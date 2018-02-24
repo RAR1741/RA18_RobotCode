@@ -2,6 +2,7 @@ package org.redalert1741.robotbase.wrapper;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class RealTalonSrxWrapper extends TalonSrxWrapper {
@@ -100,5 +101,35 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     @Override
     public ErrorCode configPeakOutputReverse(double value) {
         return talon.configPeakOutputReverse(value, timeout);
+    }
+
+    @Override
+    public int getPosition() {
+        return talon.getSensorCollection().getQuadraturePosition();
+    }
+
+    @Override
+    public void setPosition(int pos) {
+        talon.getSensorCollection().setQuadraturePosition(pos, timeout);
+    }
+
+    @Override
+    public void setPhase(boolean phase) {
+        talon.setSensorPhase(phase);
+    }
+
+    @Override
+    public boolean getReverseLimit() {
+        return talon.getSensorCollection().isRevLimitSwitchClosed();
+    }
+
+    @Override
+    public boolean getForwardLimit() {
+        return talon.getSensorCollection().isFwdLimitSwitchClosed();
+    }
+
+    @Override
+    public void setBrake(boolean brake) {
+        talon.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
     }
 }
