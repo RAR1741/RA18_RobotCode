@@ -1,0 +1,6 @@
+{
+    "auto": [
+        {"type":"drive","args":{"xdrive":0, "ydrive":-1},
+            "end":{"type":"driveDist","args":{"distance":-60, "unit":"inches"}}}
+    ]
+}
