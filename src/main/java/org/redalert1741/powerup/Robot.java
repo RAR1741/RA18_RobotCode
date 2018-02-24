@@ -36,12 +36,15 @@ public class Robot extends IterativeRobot {
     private TankDrive drive;
     private Manipulation manip;
     private Scoring score;
+    private Climber climb;
+
     private LoggablePdp pdp;
 
     private XboxController driver;
     private XboxController operator;
 
     private long enableStart;
+    private boolean climbing;
 
     @Override
     public void robotInit() {
@@ -61,6 +64,7 @@ public class Robot extends IterativeRobot {
                 new RealTalonSrxWrapper(6),
                 tilt, manipBrake);
         score = new Scoring(kick, grab);
+        climb = new Climber(manip, drive);
 
         //logging
 
@@ -104,6 +108,7 @@ public class Robot extends IterativeRobot {
         auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/min-auto.json");
         auto.start();
 
+        climbing = false;
         enableStart = System.currentTimeMillis();
     }
 
@@ -121,12 +126,26 @@ public class Robot extends IterativeRobot {
 
         score.grabOff();
         drive.setBrakes(false);
+
+        climbing = false;
     }
 
     @Override
     public void teleopPeriodic() {
+        //climbing enable
+        if(driver.getPOV() == 90) {
+            climbing = true;
+        } else if(driver.getPOV() == 270) {
+            climbing = false;
+        }
+
         //driving
-        drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
+        if(!climbing) {
+            drive.enableDriving();
+            drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
+        } else {
+            climb.climb();
+        }
 
         //manual manipulation controls
         manip.setFirstStage(-operator.getY(Hand.kLeft));
@@ -159,13 +178,6 @@ public class Robot extends IterativeRobot {
         //reset manipulation
         if(operator.getBackButton()) {
             manip.resetPosition();
-        }
-
-        //climbing controls (just drive backwards to climb)
-        if(driver.getPOV() == 90) {
-            drive.enableClimbing();
-        } else if(driver.getPOV() == 270) {
-            drive.enableDriving();
         }
 
         data.log("time", System.currentTimeMillis()-enableStart);

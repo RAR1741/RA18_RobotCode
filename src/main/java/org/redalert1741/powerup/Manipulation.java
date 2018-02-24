@@ -104,6 +104,10 @@ public class Manipulation implements Loggable, Configurable {
     public void resetPosition() {
         firstDown.setPosition(0);
     }
+
+    public boolean getFirstStageAtBottom() {
+        return firstDown.getForwardLimit();
+    }
     
     @Override
     public void setupLogging(DataLogger logger) {
