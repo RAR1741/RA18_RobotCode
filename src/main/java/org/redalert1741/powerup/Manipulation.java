@@ -25,7 +25,9 @@ public class Manipulation implements Loggable, Configurable {
     
     /**
      * Constructor for manipulation subsystem.
-     * @param lift lift motor
+     * @param firstDown motor that pulls the second stage down
+     * @param firstUp motor that pulls the second stage up
+     * @param top motor that moves the third stage on the second
      * @param tilt manipulation tilt
      * @param brake manipulation brake
      * @see Spark
@@ -65,6 +67,10 @@ public class Manipulation implements Loggable, Configurable {
         top.set(ControlMode.PercentOutput, input);
     }
 
+    /**
+     * Sets the first stage motors to move the second stage.
+     * @param input percent speed to run up or down
+     */
     public void setFirstStage(double input) {
         if(input > 0) {
             firstUp.set(ControlMode.PercentOutput, 0.5*input);
@@ -73,9 +79,12 @@ public class Manipulation implements Loggable, Configurable {
             firstUp.set(ControlMode.PercentOutput, 0);
             firstDown.set(ControlMode.PercentOutput, input);
         }
-//        firstDown.set(ControlMode.PercentOutput, -input);
     }
 
+    /**
+     * Uses {@link #setFirstStage(double)} to target given position.
+     * @param pos Position to target, (~-4000 for top, 0 for bottom)
+     */
     public void setFirstStagePosition(int pos) {
         if(Math.abs(pos-firstDown.getPosition()) > 50) {
             setFirstStage(-0.001*(pos-firstDown.getPosition()));

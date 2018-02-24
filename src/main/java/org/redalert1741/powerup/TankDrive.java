@@ -78,6 +78,11 @@ public class TankDrive implements Loggable, Configurable {
         shifter.set(true);
     }
 
+    /**
+     * Sets the brakes on the drive {@link TalonSrxWrapper talons} to be in
+     * brake (true) or coast (false).
+     * @param brake whether brakes should be enabled
+     */
     public void setBrakes(boolean brake) {
         left1.setBrake(brake);
         left2.setBrake(brake);

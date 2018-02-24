@@ -131,10 +131,6 @@ public class Robot extends IterativeRobot {
         //manual manipulation controls
         manip.setFirstStage(-operator.getY(Hand.kLeft));
         manip.setSecondStage(-operator.getY(Hand.kRight));
-//        if(driver.getStartButton()) {
-//            manip.setLift(driver.getTriggerAxis(Hand.kRight));
-//            manip.setSecond(driver.getTriggerAxis(Hand.kLeft));
-//        }
 
         //tilt manipulation
         if(driver.getAButton()) {
@@ -171,12 +167,6 @@ public class Robot extends IterativeRobot {
         } else if(driver.getPOV() == 270) {
             drive.enableDriving();
         }
-
-//        if(operator.getPOV() == 180) {
-//            manip.setFirstStagePosition(0);
-//        } else if(operator.getPOV() == 90) {
-//            manip.setFirstStagePosition(-4100);
-//        }
 
         data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
