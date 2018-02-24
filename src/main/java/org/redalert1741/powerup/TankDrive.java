@@ -90,23 +90,23 @@ public class TankDrive implements Loggable, Configurable {
         right2.setBrake(brake);
     }
 
-	@Override
-	public void setupLogging(DataLogger logger) {
-		left1.setupLogging(logger);
-		left2.setupLogging(logger);
-		right1.setupLogging(logger);
-		right2.setupLogging(logger);
-		shifter.setupLogging(logger);
-	}
+    @Override
+    public void setupLogging(DataLogger logger) {
+    	left1.setupLogging(logger);
+    	left2.setupLogging(logger);
+    	right1.setupLogging(logger);
+    	right2.setupLogging(logger);
+    	shifter.setupLogging(logger);
+    }
 
-	@Override
-	public void log(DataLogger logger) {
-		left1.log(logger);
-		left2.log(logger);
-		right1.log(logger);
-		right2.log(logger);
-		shifter.log(logger);
-	}
+    @Override
+    public void log(DataLogger logger) {
+    	left1.log(logger);
+    	left2.log(logger);
+    	right1.log(logger);
+    	right2.log(logger);
+    	shifter.log(logger);
+    }
 
     @Override
     public void reloadConfig(Config config) {
