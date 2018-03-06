@@ -140,16 +140,22 @@ public class Robot extends IterativeRobot {
         }
 
         //driving
-        if(!climbing) {
+//        if(!climbing) {
             drive.enableDriving();
             drive.arcadeDrive(driver.getX(Hand.kRight)*0.5, -0.5*driver.getY(Hand.kLeft));
-        } else {
-            climb.climb();
-        }
+//        } else {
+//            //climb.climb();
+//        }
 
         //manual manipulation controls
-        manip.setFirstStage(-operator.getY(Hand.kLeft));
+        manip.setFirstStage(operator.getY(Hand.kLeft));
         manip.setSecondStage(-operator.getY(Hand.kRight));
+        
+        if(!operator.getAButton()) {
+            manip.enableBrake();
+        } else {
+            manip.disableBrake();
+        }
 
         //tilt manipulation
         if(driver.getAButton()) {
