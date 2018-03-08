@@ -72,13 +72,7 @@ public class Manipulation implements Loggable, Configurable {
      * @param input percent speed to run up or down
      */
     public void setFirstStage(double input) {
-        if(input > 0) {
-            firstUp.set(ControlMode.PercentOutput, 0.5*input);
-            firstDown.set(ControlMode.PercentOutput, 0);
-        } else {
-            firstUp.set(ControlMode.PercentOutput, 0);
-            firstDown.set(ControlMode.PercentOutput, input);
-        }
+        firstDown.set(ControlMode.PercentOutput, input);
     }
 
     /**
@@ -103,6 +97,10 @@ public class Manipulation implements Loggable, Configurable {
 
     public void resetPosition() {
         firstDown.setPosition(0);
+    }
+
+    public boolean getFirstStageAtBottom() {
+        return firstDown.getForwardLimit();
     }
     
     @Override
