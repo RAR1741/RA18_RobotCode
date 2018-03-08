@@ -78,6 +78,33 @@ public class TankDrive implements Loggable, Configurable {
         shifter.set(true);
     }
 
+    public void setP(double pval) {
+        left1.setP(pval);
+        left2.setP(pval);
+        right1.setP(pval);
+        right2.setP(pval);
+    }
+
+    public void setI(double ival) {
+        left1.setI(ival);
+        left2.setI(ival);
+        right1.setI(ival);
+        right2.setI(ival);
+    }
+
+    public void setD(double dval) {
+        left1.setD(dval);
+        left2.setD(dval);
+        right1.setD(dval);
+        right2.setD(dval);
+    }
+
+    public void setPID(double pval, double ival, double dval) {
+        setP(pval);
+        setI(ival);
+        setD(dval);
+    }
+
     /**
      * Sets the brakes on the drive {@link TalonSrxWrapper talons} to be in
      * brake (true) or coast (false).
@@ -114,5 +141,8 @@ public class TankDrive implements Loggable, Configurable {
         left2.reloadConfig(config);
         right1.reloadConfig(config);
         right2.reloadConfig(config);
+        setP(config.getSetting("drive_p", 1));
+        setI(config.getSetting("drive_i", 0));
+        setD(config.getSetting("drive_d", 0));
     }
 }
