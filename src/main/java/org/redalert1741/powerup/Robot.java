@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
+import org.redalert1741.powerup.auto.move.ScoringGrabberMove;
+import org.redalert1741.powerup.auto.move.ScoringKickerMove;
 import org.redalert1741.powerup.auto.move.TankDriveArcadeMove;
 import org.redalert1741.powerup.auto.move.TankDriveBrakeMove;
 import org.redalert1741.powerup.auto.move.TankDriveRampRateMove;
@@ -16,6 +18,7 @@ import org.redalert1741.robotbase.auto.core.AutoFactory;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.auto.end.EmptyEnd;
+import org.redalert1741.robotbase.auto.end.TimedEnd;
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.LoggablePdp;
@@ -97,8 +100,11 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveMove("driveTank", () -> new TankDriveTankMove(drive));
         AutoFactory.addMoveMove("driveBrake", () -> new TankDriveBrakeMove(drive));
         AutoFactory.addMoveMove("driveRampRate", () -> new TankDriveRampRateMove(drive));
+        AutoFactory.addMoveMove("grab", () -> new ScoringGrabberMove(score));
+        AutoFactory.addMoveMove("kick", () -> new ScoringKickerMove(score));
         AutoFactory.addMoveEnd("driveDistRight", () -> new TalonDistanceEnd(rightDrive));
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
+        AutoFactory.addMoveEnd("time", () -> new TimedEnd());
         AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
     }
 
