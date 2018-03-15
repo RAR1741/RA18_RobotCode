@@ -141,6 +141,8 @@ public class Robot extends IterativeRobot {
 
         score.grabOff();
         drive.setBrakes(false);
+        drive.enableDriving();
+        manip.disableBrake();
 
         climbing = false;
     }
@@ -155,26 +157,25 @@ public class Robot extends IterativeRobot {
         }
 
         //driving
-//        if(!climbing) {
+        if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
             drive.arcadeDrive(driver.getX(Hand.kRight)*speedmultiplier,
                     -speedmultiplier*driver.getY(Hand.kLeft));
-//        } else {
-//            //climb.climb();
-//        }
-
-        //manual manipulation controls
-        
-        
-        if(!operator.getAButton()) {
-            manip.enableBrake();
-            manip.setFirstStage(0);
-            manip.setSecondStage(0);
         } else {
+            climb.climb();
+        }
+        
+        //manipulation height control
+        if(Math.abs(operator.getY(Hand.kRight))>0.1) {
+        	manip.changeLiftHeight(operator.getY(Hand.kRight)*0.1);
+        }
+
+        //manipulation brake
+        if(driver.getXButton()) {
+            manip.enableBrake();
+        } else{
             manip.disableBrake();
-            manip.setFirstStage(operator.getY(Hand.kLeft));
-            manip.setSecondStage(-operator.getY(Hand.kRight));
         }
 
         //tilt manipulation
@@ -197,13 +198,13 @@ public class Robot extends IterativeRobot {
         if(driver.getBumper(Hand.kRight)) {
             score.open();
         }
-        if(driver.getXButton()) {
-            score.grabOff();
-        }
 
-        //reset manipulation
+        //reset stages
         if(operator.getBackButton()) {
             manip.resetFirstStagePosition();
+        }
+        if(operator.getStartButton()) {
+        	manip.resetSecondStagePosition();
         }
 
         data.log("time", System.currentTimeMillis()-enableStart);
