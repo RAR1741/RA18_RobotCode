@@ -3,6 +3,9 @@ package org.redalert1741.robotbase.auto.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.redalert1741.robotbase.auto.end.EmptyEnd;
+import org.redalert1741.robotbase.auto.move.EmptyMove;
+
 /**
  * Represents a single move within an {@link Autonomous}.
  */
@@ -21,8 +24,8 @@ public class AutoMove {
      * @param args Extra arguments
      */
     public AutoMove(AutoMoveMove amm, AutoMoveEnd ame, Map<String, Object> args) {
-        this.amm = amm;
-        this.ame = ame;
+        this.amm = amm == null ? new EmptyMove() : amm;
+        this.ame = ame == null ? new EmptyEnd() : ame;
         this.args = args == null ? new HashMap<String, Object>() : args;
         finished = false;
     }
