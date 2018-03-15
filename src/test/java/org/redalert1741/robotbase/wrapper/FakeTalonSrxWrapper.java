@@ -150,4 +150,10 @@ public class FakeTalonSrxWrapper extends TalonSrxWrapper {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public double getVelocity() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

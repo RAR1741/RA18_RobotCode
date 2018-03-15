@@ -18,6 +18,9 @@ public class TankDrive implements Loggable, Configurable {
 
     private SolenoidWrapper shifter;
 
+    private double maxrpm;
+    private boolean speedMode;
+
     /**
      * Initializes the drivetrain.
      * @param l1 CAN ID of a left TalonSRX
@@ -43,6 +46,8 @@ public class TankDrive implements Loggable, Configurable {
         right2.follow(right1);
 
         shifter = s1;
+        
+        left1.setPhase(true);
     }
 
     /**
@@ -61,7 +66,16 @@ public class TankDrive implements Loggable, Configurable {
      * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
-        driveMotors(ydrive+xdrive, ydrive-xdrive);
+        if(speedMode) {
+            driveMotorsSpeed(ydrive+xdrive, ydrive-xdrive);
+        } else {
+            driveMotors(ydrive+xdrive, ydrive-xdrive);
+        }
+    }
+
+    public void driveMotorsSpeed(double left, double right) {
+        left1.set(ControlMode.Velocity, left*maxrpm);
+        right1.set(ControlMode.Velocity, right*maxrpm);
     }
 
     /**
@@ -76,6 +90,33 @@ public class TankDrive implements Loggable, Configurable {
      */
     public void enableClimbing() {
         shifter.set(true);
+    }
+
+    public void setP(double pval) {
+        left1.setP(pval);
+        left2.setP(pval);
+        right1.setP(pval);
+        right2.setP(pval);
+    }
+
+    public void setI(double ival) {
+        left1.setI(ival);
+        left2.setI(ival);
+        right1.setI(ival);
+        right2.setI(ival);
+    }
+
+    public void setD(double dval) {
+        left1.setD(dval);
+        left2.setD(dval);
+        right1.setD(dval);
+        right2.setD(dval);
+    }
+
+    public void setPID(double pval, double ival, double dval) {
+        setP(pval);
+        setI(ival);
+        setD(dval);
     }
 
     /**
@@ -114,5 +155,10 @@ public class TankDrive implements Loggable, Configurable {
         left2.reloadConfig(config);
         right1.reloadConfig(config);
         right2.reloadConfig(config);
+        setP(config.getSetting("drive_p", 1.0));
+        setI(config.getSetting("drive_i", 0.0));
+        setD(config.getSetting("drive_d", 0.0));
+        maxrpm = config.getSetting("drive_maxrpm", 500.0);
+        speedMode = config.getSetting("speedmode", true);
     }
 }
