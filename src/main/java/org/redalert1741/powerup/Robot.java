@@ -10,6 +10,8 @@ import java.util.Date;
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
 import org.redalert1741.powerup.auto.move.TankDriveArcadeMove;
 import org.redalert1741.powerup.auto.move.TankDriveBrakeMove;
+import org.redalert1741.powerup.auto.move.TankDriveRampRateMove;
+import org.redalert1741.powerup.auto.move.TankDriveTankMove;
 import org.redalert1741.robotbase.auto.core.AutoFactory;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
@@ -54,10 +56,11 @@ public class Robot extends IterativeRobot {
         pdp = new LoggablePdp();
 
         TalonSrxWrapper rightDrive = new RealTalonSrxWrapper(2);
+        TalonSrxWrapper leftDrive = new RealTalonSrxWrapper(4);
 
         setupSolenoids();
 
-        drive = new TankDrive(new RealTalonSrxWrapper(4), new RealTalonSrxWrapper(5),
+        drive = new TankDrive(leftDrive, new RealTalonSrxWrapper(5),
                 rightDrive, new RealTalonSrxWrapper(3),
                 driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(7),
@@ -90,9 +93,12 @@ public class Robot extends IterativeRobot {
 
         //auto moves
 
-        AutoFactory.addMoveMove("drive", () -> new TankDriveArcadeMove(drive));
-        AutoFactory.addMoveMove("drivebrake", () -> new TankDriveBrakeMove(drive));
-        AutoFactory.addMoveEnd("driveDist", () -> new TalonDistanceEnd(rightDrive));
+        AutoFactory.addMoveMove("driveArcade", () -> new TankDriveArcadeMove(drive));
+        AutoFactory.addMoveMove("driveTank", () -> new TankDriveTankMove(drive));
+        AutoFactory.addMoveMove("driveBrake", () -> new TankDriveBrakeMove(drive));
+        AutoFactory.addMoveMove("driveRampRate", () -> new TankDriveRampRateMove(drive));
+        AutoFactory.addMoveEnd("driveDistRight", () -> new TalonDistanceEnd(rightDrive));
+        AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
     }
 
@@ -105,7 +111,7 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/min-auto.json");
+        auto = new JsonAutoFactory().makeAuto(config.getSetting("auto", "/home/lvuser/auto/min-auto.json"));
         auto.start();
 
         climbing = false;

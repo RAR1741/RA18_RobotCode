@@ -44,7 +44,7 @@ public class TankDrive implements Loggable, Configurable {
 
         left2.follow(left1);
         right2.follow(right1);
-
+        
         shifter = s1;
         
         left1.setPhase(true);
@@ -117,6 +117,13 @@ public class TankDrive implements Loggable, Configurable {
         setP(pval);
         setI(ival);
         setD(dval);
+    }
+    
+    public void setRampRate(double time) {
+        left1.setClosedLoopRampRate(time);
+        right1.setClosedLoopRampRate(time);
+        left2.setClosedLoopRampRate(time);
+        right2.setClosedLoopRampRate(time);
     }
 
     /**

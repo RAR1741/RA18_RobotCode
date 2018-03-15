@@ -137,4 +137,11 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     public double getVelocity() {
         return talon.getSensorCollection().getQuadratureVelocity();
     }
+
+	@Override
+	public void setClosedLoopRampRate(double time) {
+		talon.configClosedloopRamp(time, timeout);
+	}
+    
+    
 }
