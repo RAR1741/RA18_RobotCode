@@ -33,7 +33,21 @@ public class Manipulation implements Loggable, Configurable {
     private double secondStageHeightToTick;
     
     protected enum LiftPos{
-    	Ground,Hover,Switch,ScaleLow,ScaleHigh;
+        Ground(0),Hover(1),Switch(2),ScaleLow(3),ScaleHigh(4);
+        private final int i;
+        private LiftPos(int i) {
+            this.i = i;
+        }
+
+        public LiftPos next() {
+            return i<LiftPos.values().length-1 ? 
+                    LiftPos.values()[i+1] : LiftPos.values()[i];
+        }
+        
+        public LiftPos prev() {
+            return i>0 ? 
+                    LiftPos.values()[i-1] : LiftPos.values()[i];
+        }
     }
     
     /**
@@ -75,7 +89,7 @@ public class Manipulation implements Loggable, Configurable {
     public void tiltIn() {
         tilt.set(Value.kReverse);
     }
-    
+
     public void tiltOut() {
         tilt.set(Value.kForward);
     }
@@ -85,11 +99,11 @@ public class Manipulation implements Loggable, Configurable {
      * @param input percent speed to run up or down
      */
     public void setFirstStage(double input) {
-    	if(!brake.get()) {
-    		first.set(ControlMode.PercentOutput, input);
-    	} else {
-    		first.set(ControlMode.PercentOutput, 0);
-    	}
+        if(!brake.get()) {
+            first.set(ControlMode.PercentOutput, input);
+        } else {
+            first.set(ControlMode.PercentOutput, 0);
+        }
     }
 
     /**
@@ -97,16 +111,16 @@ public class Manipulation implements Loggable, Configurable {
      * @param pos Position to target, (~-4000 for top, 0 for bottom)
      */
     public void setFirstStagePos(int pos) {
-    	if(!brake.get()) {
-    		first.set(ControlMode.Position, pos);
-    	} else {
-    		first.set(ControlMode.PercentOutput, 0);
-    	}
+        if(!brake.get()) {
+            first.set(ControlMode.Position, pos);
+        } else {
+            first.set(ControlMode.PercentOutput, 0);
+        }
     }
     
     public void setFirstStageHeight(double height){
-    	this.setFirstStagePos(
-    			-(int)(height*firstStageHeightToTick));
+        this.setFirstStagePos(
+                -(int)(height*firstStageHeightToTick));
     }
     
     /**
@@ -122,20 +136,20 @@ public class Manipulation implements Loggable, Configurable {
      * @param pos Position to target, (~?? for top, 0 for bottom)
      */
     public void setSecondStagePos(int pos) {
-    	second.set(ControlMode.Position, pos);
+        second.set(ControlMode.Position, pos);
     }
     
     public void setSecondStageHeight(double height){
-    	this.setSecondStagePos(
-    			(int)(height*secondStageHeightToTick));
+        this.setSecondStagePos(
+                (int)(height*secondStageHeightToTick));
     }
-    
+
     public int getFirstStagePos(){
-    	return first.getPosition();
+        return first.getPosition();
     }
     
     public int getSecondStagePos(){
-    	return second.getPosition();
+        return second.getPosition();
     }
     
     public void enableBrake() {
@@ -169,41 +183,43 @@ public class Manipulation implements Loggable, Configurable {
     public boolean getSecondStageAtTop() {
         return second.getReverseLimit();
     }
-    
+
     public void setLiftPos(LiftPos pos){
-    	switch(pos){
-    	case Ground:
-    		setLiftHeight(groundH);
-    		break;
-    	case Hover:
-    		setLiftHeight(hoverH);
-    		break;
-    	case Switch:
-    		setLiftHeight(switchH);
-    		break;
-    	case ScaleLow:
-    		setLiftHeight(scaleLowH);
-    		break;
-    	case ScaleHigh:
-    		setLiftHeight(scaleHighH);
-    		break;
-    	}
+        switch(pos){
+        case Ground:
+            setLiftHeight(groundH);
+            break;
+        case Hover:
+            setLiftHeight(hoverH);
+            break;
+        case Switch:
+            setLiftHeight(switchH);
+            break;
+        case ScaleLow:
+            setLiftHeight(scaleLowH);
+            break;
+        case ScaleHigh:
+            setLiftHeight(scaleHighH);
+            break;
+        default:
+            break;
+        }
     }
     
     public void setLiftHeight(double height){
-    	targetHeight = height;
-    	if(targetHeight < secondStageMaxHeight) {
-    		//setSecondStageHeight(targetHeight);
-    		setFirstStageHeight(0);
-    	} else if(targetHeight >= secondStageMaxHeight) {
-    		//setSecondStageHeight(secondStageMaxHeight);
-    		setFirstStageHeight(targetHeight-secondStageMaxHeight);
-    	}
+        targetHeight = height;
+        if(targetHeight < secondStageMaxHeight) {
+            setSecondStageHeight(targetHeight);
+            setFirstStageHeight(0);
+        } else if(targetHeight >= secondStageMaxHeight) {
+            setSecondStageHeight(secondStageMaxHeight);
+            setFirstStageHeight(targetHeight-secondStageMaxHeight);
+        }
     }
     
     public void changeLiftHeight(double height){
-    	targetHeight+=height;
-    	setLiftHeight(targetHeight);
+        targetHeight+=height;
+        setLiftHeight(targetHeight);
     }
     
     @Override
@@ -224,26 +240,28 @@ public class Manipulation implements Loggable, Configurable {
 
     @Override
     public void reloadConfig(Config config) {
-    	first.reloadConfig(config);
-    	first.setP(config.getSetting("first_p", 1));
-    	first.setI(config.getSetting("first_i", 0));
-    	first.setD(config.getSetting("first_d", 0));
-    	
-    	second.reloadConfig(config);
-    	second.setP(config.getSetting("second_p", 1));
-    	second.setI(config.getSetting("second_i", 0));
-    	second.setD(config.getSetting("second_d", 0));
-    	
-    	groundH = config.getSetting("ground_height", 0);
-    	hoverH = config.getSetting("hover_height", 0);
-    	switchH = config.getSetting("switch_height", 0);
-    	scaleLowH = config.getSetting("scaleLow_height", 0);
-    	scaleHighH = config.getSetting("scaleHigh_height", 0);
-    	firstStageMaxHeight = config.getSetting("firstMaxHeight", 41);
-    	secondStageMaxHeight = config.getSetting("firstMaxHeight", 32);
-    	secondStageHeightToTick = config.getSetting(
-    			"second_height_to_tick", 26290.3);
-    	firstStageHeightToTick = config.getSetting(
-    			"first_height_to_tick", 97.5);
+        first.reloadConfig(config);
+        first.setP(config.getSetting("first_p", 1.0));
+        first.setI(config.getSetting("first_i", 0.0));
+        first.setD(config.getSetting("first_d", 0.0));
+        
+        second.reloadConfig(config);
+        second.setP(config.getSetting("second_p", 1.0));
+        second.setI(config.getSetting("second_i", 0.0));
+        second.setD(config.getSetting("second_d", 0.0));
+        
+        groundH = config.getSetting("ground_height", 0.0);
+        hoverH = config.getSetting("hover_height", 0.0);
+        System.out.println(hoverH);
+        switchH = config.getSetting("switch_height", 0.0);
+        System.out.println(switchH);
+        scaleLowH = config.getSetting("scaleLow_height", 0.0);
+        scaleHighH = config.getSetting("scaleHigh_height", 0.0);
+        firstStageMaxHeight = config.getSetting("firstMaxHeight", 41.0);
+        secondStageMaxHeight = config.getSetting("firstMaxHeight", 32.0);
+        secondStageHeightToTick = config.getSetting(
+                "second_height_to_tick", 26290.3);
+        firstStageHeightToTick = config.getSetting(
+                "first_height_to_tick", 97.5);
     }
 }

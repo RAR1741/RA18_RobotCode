@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.redalert1741.powerup.Manipulation.LiftPos;
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
 import org.redalert1741.powerup.auto.move.ManipulationTiltMove;
 import org.redalert1741.powerup.auto.move.ScoringGrabberMove;
@@ -176,13 +177,25 @@ public class Robot extends IterativeRobot {
         
         //manipulation height control
         if(up.check(operator.getPOV() == 0)) {
-            place++;
+            place+=5;
+            manip.setLiftHeight(place);
         }
         if(down.check(operator.getPOV() == 180)) {
-            place--;
+            place-=5;
+            manip.setLiftHeight(place);
         }
         
-        manip.setFirstStageHeight(place);
+        if(operator.getAButton()){
+            manip.setLiftPos(LiftPos.Ground);
+        }
+        if(operator.getBButton()){
+            manip.setLiftPos(LiftPos.Hover);
+        }
+        if(operator.getYButton()){
+            manip.setLiftPos(LiftPos.Switch);
+        }
+        
+        //manip.setLiftHeight(place);
 
         //manipulation brake
         if(driver.getXButton()) {
