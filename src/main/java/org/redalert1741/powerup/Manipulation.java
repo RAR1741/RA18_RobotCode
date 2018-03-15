@@ -69,7 +69,7 @@ public class Manipulation implements Loggable, Configurable {
         second.configNominalOutputReverse(0);
         second.configPeakOutputForward(forwardSpeed);
         second.configPeakOutputReverse(reverseSpeed);
-        second.setPhase(true);
+        //second.setPhase(true);
     }
     
     public void tiltIn() {
@@ -106,7 +106,7 @@ public class Manipulation implements Loggable, Configurable {
     
     public void setFirstStageHeight(double height){
     	this.setFirstStagePos(
-    			(int)(height*firstStageHeightToTick));
+    			-(int)(height*firstStageHeightToTick));
     }
     
     /**
@@ -193,9 +193,10 @@ public class Manipulation implements Loggable, Configurable {
     public void setLiftHeight(double height){
     	targetHeight = height;
     	if(targetHeight < secondStageMaxHeight) {
-    		setSecondStageHeight(targetHeight);
+    		//setSecondStageHeight(targetHeight);
+    		setFirstStageHeight(0);
     	} else if(targetHeight >= secondStageMaxHeight) {
-    		setSecondStageHeight(secondStageMaxHeight);
+    		//setSecondStageHeight(secondStageMaxHeight);
     		setFirstStageHeight(targetHeight-secondStageMaxHeight);
     	}
     }

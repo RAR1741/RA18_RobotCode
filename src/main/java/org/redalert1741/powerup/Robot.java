@@ -21,6 +21,7 @@ import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.auto.end.EmptyEnd;
 import org.redalert1741.robotbase.auto.end.TimedEnd;
 import org.redalert1741.robotbase.config.Config;
+import org.redalert1741.robotbase.input.EdgeDetect;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.LoggablePdp;
 import org.redalert1741.robotbase.wrapper.RealDoubleSolenoidWrapper;
@@ -51,9 +52,16 @@ public class Robot extends IterativeRobot {
 
     private long enableStart;
     private boolean climbing;
+    
+    int place;
+    EdgeDetect up;
+    EdgeDetect down;
 
     @Override
     public void robotInit() {
+        up = new EdgeDetect();
+        down = new EdgeDetect();
+        
         driver = new XboxController(0);
         operator = new XboxController(1);
 
@@ -167,9 +175,14 @@ public class Robot extends IterativeRobot {
         }
         
         //manipulation height control
-        if(Math.abs(operator.getY(Hand.kRight))>0.1) {
-        	manip.changeLiftHeight(operator.getY(Hand.kRight)*0.1);
+        if(up.check(operator.getPOV() == 0)) {
+            place++;
         }
+        if(down.check(operator.getPOV() == 180)) {
+            place--;
+        }
+        
+        manip.setFirstStageHeight(place);
 
         //manipulation brake
         if(driver.getXButton()) {
