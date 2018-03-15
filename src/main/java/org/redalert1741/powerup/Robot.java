@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
+import org.redalert1741.powerup.auto.move.ManipulationTiltMove;
 import org.redalert1741.powerup.auto.move.ScoringGrabberMove;
 import org.redalert1741.powerup.auto.move.ScoringKickerMove;
 import org.redalert1741.powerup.auto.move.TankDriveArcadeMove;
@@ -66,7 +67,7 @@ public class Robot extends IterativeRobot {
         drive = new TankDrive(leftDrive, new RealTalonSrxWrapper(5),
                 rightDrive, new RealTalonSrxWrapper(3),
                 driveBrake);
-        manip = new Manipulation(new RealTalonSrxWrapper(1), new RealTalonSrxWrapper(7),
+        manip = new Manipulation(new RealTalonSrxWrapper(1),
                 new RealTalonSrxWrapper(6),
                 tilt, manipBrake);
         score = new Scoring(kick, grab);
@@ -102,6 +103,7 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveMove("driveRampRate", () -> new TankDriveRampRateMove(drive));
         AutoFactory.addMoveMove("grab", () -> new ScoringGrabberMove(score));
         AutoFactory.addMoveMove("kick", () -> new ScoringKickerMove(score));
+        AutoFactory.addMoveMove("tilted", () -> new ManipulationTiltMove(manip));
         AutoFactory.addMoveEnd("driveDistRight", () -> new TalonDistanceEnd(rightDrive));
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
@@ -117,7 +119,8 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        auto = new JsonAutoFactory().makeAuto(config.getSetting("auto", "/home/lvuser/auto/min-auto.json"));
+        auto = new JsonAutoFactory().makeAuto(config.getSetting("auto", 
+        		"/home/lvuser/auto/min-auto.json"));
         auto.start();
 
         climbing = false;
@@ -200,7 +203,7 @@ public class Robot extends IterativeRobot {
 
         //reset manipulation
         if(operator.getBackButton()) {
-            manip.resetPosition();
+            manip.resetFirstStagePosition();
         }
 
         data.log("time", System.currentTimeMillis()-enableStart);

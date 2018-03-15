@@ -16,9 +16,8 @@ import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
 public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
-    private TalonSrxWrapper firstDown;
-    private TalonSrxWrapper firstUp;
-    private TalonSrxWrapper top;
+    private TalonSrxWrapper first;
+    private TalonSrxWrapper second;
     private SolenoidWrapper brake;
     private double forwardSpeed;
     private double reverseSpeed;
@@ -30,29 +29,31 @@ public class Manipulation implements Loggable, Configurable {
      * @param top motor that moves the third stage on the second
      * @param tilt manipulation tilt
      * @param brake manipulation brake
-     * @see Spark
+     * @see TalonSrxWrapper
      * @see DoubleSolenoid
      * @see Solenoid
      */
-    public Manipulation(TalonSrxWrapper firstDown, TalonSrxWrapper firstUp,
-            TalonSrxWrapper top,
+    public Manipulation(TalonSrxWrapper firstStage, TalonSrxWrapper secondStage,
             DoubleSolenoidWrapper tilt, SolenoidWrapper brake) {
-        this.firstUp = firstUp;
-        this.firstDown = firstDown;
-        this.top = top;
+        this.first = firstStage;
+        this.second = secondStage;
         this.tilt = tilt;
         this.brake = brake;
 
         forwardSpeed = 1;
         reverseSpeed = -1;
-        firstDown.configNominalOutputForward(0);
-        firstDown.configNominalOutputReverse(0);
-        firstDown.configPeakOutputForward(forwardSpeed);
-        firstDown.configPeakOutputReverse(reverseSpeed);
-        firstDown.setP(2);
-        firstDown.setI(0);
-        firstDown.setD(0);
-        firstDown.setPhase(true);
+        
+        first.configNominalOutputForward(0);
+        first.configNominalOutputReverse(0);
+        first.configPeakOutputForward(forwardSpeed);
+        first.configPeakOutputReverse(reverseSpeed);
+        first.setPhase(true);
+        
+        second.configNominalOutputForward(0);
+        second.configNominalOutputReverse(0);
+        second.configPeakOutputForward(forwardSpeed);
+        second.configPeakOutputReverse(reverseSpeed);
+        second.setPhase(true);
     }
     
     public void tiltIn() {
@@ -63,28 +64,36 @@ public class Manipulation implements Loggable, Configurable {
         tilt.set(Value.kForward);
     }
 
-    public void setSecondStage(double input) {
-        top.set(ControlMode.PercentOutput, input);
-    }
-
     /**
-     * Sets the first stage motors to move the second stage.
+     * Sets the first stage motor to move the first stage.
      * @param input percent speed to run up or down
      */
     public void setFirstStage(double input) {
-        firstDown.set(ControlMode.PercentOutput, input);
+        first.set(ControlMode.PercentOutput, input);
     }
 
     /**
-     * Uses {@link #setFirstStage(double)} to target given position.
+     * Target given position for the first stage.
      * @param pos Position to target, (~-4000 for top, 0 for bottom)
      */
-    public void setFirstStagePosition(int pos) {
-        if(Math.abs(pos-firstDown.getPosition()) > 50) {
-            setFirstStage(-0.001*(pos-firstDown.getPosition()));
-        } else {
-            setFirstStage(0);
-        }
+    public void setFirstStagePos(int pos) {
+    	first.set(ControlMode.Position, pos);
+    }
+    
+    /**
+     * Sets the second stage motor to move the second stage.
+     * @param input percent speed to run up or down
+     */
+    public void setSecondStage(double input) {
+        second.set(ControlMode.PercentOutput, input);
+    }
+
+    /**
+     * Target given position for the second stage.
+     * @param pos Position to target, (~?? for top, 0 for bottom)
+     */
+    public void setSecondStagePos(int pos) {
+    	second.set(ControlMode.Position, pos);
     }
     
     public void enableBrake() {
@@ -95,36 +104,56 @@ public class Manipulation implements Loggable, Configurable {
         brake.set(false);
     }
 
-    public void resetPosition() {
-        firstDown.setPosition(0);
+    public void resetFirstStagePosition() {
+        first.setPosition(0);
+    }
+    
+    public void resetSecondStagePosition() {
+        second.setPosition(0);
     }
 
     public boolean getFirstStageAtBottom() {
-        return firstDown.getForwardLimit();
+        return first.getForwardLimit();
+    }
+    
+    public boolean getFirstStageAtTop() {
+        return first.getReverseLimit();
+    }
+    
+    public boolean getSecondStageAtBottom() {
+        return second.getForwardLimit();
+    }
+    
+    public boolean getSecondStageAtTop() {
+        return second.getReverseLimit();
     }
     
     @Override
     public void setupLogging(DataLogger logger) {
         brake.setupLogging(logger);
         tilt.setupLogging(logger);
-        firstDown.setupLogging(logger);
-        firstUp.setupLogging(logger);
-        top.setupLogging(logger);
+        first.setupLogging(logger);
+        second.setupLogging(logger);
     }
 
     @Override
     public void log(DataLogger logger) {
         brake.log(logger);
         tilt.log(logger);
-        firstDown.log(logger);
-        firstUp.log(logger);
-        top.log(logger);
+        first.log(logger);
+        second.log(logger);
     }
 
     @Override
     public void reloadConfig(Config config) {
-        firstDown.reloadConfig(config);
-        firstUp.reloadConfig(config);
-        top.reloadConfig(config);
+    	first.reloadConfig(config);
+    	first.setP(config.getSetting("first_p", 1));
+    	first.setI(config.getSetting("first_i", 0));
+    	first.setD(config.getSetting("first_d", 0));
+    	
+    	second.reloadConfig(config);
+    	second.setP(config.getSetting("second_p", 1));
+    	second.setI(config.getSetting("second_i", 0));
+    	second.setD(config.getSetting("second_d", 0));
     }
 }

@@ -1,10 +1,9 @@
 {
     "auto":[
-    	{"type":"tilted","args":{"tilt":false},"end":{"type":"time","args":{"length":1}}},
         {"type":"driveBrake","args":{"brake":false},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
         {"type":"driveRampRate","args":{"rampRate":0},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
         {"type":"driveTank","args":{"leftDrive":0.5,"rightDrive":0.5},"end":{"type":"driveDistRight","args":{"unit":"inches","distance":300}}},
-        {"type":"driveTank","args":{"leftDrive":0.2,"rightDrive":-0.2},"end":{"type":"driveDistRight","args":{"unit":"inches","distance":4}}},
+        {"type":"driveTank","args":{"leftDrive":-0.2,"rightDrive":0.2},"end":{"type":"driveDistRight","args":{"unit":"inches","distance":4}}},
         {"type":"kick","args":{"kick":true},"end":{"type":"empty","args":{}}},
         {"type":"grab","args":{"grab":false},"end":{"type":"empty","args":{}}}
     ]

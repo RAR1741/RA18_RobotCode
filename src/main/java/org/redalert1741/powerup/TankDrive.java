@@ -119,6 +119,10 @@ public class TankDrive implements Loggable, Configurable {
         setD(dval);
     }
     
+    /**
+     * Sets the Closed Loop Ramp rate on the drive {@link TalonSrxWrapper talons} 
+     * @param time how much time it takes to go from neutral to full speed
+     */
     public void setRampRate(double time) {
         left1.setClosedLoopRampRate(time);
         right1.setClosedLoopRampRate(time);
