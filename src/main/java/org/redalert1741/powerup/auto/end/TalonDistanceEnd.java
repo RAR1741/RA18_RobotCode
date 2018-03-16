@@ -22,7 +22,7 @@ public class TalonDistanceEnd implements AutoMoveEnd {
         if(args.containsKey("unit")) {
             if(args.get("unit").equals("inches")) {
                 distance = (int) Math.round(distarg
-                    *(80*((25.0/7)*(45.0/19))/(6*Math.PI)));
+                    *(80*((25.0/7)*(25.0/7))/(6*Math.PI)));
             }
         }
     }

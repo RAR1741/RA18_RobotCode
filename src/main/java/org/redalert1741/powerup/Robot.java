@@ -128,8 +128,8 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        auto = new JsonAutoFactory().makeAuto(config.getSetting("auto", 
-        		"/home/lvuser/auto/min-auto.json"));
+        auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/"+config.getSetting("auto", 
+                "min-auto.json"));
         auto.start();
 
         climbing = false;
@@ -179,6 +179,7 @@ public class Robot extends IterativeRobot {
         if(up.check(operator.getPOV() == 0)) {
             place+=5;
             manip.setLiftHeight(place);
+            
         }
         if(down.check(operator.getPOV() == 180)) {
             place-=5;
@@ -230,7 +231,7 @@ public class Robot extends IterativeRobot {
             manip.resetFirstStagePosition();
         }
         if(operator.getStartButton()) {
-        	manip.resetSecondStagePosition();
+            manip.resetSecondStagePosition();
         }
 
         data.log("time", System.currentTimeMillis()-enableStart);
@@ -238,8 +239,14 @@ public class Robot extends IterativeRobot {
     }
 
     @Override
+    public void testInit() {
+        startLogging(data, "test");
+    }
+
+    @Override
     public void testPeriodic() {
-        // TODO: Add code to be called in test mode
+        data.log("time", System.currentTimeMillis()-enableStart);
+        data.logAll();
     }
 
     private void startLogging(DataLogger data, String type) {
