@@ -57,6 +57,8 @@ public class Robot extends IterativeRobot {
     int place;
     EdgeDetect up;
     EdgeDetect down;
+    double fheight;
+    double sheight;
 
     @Override
     public void robotInit() {
@@ -195,6 +197,17 @@ public class Robot extends IterativeRobot {
         if(operator.getYButton()){
             manip.setLiftPos(LiftPos.Switch);
         }
+        
+        if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
+            manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*5));
+        }
+        
+        if(Math.abs(operator.getY(Hand.kRight))>0.1) {
+            manip.setSecondStageHeight(manip.getSecondStageHeight()-(operator.getY(Hand.kRight)*5));
+        }
+        
+        System.out.println(manip.getFirstStageHeight());
+        System.out.println(manip.getFirstStagePos());
         
         //manip.setLiftHeight(place);
 

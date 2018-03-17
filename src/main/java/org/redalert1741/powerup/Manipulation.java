@@ -123,6 +123,10 @@ public class Manipulation implements Loggable, Configurable {
                 -(int)(height*firstStageHeightToTick));
     }
     
+    public double getFirstStageHeight() {
+        return getFirstStagePos()/firstStageHeightToTick;
+    }
+    
     /**
      * Sets the second stage motor to move the second stage.
      * @param input percent speed to run up or down
@@ -143,6 +147,10 @@ public class Manipulation implements Loggable, Configurable {
         this.setSecondStagePos(
                 (int)(height*secondStageHeightToTick));
     }
+    
+    public double getSecondStageHeight() {
+        return getSecondStagePos()/secondStageHeightToTick;
+    }
 
     public int getFirstStagePos(){
         return first.getPosition();
@@ -162,10 +170,12 @@ public class Manipulation implements Loggable, Configurable {
 
     public void resetFirstStagePosition() {
         first.setPosition(0);
+        setFirstStageHeight(0);
     }
     
     public void resetSecondStagePosition() {
         second.setPosition(0);
+        setSecondStageHeight(0);
     }
 
     public boolean getFirstStageAtBottom() {
@@ -220,6 +230,10 @@ public class Manipulation implements Loggable, Configurable {
     public void changeLiftHeight(double height){
         targetHeight+=height;
         setLiftHeight(targetHeight);
+    }
+    
+    public double getTargetHeight(){
+        return targetHeight;
     }
     
     @Override
