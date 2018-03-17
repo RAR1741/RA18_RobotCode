@@ -59,6 +59,7 @@ public class Robot extends IterativeRobot {
     EdgeDetect down;
     double fheight;
     double sheight;
+    double manualSpeed;
 
     @Override
     public void robotInit() {
@@ -79,7 +80,7 @@ public class Robot extends IterativeRobot {
                 rightDrive, new RealTalonSrxWrapper(3),
                 driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1),
-                new RealTalonSrxWrapper(6),
+                new RealTalonSrxWrapper(7),
                 tilt, manipBrake);
         score = new Scoring(kick, grab);
         climb = new Climber(manip, drive);
@@ -179,13 +180,14 @@ public class Robot extends IterativeRobot {
         
         //manipulation height control
         if(up.check(operator.getPOV() == 0)) {
-            place+=5;
-            manip.setLiftHeight(place);
-            
+//            place+=5;
+//            manip.setLiftHeight(place);
+            manip.changeLiftHeight(5);
         }
         if(down.check(operator.getPOV() == 180)) {
-            place-=5;
-            manip.setLiftHeight(place);
+//            place-=5;
+//            manip.setLiftHeight(place);
+            manip.changeLiftHeight(-5);
         }
         
         if(operator.getAButton()){
@@ -197,6 +199,12 @@ public class Robot extends IterativeRobot {
         if(operator.getYButton()){
             manip.setLiftPos(LiftPos.Switch);
         }
+        if(operator.getBumper(Hand.kLeft)){
+            manip.setLiftPos(LiftPos.ScaleLow);
+        }
+        if(operator.getBumper(Hand.kRight)){
+            manip.setLiftPos(LiftPos.ScaleHigh);
+        }
         
         if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
             manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*5));
@@ -206,13 +214,14 @@ public class Robot extends IterativeRobot {
             manip.setSecondStageHeight(manip.getSecondStageHeight()-(operator.getY(Hand.kRight)*5));
         }
         
-        System.out.println(manip.getFirstStageHeight());
-        System.out.println(manip.getFirstStagePos());
+        System.out.println(manip.getSecondStageAtTop());
+        System.out.println(manip.getSecondStageAtBottom());
+        System.out.println("========");
         
         //manip.setLiftHeight(place);
 
         //manipulation brake
-        if(driver.getXButton()) {
+        if(operator.getXButton()) {
             manip.enableBrake();
         } else{
             manip.disableBrake();
@@ -246,6 +255,9 @@ public class Robot extends IterativeRobot {
         if(operator.getStartButton()) {
             manip.resetSecondStagePosition();
         }
+        
+        //update manipulation
+        manip.update();
 
         data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
@@ -274,6 +286,7 @@ public class Robot extends IterativeRobot {
     private void reloadConfig() {
         config.loadFromFile("/home/lvuser/config.txt");
         config.reloadConfig();
+        manualSpeed = config.getSetting("manual_speed", 10.0);
     }
 
     private void setupSolenoids() {

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.config.Configurable;
+import org.redalert1741.robotbase.input.EdgeDetect;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
@@ -31,6 +32,8 @@ public class Manipulation implements Loggable, Configurable {
     private double secondStageMaxHeight;
     private double firstStageHeightToTick;
     private double secondStageHeightToTick;
+    private EdgeDetect firstReset;
+    private EdgeDetect secondReset;
     
     protected enum LiftPos{
         Ground(0),Hover(1),Switch(2),ScaleLow(3),ScaleHigh(4);
@@ -84,6 +87,9 @@ public class Manipulation implements Loggable, Configurable {
         second.configPeakOutputForward(forwardSpeed);
         second.configPeakOutputReverse(reverseSpeed);
         //second.setPhase(true);
+        
+        firstReset = new EdgeDetect();
+        secondReset = new EdgeDetect();
     }
     
     public void tiltIn() {
@@ -187,11 +193,11 @@ public class Manipulation implements Loggable, Configurable {
     }
     
     public boolean getSecondStageAtBottom() {
-        return second.getForwardLimit();
+        return second.getReverseLimit();
     }
     
     public boolean getSecondStageAtTop() {
-        return second.getReverseLimit();
+        return second.getForwardLimit();
     }
 
     public void setLiftPos(LiftPos pos){
@@ -234,6 +240,16 @@ public class Manipulation implements Loggable, Configurable {
     
     public double getTargetHeight(){
         return targetHeight;
+    }
+    
+    public void update() {
+        if(firstReset.check(getFirstStageAtBottom())) {
+            resetFirstStagePosition();
+        }
+        
+        if(secondReset.check(getSecondStageAtBottom())) {
+            resetSecondStagePosition();
+        }
     }
     
     @Override

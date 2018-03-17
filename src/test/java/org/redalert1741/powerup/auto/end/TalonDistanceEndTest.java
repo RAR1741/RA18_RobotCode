@@ -73,14 +73,14 @@ public class TalonDistanceEndTest {
         auto.run();
         assertEquals(-1, left1.get(), 0.001);
         assertEquals(-1, right1.get(), 0.001);
-        right1.setPosition(-2000);
+        right1.setPosition(-100);
         auto.run();
         assertEquals(-1, left1.get(), 0.001);
         assertEquals(-1, right1.get(), 0.001);
         auto.run();
         assertEquals(-1, left1.get(), 0.001);
         assertEquals(-1, right1.get(), 0.001);
-        right1.setPosition(-2155);
+        right1.setPosition(-1164120);
         auto.run();
         auto.run();
         assertEquals(0, left1.get(), 0.001);
