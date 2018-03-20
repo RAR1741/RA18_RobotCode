@@ -77,6 +77,11 @@ public class TankDrive implements Loggable, Configurable {
         left1.set(ControlMode.Velocity, left*maxrpm);
         right1.set(ControlMode.Velocity, right*maxrpm);
     }
+    
+    public void driveMotorsPercentV(double left, double right){
+        left1.set(ControlMode.PercentOutput, left);
+        right1.set(ControlMode.PercentOutput, right);
+    }
 
     /**
      * Shift to driving.

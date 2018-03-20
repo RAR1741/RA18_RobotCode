@@ -10,6 +10,7 @@ public class TankDriveTankMove implements AutoMoveMove {
     private double leftdrive;
     private double rightdrive;
     private boolean stop;
+    private String mode;
 
     public TankDriveTankMove(TankDrive drive) {
         this.drive = drive;
@@ -20,6 +21,7 @@ public class TankDriveTankMove implements AutoMoveMove {
         leftdrive = Double.parseDouble(args.get("leftDrive"));
         rightdrive = Double.parseDouble(args.get("rightDrive"));
         stop = Boolean.parseBoolean(args.getOrDefault("stop", "true"));
+        mode = args.getOrDefault("mode", "speed");
     }
 
     @Override
@@ -27,7 +29,11 @@ public class TankDriveTankMove implements AutoMoveMove {
 
     @Override
     public void run() {
-        drive.driveMotorsSpeed(leftdrive, rightdrive);
+        if(mode.equals("speed")){
+            drive.driveMotorsSpeed(leftdrive, rightdrive);
+        } else{
+            drive.driveMotorsPercentV(leftdrive, rightdrive);
+        }
     }
 
     @Override
