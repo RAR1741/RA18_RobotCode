@@ -35,7 +35,7 @@ public class Manipulation implements Loggable, Configurable {
     private EdgeDetect firstReset;
     private EdgeDetect secondReset;
     
-    protected enum LiftPos{
+    public enum LiftPos{
         GROUND(0),HOVER(1),SWITCH(2),SCALE_LOW(3),SCALE_HIGH(4);
         private final int index;
         private LiftPos(int index) {
