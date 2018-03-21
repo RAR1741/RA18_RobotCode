@@ -85,7 +85,6 @@ public class Manipulation implements Loggable, Configurable {
         second.configNominalOutputReverse(0);
         second.configPeakOutputForward(forwardSpeed);
         second.configPeakOutputReverse(reverseSpeed);
-        //second.setPhase(true);
         
         firstReset = new EdgeDetect();
         secondReset = new EdgeDetect();
@@ -200,7 +199,7 @@ public class Manipulation implements Loggable, Configurable {
     }
 
     /**
-     * Set lift to a preset position
+     * Set lift to a preset position.
      * @param pos Preset position contained in {@link LiftPos}
      */
     public void setLiftPos(LiftPos pos){
@@ -226,7 +225,7 @@ public class Manipulation implements Loggable, Configurable {
     }
     
     /**
-     * Set lift to a target height
+     * Set lift to a target height.
      * @param height Target height in inches
      */
     public void setLiftHeight(double height){
@@ -253,7 +252,7 @@ public class Manipulation implements Loggable, Configurable {
     /**
      * Function run in periodic to automatically reset
      * the lift encoders when their respective limit
-     * sensors are triggered
+     * sensors are triggered.
      */
     public void update() {
         if(firstReset.check(getFirstStageAtBottom())) {
