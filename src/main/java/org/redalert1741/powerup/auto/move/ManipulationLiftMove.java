@@ -9,8 +9,8 @@ public class ManipulationLiftMove implements AutoMoveMove{
 	private Manipulation manip;
 	private double firstStageHeight;
 	
-	public ManipulationLiftMove(Manipulation m){
-		manip = m;
+	public ManipulationLiftMove(Manipulation manip){
+		this.manip = manip;
 	}
 	
 	@Override

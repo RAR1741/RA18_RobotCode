@@ -181,30 +181,26 @@ public class Robot extends IterativeRobot {
         
         //manipulation height control
         if(up.check(operator.getPOV() == 0)) {
-//            place+=5;
-//            manip.setLiftHeight(place);
             manip.changeLiftHeight(5);
         }
         if(down.check(operator.getPOV() == 180)) {
-//            place-=5;
-//            manip.setLiftHeight(place);
             manip.changeLiftHeight(-5);
         }
         
         if(operator.getAButton()){
-            manip.setLiftPos(LiftPos.Ground);
+            manip.setLiftPos(LiftPos.GROUND);
         }
         if(operator.getBButton()){
-            manip.setLiftPos(LiftPos.Hover);
+            manip.setLiftPos(LiftPos.HOVER);
         }
         if(operator.getYButton()){
-            manip.setLiftPos(LiftPos.Switch);
+            manip.setLiftPos(LiftPos.SWITCH);
         }
         if(operator.getBumper(Hand.kLeft)){
-            manip.setLiftPos(LiftPos.ScaleLow);
+            manip.setLiftPos(LiftPos.SCALE_LOW);
         }
         if(operator.getBumper(Hand.kRight)){
-            manip.setLiftPos(LiftPos.ScaleHigh);
+            manip.setLiftPos(LiftPos.SCALE_HIGH);
         }
         
         if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
@@ -215,12 +211,6 @@ public class Robot extends IterativeRobot {
             manip.setSecondStageHeight(manip.getSecondStageHeight()-(operator.getY(Hand.kRight)*5));
         }
         
-        System.out.println(manip.getSecondStageAtTop());
-        System.out.println(manip.getSecondStageAtBottom());
-        System.out.println("========");
-        
-        //manip.setLiftHeight(place);
-
         //manipulation brake
         if(operator.getXButton()) {
             manip.enableBrake();

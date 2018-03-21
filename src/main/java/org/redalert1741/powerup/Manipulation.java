@@ -36,30 +36,29 @@ public class Manipulation implements Loggable, Configurable {
     private EdgeDetect secondReset;
     
     protected enum LiftPos{
-        Ground(0),Hover(1),Switch(2),ScaleLow(3),ScaleHigh(4);
-        private final int i;
-        private LiftPos(int i) {
-            this.i = i;
+        GROUND(0),HOVER(1),SWITCH(2),SCALE_LOW(3),SCALE_HIGH(4);
+        private final int index;
+        private LiftPos(int index) {
+            this.index = index;
         }
 
         public LiftPos next() {
-            return i<LiftPos.values().length-1 ? 
-                    LiftPos.values()[i+1] : LiftPos.values()[i];
+            return index<LiftPos.values().length-1 
+            		? LiftPos.values()[index+1] : LiftPos.values()[index];
         }
         
         public LiftPos prev() {
-            return i>0 ? 
-                    LiftPos.values()[i-1] : LiftPos.values()[i];
+            return index>0 
+            		? LiftPos.values()[index-1] : LiftPos.values()[index];
         }
     }
     
     /**
      * Constructor for manipulation subsystem.
-     * @param firstDown motor that pulls the second stage down
-     * @param firstUp motor that pulls the second stage up
-     * @param top motor that moves the third stage on the second
-     * @param tilt manipulation tilt
-     * @param brake manipulation brake
+     * @param firstStage motor that moves the first stage
+     * @param secondStage motor that moves the second stage
+     * @param tilt manipulation tilt double solenoid
+     * @param brake manipulation brake solenoid
      * @see TalonSrxWrapper
      * @see DoubleSolenoid
      * @see Solenoid
@@ -200,21 +199,25 @@ public class Manipulation implements Loggable, Configurable {
         return second.getForwardLimit();
     }
 
+    /**
+     * Set lift to a preset position
+     * @param pos Preset position contained in {@link LiftPos}
+     */
     public void setLiftPos(LiftPos pos){
         switch(pos){
-        case Ground:
+        case GROUND:
             setLiftHeight(groundH);
             break;
-        case Hover:
+        case HOVER:
             setLiftHeight(hoverH);
             break;
-        case Switch:
+        case SWITCH:
             setLiftHeight(switchH);
             break;
-        case ScaleLow:
+        case SCALE_LOW:
             setLiftHeight(scaleLowH);
             break;
-        case ScaleHigh:
+        case SCALE_HIGH:
             setLiftHeight(scaleHighH);
             break;
         default:
@@ -222,12 +225,16 @@ public class Manipulation implements Loggable, Configurable {
         }
     }
     
+    /**
+     * Set lift to a target height
+     * @param height Target height in inches
+     */
     public void setLiftHeight(double height){
         targetHeight = height;
         if(targetHeight < secondStageMaxHeight) {
             setSecondStageHeight(targetHeight);
             setFirstStageHeight(0);
-        } else if(targetHeight >= secondStageMaxHeight) {
+        } else{
             setSecondStageHeight(secondStageMaxHeight);
             setFirstStageHeight(targetHeight-secondStageMaxHeight);
         }
@@ -242,6 +249,12 @@ public class Manipulation implements Loggable, Configurable {
         return targetHeight;
     }
     
+    
+    /**
+     * Function run in periodic to automatically reset
+     * the lift encoders when their respective limit
+     * sensors are triggered
+     */
     public void update() {
         if(firstReset.check(getFirstStageAtBottom())) {
             resetFirstStagePosition();
@@ -282,9 +295,7 @@ public class Manipulation implements Loggable, Configurable {
         
         groundH = config.getSetting("ground_height", 0.0);
         hoverH = config.getSetting("hover_height", 0.0);
-        System.out.println(hoverH);
         switchH = config.getSetting("switch_height", 0.0);
-        System.out.println(switchH);
         scaleLowH = config.getSetting("scaleLow_height", 0.0);
         scaleHighH = config.getSetting("scaleHigh_height", 0.0);
         firstStageMaxHeight = config.getSetting("firstMaxHeight", 41.0);

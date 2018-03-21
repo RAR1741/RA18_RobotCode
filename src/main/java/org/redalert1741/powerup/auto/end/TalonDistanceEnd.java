@@ -19,11 +19,10 @@ public class TalonDistanceEnd implements AutoMoveEnd {
     public void setArgs(Map<String, String> args) {
         double distarg = Double.parseDouble(args.get("distance"));
         distance = (int)Math.round(distarg);
-        if(args.containsKey("unit")) {
-            if(args.get("unit").equals("inches")) {
-                distance = (int) Math.round(distarg
-                    *(80*((25.0/7)*(25.0/7))/(6*Math.PI)));
-            }
+        if(args.containsKey("unit")&&
+        		args.get("unit").equals("inches")) {
+            distance = (int) Math.round(distarg
+                *(80*((25.0/7)*(25.0/7))/(6*Math.PI)));
         }
     }
 
