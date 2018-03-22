@@ -312,7 +312,7 @@ public class Manipulation implements Loggable, Configurable {
         firstStageMaxHeight = config.getSetting("firstMaxHeight", 41.0);
         secondStageMaxHeight = config.getSetting("secondMaxHeight", 32.0);
         secondStageHeightToTick = config.getSetting(
-                "second_height_to_tick", 26290.3);
+                "second_height_to_tick", 525.8);
         firstStageHeightToTick = config.getSetting(
                 "first_height_to_tick", 97.5);
     }
