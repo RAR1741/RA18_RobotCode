@@ -48,6 +48,7 @@ public class TankDrive implements Loggable, Configurable {
         shifter = s1;
         
         left1.setPhase(true);
+        right1.setPhase(true);
     }
 
     /**

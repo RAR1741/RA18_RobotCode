@@ -34,6 +34,7 @@ public class Manipulation implements Loggable, Configurable {
     private double secondStageHeightToTick;
     private EdgeDetect firstReset;
     private EdgeDetect secondReset;
+    private boolean homing;
     
     public enum LiftPos{
         GROUND(0),HOVER(1),SWITCH(2),SCALE_LOW(3),SCALE_HIGH(4);
@@ -88,6 +89,8 @@ public class Manipulation implements Loggable, Configurable {
         
         firstReset = new EdgeDetect();
         secondReset = new EdgeDetect();
+
+        homing = false;
     }
     
     public void tiltIn() {
@@ -248,6 +251,10 @@ public class Manipulation implements Loggable, Configurable {
         return targetHeight;
     }
     
+    public void home() {
+        homing = true;
+    }
+    
     
     /**
      * Function run in periodic to automatically reset
@@ -255,6 +262,11 @@ public class Manipulation implements Loggable, Configurable {
      * sensors are triggered.
      */
     public void update() {
+        if(homing) {
+            first.set(ControlMode.PercentOutput, getFirstStageAtBottom() ? 0 : -0.1);
+            second.set(ControlMode.PercentOutput, getSecondStageAtBottom() ? 0 : 0.1);
+            homing = !(getFirstStageAtBottom() && getSecondStageAtBottom());
+        }
         if(firstReset.check(getFirstStageAtBottom())) {
             resetFirstStagePosition();
         }
