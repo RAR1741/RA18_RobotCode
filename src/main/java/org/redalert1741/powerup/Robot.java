@@ -31,6 +31,9 @@ import org.redalert1741.robotbase.wrapper.RealSolenoidWrapper;
 import org.redalert1741.robotbase.wrapper.RealTalonSrxWrapper;
 import org.redalert1741.robotbase.wrapper.TalonSrxWrapper;
 
+import openrio.powerup.MatchData;
+import openrio.powerup.MatchData.GameFeature;
+
 public class Robot extends IterativeRobot {
     private DataLogger data;
     private Config config;
@@ -132,8 +135,41 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/"+config.getSetting("auto", 
-                "min-auto.json"));
+        int position = config.getSetting("auto_position", -1);
+        MatchData.OwnedSide sw = MatchData.getOwnedSide(GameFeature.SWITCH_NEAR);
+        MatchData.OwnedSide sc = MatchData.getOwnedSide(GameFeature.SCALE);
+        String autoChoice = "empty-auto.json";
+        switch(position) {
+        case 1:
+            if(sw == MatchData.OwnedSide.LEFT) {
+                autoChoice = "left_switch.json";
+            } else if(sc == MatchData.OwnedSide.LEFT) {
+                autoChoice = "left_scale.json";
+            } else {
+                autoChoice = "min-auto.json";
+            }
+            break;
+        case 2:
+            if(sw == MatchData.OwnedSide.LEFT) {
+                autoChoice = "middle_left.json";
+            } else {
+                autoChoice = "middle_right.json";
+            }
+            break;
+        case 3:
+            if(sw == MatchData.OwnedSide.RIGHT) {
+                autoChoice = "right_switch.json";
+            } else if(sc == MatchData.OwnedSide.RIGHT) {
+                autoChoice = "right_scale.json";
+            } else {
+                autoChoice = "min-auto.json";
+            }
+            break;
+        default:
+            autoChoice = "min-auto.json";
+        }
+        
+        auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/"+autoChoice);
         auto.start();
 
         climbing = false;
