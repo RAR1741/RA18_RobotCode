@@ -175,7 +175,7 @@ public class TankDrive implements Loggable, Configurable {
         setP(config.getSetting("drive_p", 1.0));
         setI(config.getSetting("drive_i", 0.0));
         setD(config.getSetting("drive_d", 0.0));
-        maxrpm = config.getSetting("drive_maxrpm", 500.0);
+        maxrpm = config.getSetting("drive_maxrpm", 1300.0);
         speedMode = config.getSetting("speedmode", true);
     }
 }

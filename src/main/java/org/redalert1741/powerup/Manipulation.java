@@ -300,17 +300,17 @@ public class Manipulation implements Loggable, Configurable {
         first.setD(config.getSetting("first_d", 0.0));
         
         second.reloadConfig(config);
-        second.setP(config.getSetting("second_p", 1.0));
+        second.setP(config.getSetting("second_p", 0.01));
         second.setI(config.getSetting("second_i", 0.0));
         second.setD(config.getSetting("second_d", 0.0));
         
         groundH = config.getSetting("ground_height", 0.0);
-        hoverH = config.getSetting("hover_height", 0.0);
-        switchH = config.getSetting("switch_height", 0.0);
+        hoverH = config.getSetting("hover_height", 4.0);
+        switchH = config.getSetting("switch_height", 24.0);
         scaleLowH = config.getSetting("scaleLow_height", 0.0);
-        scaleHighH = config.getSetting("scaleHigh_height", 0.0);
+        scaleHighH = config.getSetting("scaleHigh_height", 73.0);
         firstStageMaxHeight = config.getSetting("firstMaxHeight", 41.0);
-        secondStageMaxHeight = config.getSetting("firstMaxHeight", 32.0);
+        secondStageMaxHeight = config.getSetting("secondMaxHeight", 32.0);
         secondStageHeightToTick = config.getSetting(
                 "second_height_to_tick", 26290.3);
         firstStageHeightToTick = config.getSetting(
