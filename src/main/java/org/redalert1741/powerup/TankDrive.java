@@ -67,16 +67,14 @@ public class TankDrive implements Loggable, Configurable {
      * @param ydrive drive power
      */
     public void arcadeDrive(double xdrive, double ydrive) {
-        if(speedMode) {
-            driveMotorsSpeed(ydrive+xdrive, ydrive-xdrive);
-        } else {
-            driveMotors(ydrive+xdrive, ydrive-xdrive);
-        }
+        driveMotors(ydrive+xdrive, ydrive-xdrive);
     }
 
     public void driveMotorsSpeed(double left, double right) {
-        left1.set(ControlMode.Velocity, left*maxrpm);
-        right1.set(ControlMode.Velocity, right*maxrpm);
+        driveMotorsPercentV(left, right);
+//        left1.set(ControlMode.Per, left*maxrpm);
+        
+//        right1.set(ControlMode.Velocity, right*maxrpm);
     }
     
     public void driveMotorsPercentV(double left, double right){

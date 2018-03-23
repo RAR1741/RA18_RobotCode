@@ -135,7 +135,7 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        int position = config.getSetting("auto_position", -1);
+        int position = config.getSetting("auto_position", -1.0).intValue();
         MatchData.OwnedSide sw = MatchData.getOwnedSide(GameFeature.SWITCH_NEAR);
         MatchData.OwnedSide sc = MatchData.getOwnedSide(GameFeature.SCALE);
         String autoChoice = "empty-auto.json";
@@ -297,6 +297,13 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void testPeriodic() {
+        System.out.println("1t: "+manip.getFirstStageAtTop());
+        System.out.println("1b: "+manip.getFirstStageAtBottom());
+        System.out.println("2t: "+manip.getSecondStageAtTop());
+        System.out.println("2b: "+manip.getSecondStageAtBottom());
+        System.out.println("1h: "+manip.getFirstStageHeight());
+        System.out.println("2h: "+manip.getSecondStageHeight());
+        System.out.println("=============");
         data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
     }

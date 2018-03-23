@@ -3,7 +3,7 @@
         {"type":"driveBrake","args":{"brake":false},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
         {"type":"driveRampRate","args":{"rampRate":0},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
         {"type":"tilted","args":{"tilt":true},"end":{"type":"time","args":{"length":1500}}},
-        {"type":"driveTank","args":{"leftDrive":0.48,"rightDrive":0.5},"end":{"type":"driveDistRight","args":{"unit":"inches","distance":135}}},
+        {"type":"driveTank","args":{"leftDrive":0.4,"rightDrive":0.38},"end":{"type":"driveDistRight","args":{"unit":"inches","distance":135}}},
         {"type":"driveTank","args":{"mode":"PercentV","leftDrive":-0.4,"rightDrive":0.4},"end":{"type":"time","args":{"length":900}}},
         {"type":"driveTank","args":{"leftDrive":0.3,"rightDrive":0.3},"end":{"type":"time","args":{"length":2000}}},
         {"type":"kick","args":{"kick":true},"end":{"type":"empty","args":{}}},
