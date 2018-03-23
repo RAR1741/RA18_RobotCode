@@ -276,6 +276,11 @@ public class Manipulation implements Loggable, Configurable {
         }
     }
     
+    public void disable() {
+        first.set(ControlMode.PercentOutput, 0);
+        second.set(ControlMode.PercentOutput, 0);
+    }
+    
     @Override
     public void setupLogging(DataLogger logger) {
         brake.setupLogging(logger);

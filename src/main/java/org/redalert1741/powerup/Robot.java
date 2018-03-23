@@ -213,6 +213,8 @@ public class Robot extends IterativeRobot {
                     -speedmultiplier*driver.getY(Hand.kLeft));
         } else {
             climb.climb();
+            manip.disable();
+            drive.arcadeDrive(0, -driver.getTriggerAxis(Hand.kRight));
         }
         
         //manipulation height control
