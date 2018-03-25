@@ -1,6 +1,7 @@
 package org.redalert1741.powerup;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -58,6 +59,9 @@ public class Robot extends IterativeRobot {
     private long enableStart;
     private boolean climbing;
     
+    private DigitalInput di0;
+    private DigitalInput di1;
+    
     int place;
     EdgeDetect up;
     EdgeDetect down;
@@ -72,6 +76,9 @@ public class Robot extends IterativeRobot {
         
         driver = new XboxController(0);
         operator = new XboxController(1);
+        
+        di0 = new DigitalInput(0);
+        di1 = new DigitalInput(1);
 
         pdp = new LoggablePdp();
 
@@ -135,7 +142,8 @@ public class Robot extends IterativeRobot {
         score.retract();
         drive.setBrakes(false);
 
-        int position = config.getSetting("auto_position", -1.0).intValue();
+        int position = findPosition(); //config.getSetting("auto_position", -1.0).intValue();
+        System.out.println(findPosition());
         MatchData.OwnedSide sw = MatchData.getOwnedSide(GameFeature.SWITCH_NEAR);
         MatchData.OwnedSide sc = MatchData.getOwnedSide(GameFeature.SCALE);
         String autoChoice = "empty-auto.json";
@@ -209,8 +217,8 @@ public class Robot extends IterativeRobot {
         if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
-            drive.arcadeDrive(driver.getX(Hand.kRight)*speedmultiplier,
-                    -speedmultiplier*driver.getY(Hand.kLeft));
+            drive.driveTeleopSpeed(deadband(driver.getX(Hand.kRight))*speedmultiplier,
+                    -speedmultiplier*deadband(driver.getY(Hand.kLeft)));
         } else {
             climb.climb();
             manip.disable();
@@ -305,6 +313,7 @@ public class Robot extends IterativeRobot {
         System.out.println("2b: "+manip.getSecondStageAtBottom());
         System.out.println("1h: "+manip.getFirstStageHeight());
         System.out.println("2h: "+manip.getSecondStageHeight());
+        System.out.println("pos: "+findPosition());
         System.out.println("=============");
         data.log("time", System.currentTimeMillis()-enableStart);
         data.logAll();
@@ -334,5 +343,20 @@ public class Robot extends IterativeRobot {
         manipBrake = new RealSolenoidWrapper(solenoids.charAt(3)-'0');
         kick = new RealDoubleSolenoidWrapper(solenoids.charAt(4)-'0', solenoids.charAt(5)-'0');
         grab = new RealDoubleSolenoidWrapper(solenoids.charAt(6)-'0', solenoids.charAt(7)-'0');
+    }
+    
+    public double deadband(double in) {
+        return Math.abs(in)>0.02 ? in : 0;
+    }
+    
+    public int findPosition() {
+        //System.out.println(di0.get());
+        if(!di0.get()) {
+            return 3;
+        } else if(!di1.get()) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 }
