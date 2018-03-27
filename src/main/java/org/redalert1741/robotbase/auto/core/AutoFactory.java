@@ -47,17 +47,33 @@ public abstract class AutoFactory
      * Parses a single POJO move.
      * @param move Move to parse
      * @return Parsed AutoMove
+     * @throws MissingAutoMoveFactoryException 
      */
-    public AutoMove parseMove(AutoPojo.MovePojo move) {
+    public AutoMove parseMove(AutoPojo.MovePojo move) throws MissingAutoMoveFactoryException {
+        if(move == null) {
+            return new AutoMove(null, null, null);
+        }
+
         AutoMoveMove amm = null;
         if(move.type != null) {
-            amm = ammf.get(move.type).createAutoMoveMove();
-            amm.setArgs(move.args);
+            if(ammf.containsKey(move.type)) {
+                amm = ammf.get(move.type).createAutoMoveMove();
+                amm.setArgs(move.args);
+            } else {
+                throw new MissingAutoMoveFactoryException(
+                        MissingAutoMoveFactoryException.FactoryType.MOVE, move.type);
+            }
         }
+
         AutoMoveEnd ame = null;
         if(move.end != null) {
-            ame = amef.get(move.end.type).createAutoMoveEnd();
-            ame.setArgs(move.end.args);
+            if(amef.containsKey(move.end.type)) {
+                ame = amef.get(move.end.type).createAutoMoveEnd();
+                ame.setArgs(move.end.args);
+            } else {
+                throw new MissingAutoMoveFactoryException(
+                        MissingAutoMoveFactoryException.FactoryType.END, move.end.type);
+            }
         }
         return new AutoMove(amm, ame, move.moveargs);
     }
@@ -70,7 +86,15 @@ public abstract class AutoFactory
     public Autonomous parseAutonomous(AutoPojo pojo) {
         List<AutoMove> moves = new ArrayList<>();
         for (AutoPojo.MovePojo move : pojo.auto) {
-            moves.add(parseMove(move));
+            try {
+                moves.add(parseMove(move));
+            } catch(MissingAutoMoveFactoryException e) {
+                if(e.factory == MissingAutoMoveFactoryException.FactoryType.MOVE) {
+                    throw new MissingAutoMoveException(e.type, pojo.auto.indexOf(move));
+                } else {
+                    throw new MissingAutoEndException(e.type, pojo.auto.indexOf(move));
+                }
+            }
         }
         return new Autonomous(moves);
     }
