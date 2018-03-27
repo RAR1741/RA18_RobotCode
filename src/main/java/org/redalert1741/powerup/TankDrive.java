@@ -18,6 +18,9 @@ public class TankDrive implements Loggable, Configurable {
 
     private SolenoidWrapper shifter;
 
+    private double maxrpm;
+    private boolean speedMode;
+
     /**
      * Initializes the drivetrain.
      * @param l1 CAN ID of a left TalonSRX
@@ -41,8 +44,11 @@ public class TankDrive implements Loggable, Configurable {
 
         left2.follow(left1);
         right2.follow(right1);
-
+        
         shifter = s1;
+        
+        left1.setPhase(true);
+        right1.setPhase(true);
     }
 
     /**
@@ -64,6 +70,23 @@ public class TankDrive implements Loggable, Configurable {
         driveMotors(ydrive+xdrive, ydrive-xdrive);
     }
 
+    public void driveMotorsSpeed(double left, double right) {
+        driveMotorsPercentV(left, right);
+//        left1.set(ControlMode.Per, left*maxrpm);
+        
+//        right1.set(ControlMode.Velocity, right*maxrpm);
+    }
+    
+    public void driveMotorsPercentV(double left, double right){
+        left1.set(ControlMode.PercentOutput, left);
+        right1.set(ControlMode.PercentOutput, right);
+    }
+    
+    public void driveTeleopSpeed(double xdrive, double ydrive){
+      left1.set(ControlMode.Velocity, (ydrive+xdrive)*maxrpm);        
+      right1.set(ControlMode.Velocity, (ydrive-xdrive)*maxrpm);
+    }
+
     /**
      * Shift to driving.
      */
@@ -76,6 +99,44 @@ public class TankDrive implements Loggable, Configurable {
      */
     public void enableClimbing() {
         shifter.set(true);
+    }
+
+    public void setP(double pval) {
+        left1.setP(pval);
+        left2.setP(pval);
+        right1.setP(pval);
+        right2.setP(pval);
+    }
+
+    public void setI(double ival) {
+        left1.setI(ival);
+        left2.setI(ival);
+        right1.setI(ival);
+        right2.setI(ival);
+    }
+
+    public void setD(double dval) {
+        left1.setD(dval);
+        left2.setD(dval);
+        right1.setD(dval);
+        right2.setD(dval);
+    }
+
+    public void setPID(double pval, double ival, double dval) {
+        setP(pval);
+        setI(ival);
+        setD(dval);
+    }
+    
+    /**
+     * Sets the Closed Loop Ramp rate on the drive {@link TalonSrxWrapper talons}.
+     * @param time how much time it takes to go from neutral to full speed
+     */
+    public void setRampRate(double time) {
+        left1.setClosedLoopRampRate(time);
+        right1.setClosedLoopRampRate(time);
+        left2.setClosedLoopRampRate(time);
+        right2.setClosedLoopRampRate(time);
     }
 
     /**
@@ -114,5 +175,10 @@ public class TankDrive implements Loggable, Configurable {
         left2.reloadConfig(config);
         right1.reloadConfig(config);
         right2.reloadConfig(config);
+        setP(config.getSetting("drive_p", 1.0));
+        setI(config.getSetting("drive_i", 0.0));
+        setD(config.getSetting("drive_d", 0.0));
+        maxrpm = config.getSetting("drive_maxrpm", 1300.0);
+        speedMode = config.getSetting("speedmode", true);
     }
 }

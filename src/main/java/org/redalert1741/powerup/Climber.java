@@ -11,12 +11,12 @@ public class Climber {
 
     public void climb() {
         drive.enableClimbing();
-        if(manip.getFirstStageAtBottom()) {
-            drive.arcadeDrive(0, -1);
-            manip.setFirstStage(1);
-        } else {
-            drive.arcadeDrive(0, 0);
-            manip.setFirstStage(0);
-        }
+//        if(manip.getFirstStageAtBottom()) {
+//            drive.arcadeDrive(0, -1);
+//            manip.setFirstStage(1);
+//        } else {
+//            drive.arcadeDrive(0, 0);
+//            manip.setFirstStage(0);
+//        }
     }
 }

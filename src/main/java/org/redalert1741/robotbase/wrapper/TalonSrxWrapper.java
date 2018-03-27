@@ -41,6 +41,8 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
     public abstract ErrorCode configPeakOutputReverse(double value);
 
     public abstract int getPosition();
+    
+    public abstract double getVelocity();
 
     public abstract void setPosition(int pos);
 
@@ -51,6 +53,8 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
     public abstract boolean getForwardLimit();
 
     public abstract void setBrake(boolean brake);
+    
+    public abstract void setClosedLoopRampRate(double time);
 
     @Override
     public void setupLogging(DataLogger logger) {
@@ -58,6 +62,7 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
         logger.addAttribute(logname+"_voltage");
         logger.addAttribute(logname+"_value");
         logger.addAttribute(logname+"_position");
+        logger.addAttribute(logname+"_velocity");
     }
 
     @Override
@@ -66,6 +71,7 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
         logger.log(logname+"_voltage", getBusVoltage());
         logger.log(logname+"_value", get());
         logger.log(logname+"_position", getPosition());
+        logger.log(logname+"_velocity", getVelocity());
     }
 
     @Override

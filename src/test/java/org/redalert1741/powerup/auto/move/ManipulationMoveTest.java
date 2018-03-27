@@ -27,10 +27,9 @@ public class ManipulationMoveTest {
     public static void initManipulation() {
         lift = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
-        up = new FakeTalonSrxWrapper();
         brake = new FakeSolenoidWrapper();
         down = new FakeTalonSrxWrapper();
-        manipulation = new Manipulation(down, up, lift, tilt, brake);
+        manipulation = new Manipulation(down, lift, tilt, brake);
         AutoFactory.addMoveMove("tilt", () -> new ManipulationTiltMove(manipulation));
 
         manual1 = new ManualEnd();

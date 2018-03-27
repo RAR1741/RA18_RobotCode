@@ -1,0 +1,6 @@
+{
+    "auto": [
+        {"type":"counter"},
+        {"end":{"type":"manual"}}
+    ]
+}

@@ -132,4 +132,16 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
     public void setBrake(boolean brake) {
         talon.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
     }
+
+    @Override
+    public double getVelocity() {
+        return talon.getSensorCollection().getQuadratureVelocity();
+    }
+
+	@Override
+	public void setClosedLoopRampRate(double time) {
+		talon.configClosedloopRamp(time, timeout);
+	}
+    
+    
 }

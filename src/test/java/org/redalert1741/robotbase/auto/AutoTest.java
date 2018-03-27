@@ -164,6 +164,23 @@ public class AutoTest {
     }
 
     @Test
+    public void missingArgsTest() {
+        CounterMove counter = new CounterMove();
+        AutoFactory.addMoveMove("counter", () -> counter);
+        ManualEnd manual = new ManualEnd();
+        AutoFactory.addMoveEnd("manual", () -> manual);
+        Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("missing-args-test.json").getPath());
+        auto.start();
+
+        auto.run();
+        auto.run();
+        manual.completed = true;
+        auto.run();
+        auto.run();
+        assertEquals(1, counter.count);
+    }
+
+    @Test
     public void noFileTest() {
         Autonomous auto = new JsonAutoFactory().makeAuto("bad path that i hope never exists");
         assertNull(auto);
