@@ -184,6 +184,16 @@ public class Manipulation implements Loggable, Configurable {
         second.setPosition(0);
         setSecondStageHeight(0);
     }
+    
+    public void resetFirstStageHeight(double height){
+    	first.setPosition((int)(-firstStageHeightToTick*height));
+        setFirstStageHeight(height);
+    }
+    
+    public void resetSecondStageHeight(double height){
+    	second.setPosition((int)(secondStageHeightToTick*height));
+        setSecondStageHeight(height);
+    }
 
     public boolean getFirstStageAtBottom() {
         return first.getForwardLimit();

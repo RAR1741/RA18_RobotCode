@@ -11,6 +11,7 @@ import java.util.Date;
 import org.redalert1741.powerup.Manipulation.LiftPos;
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
 import org.redalert1741.powerup.auto.move.ManipulationLiftMove;
+import org.redalert1741.powerup.auto.move.ManipulationLiftResetPosMove;
 import org.redalert1741.powerup.auto.move.ManipulationTiltMove;
 import org.redalert1741.powerup.auto.move.ScoringGrabberMove;
 import org.redalert1741.powerup.auto.move.ScoringKickerMove;
@@ -127,6 +128,7 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveMove("kick", () -> new ScoringKickerMove(score));
         AutoFactory.addMoveMove("tilted", () -> new ManipulationTiltMove(manip));
         AutoFactory.addMoveMove("lift", () -> new ManipulationLiftMove(manip));
+        AutoFactory.addMoveMove("resetLiftHeight", () -> new ManipulationLiftResetPosMove(manip));
         AutoFactory.addMoveEnd("driveDistRight", () -> new TalonDistanceEnd(rightDrive));
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
