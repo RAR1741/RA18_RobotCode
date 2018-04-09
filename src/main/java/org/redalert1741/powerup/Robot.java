@@ -252,7 +252,7 @@ public class Robot extends IterativeRobot {
         }
         
         if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
-            manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*5));
+            manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*8));
         }
         
         if(Math.abs(operator.getY(Hand.kRight))>0.1) {
