@@ -21,6 +21,7 @@ public class ManipulationMoveTest {
     static FakeTalonSrxWrapper lift, up, down;
     static FakeDoubleSolenoidWrapper tilt;
     static FakeSolenoidWrapper brake;
+    static FakeSolenoidWrapper startBrake;
     static ManualEnd manual1, manual2;
 
     @BeforeClass
@@ -29,7 +30,8 @@ public class ManipulationMoveTest {
         tilt = new FakeDoubleSolenoidWrapper();
         brake = new FakeSolenoidWrapper();
         down = new FakeTalonSrxWrapper();
-        manipulation = new Manipulation(down, lift, tilt, brake);
+        startBrake = new FakeSolenoidWrapper();
+        manipulation = new Manipulation(down, lift, tilt, brake, startBrake);
         AutoFactory.addMoveMove("tilt", () -> new ManipulationTiltMove(manipulation));
 
         manual1 = new ManualEnd();

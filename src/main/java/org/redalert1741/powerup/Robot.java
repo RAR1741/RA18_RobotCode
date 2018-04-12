@@ -45,9 +45,10 @@ public class Robot extends IterativeRobot {
 
     private RealDoubleSolenoidWrapper tilt;
     private RealDoubleSolenoidWrapper grab;
-    private RealDoubleSolenoidWrapper kick;
+    private RealSolenoidWrapper kick;
     private RealSolenoidWrapper driveBrake;
     private RealSolenoidWrapper manipBrake;
+    private RealSolenoidWrapper startBrake;
 
     private TankDrive drive;
     private Manipulation manip;
@@ -95,7 +96,7 @@ public class Robot extends IterativeRobot {
                 driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1),
                 new RealTalonSrxWrapper(7),
-                tilt, manipBrake);
+                tilt, manipBrake, startBrake);
         score = new Scoring(kick, grab);
         climb = new Climber(manip, drive);
 
@@ -149,6 +150,7 @@ public class Robot extends IterativeRobot {
         score.close();
         score.retract();
         drive.setBrakes(false);
+        manip.lock();
 
         int position = findPosition(); //config.getSetting("auto_position", -1.0).intValue();
         System.out.println(findPosition());
@@ -208,6 +210,8 @@ public class Robot extends IterativeRobot {
         drive.setBrakes(false);
         drive.enableDriving();
         manip.disableBrake();
+        manip.unlock();
+        manip.setSecondStagePos(0);
 
         climbing = false;
     }
@@ -349,7 +353,8 @@ public class Robot extends IterativeRobot {
         driveBrake = new RealSolenoidWrapper(solenoids.charAt(0)-'0');
         tilt = new RealDoubleSolenoidWrapper(solenoids.charAt(1)-'0', solenoids.charAt(2)-'0');
         manipBrake = new RealSolenoidWrapper(solenoids.charAt(3)-'0');
-        kick = new RealDoubleSolenoidWrapper(solenoids.charAt(4)-'0', solenoids.charAt(5)-'0');
+        kick = new RealSolenoidWrapper(solenoids.charAt(4)-'0');
+        startBrake = new RealSolenoidWrapper(solenoids.charAt(5)-'0');
         grab = new RealDoubleSolenoidWrapper(solenoids.charAt(6)-'0', solenoids.charAt(7)-'0');
     }
     

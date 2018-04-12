@@ -20,6 +20,7 @@ public class Manipulation implements Loggable, Configurable {
     private TalonSrxWrapper first;
     private TalonSrxWrapper second;
     private SolenoidWrapper brake;
+    private SolenoidWrapper startBrake;
     private double forwardSpeed;
     private double reverseSpeed;
     private double groundH;
@@ -65,11 +66,12 @@ public class Manipulation implements Loggable, Configurable {
      * @see Solenoid
      */
     public Manipulation(TalonSrxWrapper firstStage, TalonSrxWrapper secondStage,
-            DoubleSolenoidWrapper tilt, SolenoidWrapper brake) {
+            DoubleSolenoidWrapper tilt, SolenoidWrapper brake, SolenoidWrapper startBrake) {
         this.first = firstStage;
         this.second = secondStage;
         this.tilt = tilt;
         this.brake = brake;
+        this.startBrake = startBrake;
 
         forwardSpeed = 1;
         reverseSpeed = -1;
@@ -289,6 +291,14 @@ public class Manipulation implements Loggable, Configurable {
     public void disable() {
         first.set(ControlMode.PercentOutput, 0);
         second.set(ControlMode.PercentOutput, 0);
+    }
+    
+    public void unlock() {
+        startBrake.set(true);
+    }
+    
+    public void lock() {
+        startBrake.set(false);
     }
     
     @Override

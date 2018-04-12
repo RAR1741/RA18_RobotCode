@@ -7,14 +7,16 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import org.junit.Before;
 import org.junit.Test;
 import org.redalert1741.robotbase.wrapper.FakeDoubleSolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.FakeSolenoidWrapper;
 
 public class ScoringTest {
     Scoring scoring;
-    FakeDoubleSolenoidWrapper kick, grab;
+    FakeDoubleSolenoidWrapper grab;
+    FakeSolenoidWrapper kick;
 
     @Before
     public void initScoring() {
-        kick = new FakeDoubleSolenoidWrapper();
+        kick = new FakeSolenoidWrapper();
         grab = new FakeDoubleSolenoidWrapper();
         scoring = new Scoring(kick, grab);
     }
@@ -22,9 +24,9 @@ public class ScoringTest {
     @Test
     public void kickTest() {
         scoring.kick();
-        assertEquals(Value.kForward, kick.value);
+        assertEquals(true, kick.value);
         scoring.retract();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
     }
 
     @Test

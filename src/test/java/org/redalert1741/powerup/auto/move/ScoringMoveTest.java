@@ -13,15 +13,17 @@ import org.redalert1741.robotbase.auto.core.AutoFactory;
 import org.redalert1741.robotbase.auto.core.Autonomous;
 import org.redalert1741.robotbase.auto.core.JsonAutoFactory;
 import org.redalert1741.robotbase.wrapper.FakeDoubleSolenoidWrapper;
+import org.redalert1741.robotbase.wrapper.FakeSolenoidWrapper;
 
 public class ScoringMoveTest {
     static Scoring scoring;
-    static FakeDoubleSolenoidWrapper kick, grab;
+    static FakeDoubleSolenoidWrapper grab;
+    static FakeSolenoidWrapper kick;
     static ManualEnd manual1, manual2;
 
     @BeforeClass
     public static void initScoring() {
-        kick = new FakeDoubleSolenoidWrapper();
+        kick = new FakeSolenoidWrapper();
         grab = new FakeDoubleSolenoidWrapper();
         scoring = new Scoring(kick, grab);
         AutoFactory.addMoveMove("kick", () -> new ScoringKickerMove(scoring));
