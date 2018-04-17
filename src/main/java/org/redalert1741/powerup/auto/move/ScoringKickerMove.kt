@@ -3,8 +3,7 @@ package org.redalert1741.powerup.auto.move
 import org.redalert1741.powerup.Scoring
 import org.redalert1741.robotbase.auto.move.EmptyMove
 
-class ScoringKickerMove(score: Scoring) : EmptyMove() {
-    private val score: Scoring = score
+class ScoringKickerMove(private val score: Scoring) : EmptyMove() {
     private var kick: Boolean = false
 
     override fun setArgs(args: Map<String, String>) {
