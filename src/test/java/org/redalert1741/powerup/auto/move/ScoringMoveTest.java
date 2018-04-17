@@ -47,7 +47,7 @@ public class ScoringMoveTest {
     public void kickTest(){
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("kick-scoring-auto.json").getPath());
         auto.start();
-        assertEquals(false, kick.value);
+        assertEquals(true, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
         assertEquals(true, kick.value);

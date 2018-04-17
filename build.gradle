@@ -1,5 +1,6 @@
 plugins {
     id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.1.51"
     id "eclipse"
     id "idea"
     id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
@@ -54,7 +55,7 @@ dependencies {
     testRuntime "org.slf4j:slf4j-api:1.7.10"
     compile group: 'net.saliman', name: 'gradle-cobertura-plugin', version: '2.5.3'
     // compile group: 'org.apache.logging.log4j.jul.LogManager'
-
+    compile "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
