@@ -280,11 +280,11 @@ public class Manipulation implements Loggable, Configurable {
             homing = !(getFirstStageAtBottom() && getSecondStageAtBottom());
         }
         if(firstReset.check(getFirstStageAtBottom())) {
-            resetFirstStagePosition();
+            //resetFirstStagePosition();
         }
         
         if(secondReset.check(getSecondStageAtBottom())) {
-            resetSecondStagePosition();
+            //resetSecondStagePosition();
         }
     }
     

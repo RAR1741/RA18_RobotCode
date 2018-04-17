@@ -137,9 +137,9 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
         AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
         
-        UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
-        cam.setResolution(160, 120);
-        cam.setFPS(100);
+        //UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
+        //cam.setResolution(160, 120);
+        //cam.setFPS(100);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class Robot extends IterativeRobot {
         switch(position) {
         case 1:
             if(sw == MatchData.OwnedSide.LEFT) {
-                autoChoice = "left_switch.json";
+                autoChoice = "min-auto.json";
             } else if(sc == MatchData.OwnedSide.LEFT) {
                 autoChoice = "left_scale.json";
             } else {
@@ -176,7 +176,7 @@ public class Robot extends IterativeRobot {
             break;
         case 3:
             if(sw == MatchData.OwnedSide.RIGHT) {
-                autoChoice = "right_switch.json";
+                autoChoice = "min-auto.json";
             } else if(sc == MatchData.OwnedSide.RIGHT) {
                 autoChoice = "right_scale.json";
             } else {
@@ -247,6 +247,7 @@ public class Robot extends IterativeRobot {
         
         if(operator.getAButton()){
             manip.setLiftPos(LiftPos.GROUND);
+            manip.unlock();
         }
         if(operator.getBButton()){
             manip.setLiftPos(LiftPos.HOVER);
@@ -255,10 +256,13 @@ public class Robot extends IterativeRobot {
             manip.setLiftPos(LiftPos.SWITCH);
         }
         if(operator.getBumper(Hand.kLeft)){
-            manip.setLiftPos(LiftPos.SCALE_LOW);
+            manip.setLiftPos(LiftPos.GROUND);
         }
         if(operator.getBumper(Hand.kRight)){
-            manip.setLiftPos(LiftPos.SCALE_HIGH);
+            manip.setLiftPos(LiftPos.SCALE_LOW);
+        }
+        if(operator.getTriggerAxis(Hand.kRight) > 0.5) {
+        	manip.setLiftPos(LiftPos.SCALE_HIGH);
         }
         
         if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
