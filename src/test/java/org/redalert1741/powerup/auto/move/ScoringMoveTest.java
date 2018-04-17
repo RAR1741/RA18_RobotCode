@@ -47,26 +47,26 @@ public class ScoringMoveTest {
     public void kickTest(){
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("kick-scoring-auto.json").getPath());
         auto.start();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
-        assertEquals(Value.kForward, kick.value);
+        assertEquals(true, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
-        assertEquals(Value.kForward, kick.value);
+        assertEquals(true, kick.value);
         assertEquals(Value.kReverse, grab.value);
         manual1.completed = true;
         auto.run();
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         manual2.completed = true;
         auto.run();
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
     }
 
@@ -74,26 +74,26 @@ public class ScoringMoveTest {
     public void grabTest(){
         Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("grab-scoring-auto.json").getPath());
         auto.start();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kForward, grab.value);
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kForward, grab.value);
         manual1.completed = true;
         auto.run();
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
         manual2.completed = true;
         auto.run();
         auto.run();
-        assertEquals(Value.kReverse, kick.value);
+        assertEquals(false, kick.value);
         assertEquals(Value.kReverse, grab.value);
     }
 }
