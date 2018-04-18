@@ -48,7 +48,7 @@ public abstract class AutoFactory
      * @param move Move to parse
      * @return Parsed AutoMove
      * @throws MissingAutoMoveFactoryException if there's no
-     * matching AutoMoveMoveFactory or AutoMoveEndFactory
+     *     matching AutoMoveMoveFactory or AutoMoveEndFactory
      */
     public AutoMove parseMove(AutoPojo.MovePojo move) throws MissingAutoMoveFactoryException {
         if(move == null) {

@@ -16,6 +16,11 @@ public class MissingAutoMoveFactoryException extends Exception {
     public FactoryType factory;
     public String type;
     
+    /**
+     * Constructor for this.
+     * @param factory type of factory
+     * @param type name of missing factory
+     */
     public MissingAutoMoveFactoryException(FactoryType factory, String type) {
         super("Missing " + factory.toString() + " factory for \"" + type + "\"");
         this.factory = factory;
