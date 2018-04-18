@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -136,10 +134,6 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
         AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
-        
-        //UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
-        //cam.setResolution(160, 120);
-        //cam.setFPS(100);
     }
 
     @Override
