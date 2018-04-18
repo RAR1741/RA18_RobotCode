@@ -29,8 +29,6 @@ public class ManipulationLiftResetPosMove implements AutoMoveMove{
 	public void run() {
 		manip.resetFirstStageHeight(firstStageHeight);
 		manip.resetSecondStageHeight(secondStageHeight);
-		manip.setFirstStageHeight(firstStageHeight);
-		manip.setSecondStageHeight(secondStageHeight);
 	}
 
 	@Override
