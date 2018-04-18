@@ -94,6 +94,7 @@ public class Robot extends IterativeRobot {
                 driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1),
                 new RealTalonSrxWrapper(7),
+                new RealTalonSrxWrapper(6),
                 tilt, manipBrake, startBrake);
         score = new Scoring(kick, grab);
         climb = new Climber(manip, drive);
