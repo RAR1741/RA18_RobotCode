@@ -11,6 +11,7 @@ import java.util.Date;
 import org.redalert1741.powerup.Manipulation.LiftPos;
 import org.redalert1741.powerup.auto.end.TalonDistanceEnd;
 import org.redalert1741.powerup.auto.move.ManipulationLiftMove;
+import org.redalert1741.powerup.auto.move.ManipulationLiftResetPosMove;
 import org.redalert1741.powerup.auto.move.ManipulationTiltMove;
 import org.redalert1741.powerup.auto.move.ScoringGrabberMove;
 import org.redalert1741.powerup.auto.move.ScoringKickerMove;
@@ -42,9 +43,10 @@ public class Robot extends IterativeRobot {
 
     private RealDoubleSolenoidWrapper tilt;
     private RealDoubleSolenoidWrapper grab;
-    private RealDoubleSolenoidWrapper kick;
+    private RealSolenoidWrapper kick;
     private RealSolenoidWrapper driveBrake;
     private RealSolenoidWrapper manipBrake;
+    private RealSolenoidWrapper startBrake;
 
     private TankDrive drive;
     private Manipulation manip;
@@ -92,7 +94,8 @@ public class Robot extends IterativeRobot {
                 driveBrake);
         manip = new Manipulation(new RealTalonSrxWrapper(1),
                 new RealTalonSrxWrapper(7),
-                tilt, manipBrake);
+                new RealTalonSrxWrapper(6),
+                tilt, manipBrake, startBrake);
         score = new Scoring(kick, grab);
         climb = new Climber(manip, drive);
 
@@ -127,6 +130,7 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveMove("kick", () -> new ScoringKickerMove(score));
         AutoFactory.addMoveMove("tilted", () -> new ManipulationTiltMove(manip));
         AutoFactory.addMoveMove("lift", () -> new ManipulationLiftMove(manip));
+        AutoFactory.addMoveMove("resetLiftHeight", () -> new ManipulationLiftResetPosMove(manip));
         AutoFactory.addMoveEnd("driveDistRight", () -> new TalonDistanceEnd(rightDrive));
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
@@ -141,6 +145,7 @@ public class Robot extends IterativeRobot {
         score.close();
         score.retract();
         drive.setBrakes(false);
+        manip.lock();
 
         int position = findPosition(); //config.getSetting("auto_position", -1.0).intValue();
         System.out.println(findPosition());
@@ -150,7 +155,7 @@ public class Robot extends IterativeRobot {
         switch(position) {
         case 1:
             if(sw == MatchData.OwnedSide.LEFT) {
-                autoChoice = "left_switch.json";
+                autoChoice = "min-auto.json";
             } else if(sc == MatchData.OwnedSide.LEFT) {
                 autoChoice = "left_scale.json";
             } else {
@@ -166,7 +171,7 @@ public class Robot extends IterativeRobot {
             break;
         case 3:
             if(sw == MatchData.OwnedSide.RIGHT) {
-                autoChoice = "right_switch.json";
+                autoChoice = "min-auto.json";
             } else if(sc == MatchData.OwnedSide.RIGHT) {
                 autoChoice = "right_scale.json";
             } else {
@@ -200,6 +205,8 @@ public class Robot extends IterativeRobot {
         drive.setBrakes(false);
         drive.enableDriving();
         manip.disableBrake();
+        manip.unlock();
+        manip.setSecondStagePos(0);
 
         climbing = false;
     }
@@ -235,6 +242,7 @@ public class Robot extends IterativeRobot {
         
         if(operator.getAButton()){
             manip.setLiftPos(LiftPos.GROUND);
+            manip.unlock();
         }
         if(operator.getBButton()){
             manip.setLiftPos(LiftPos.HOVER);
@@ -243,14 +251,17 @@ public class Robot extends IterativeRobot {
             manip.setLiftPos(LiftPos.SWITCH);
         }
         if(operator.getBumper(Hand.kLeft)){
-            manip.setLiftPos(LiftPos.SCALE_LOW);
+            manip.setLiftPos(LiftPos.GROUND);
         }
         if(operator.getBumper(Hand.kRight)){
-            manip.setLiftPos(LiftPos.SCALE_HIGH);
+            manip.setLiftPos(LiftPos.SCALE_LOW);
+        }
+        if(operator.getTriggerAxis(Hand.kRight) > 0.5) {
+        	manip.setLiftPos(LiftPos.SCALE_HIGH);
         }
         
         if(Math.abs(operator.getY(Hand.kLeft))>0.1) {
-            manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*5));
+            manip.setFirstStageHeight(manip.getFirstStageHeight()-(operator.getY(Hand.kLeft)*8));
         }
         
         if(Math.abs(operator.getY(Hand.kRight))>0.1) {
@@ -341,7 +352,8 @@ public class Robot extends IterativeRobot {
         driveBrake = new RealSolenoidWrapper(solenoids.charAt(0)-'0');
         tilt = new RealDoubleSolenoidWrapper(solenoids.charAt(1)-'0', solenoids.charAt(2)-'0');
         manipBrake = new RealSolenoidWrapper(solenoids.charAt(3)-'0');
-        kick = new RealDoubleSolenoidWrapper(solenoids.charAt(4)-'0', solenoids.charAt(5)-'0');
+        kick = new RealSolenoidWrapper(solenoids.charAt(4)-'0');
+        startBrake = new RealSolenoidWrapper(solenoids.charAt(5)-'0');
         grab = new RealDoubleSolenoidWrapper(solenoids.charAt(6)-'0', solenoids.charAt(7)-'0');
     }
     

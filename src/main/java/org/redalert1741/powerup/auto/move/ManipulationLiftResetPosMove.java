@@ -5,12 +5,12 @@ import java.util.Map;
 import org.redalert1741.powerup.Manipulation;
 import org.redalert1741.robotbase.auto.core.AutoMoveMove;
 
-public class ManipulationLiftMove implements AutoMoveMove{
+public class ManipulationLiftResetPosMove implements AutoMoveMove{
 	private Manipulation manip;
 	private double firstStageHeight;
 	private double secondStageHeight;
 	
-	public ManipulationLiftMove(Manipulation manip){
+	public ManipulationLiftResetPosMove(Manipulation manip){
 		this.manip = manip;
 	}
 	
@@ -27,8 +27,8 @@ public class ManipulationLiftMove implements AutoMoveMove{
 
 	@Override
 	public void run() {
-		manip.setFirstStageHeight(firstStageHeight);
-		manip.setSecondStageHeight(secondStageHeight);
+		manip.resetFirstStageHeight(firstStageHeight);
+		manip.resetSecondStageHeight(secondStageHeight);
 	}
 
 	@Override

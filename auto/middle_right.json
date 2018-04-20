@@ -1,11 +1,13 @@
 {
     "auto":[
-    	{"type":"tilted","args":{"tilt":true},"end":{"type":"time","args":{"length":1000}}},
+    	{"type":"tilted","args":{"tilt":true},"end":{"type":"time","args":{"length":1}}},
         {"type":"driveBrake","args":{"brake":false},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
         {"type":"driveRampRate","args":{"rampRate":0},"end":{"type":"empty","args":{}},"moveargs":{"async":true}},
-        {"type":"driveTank","args":{"mode":"PercentV","stop":"false","leftDrive":0.65,"rightDrive":0.2},"end":{"type":"time","args":{"length":1300}}},
-		{"type":"driveTank","args":{"mode":"PercentV","leftDrive":0.2,"rightDrive":0.5},"end":{"type":"time","args":{"length":1800}}},
+        {"type":"driveTank","args":{"mode":"speed","stop":"false","leftDrive":0.61,"rightDrive":0.3},"end":{"type":"time","args":{"length":1500}}},
+		{"type":"driveTank","args":{"mode":"speed","leftDrive":0.3,"rightDrive":0.6},"end":{"type":"time","args":{"length":1800}}},
         {"type":"kick","args":{"kick":true}},
-        {"type":"grab","args":{"grab":false}}
+        {"type":"grab","args":{"grab":false},"end":{"type":"time","args":{"length":500}}},
+        {"type":"driveTank","args":{"mode":"speed","stop":"false","leftDrive":-0.3,"rightDrive":-0.7},"end":{"type":"time","args":{"length":1800}}},
+        {"type":"driveTank","args":{"mode":"speed","leftDrive":-0.65,"rightDrive":-0.3},"end":{"type":"time","args":{"length":1200}}}	
     ]
 }
