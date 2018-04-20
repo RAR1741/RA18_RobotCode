@@ -15,6 +15,7 @@ public class ManipulationTest {
     Manipulation manipulation;
     FakeTalonSrxWrapper lift;
     FakeTalonSrxWrapper down;
+    FakeTalonSrxWrapper liftFollow;
     FakeDoubleSolenoidWrapper tilt;
     FakeSolenoidWrapper brake;
     FakeSolenoidWrapper startBrake;
@@ -25,8 +26,9 @@ public class ManipulationTest {
         lift = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
         down = new FakeTalonSrxWrapper();
+        liftFollow = new FakeTalonSrxWrapper();
         brake = new FakeSolenoidWrapper();
-        manipulation = new Manipulation(down, lift, tilt, brake, startBrake);
+        manipulation = new Manipulation(down, lift, liftFollow, tilt, brake, startBrake);
         config = new Config();
         config.loadFromFile(getClass().getResource("manipulationconfig.txt").getPath());
         config.addConfigurable(manipulation);
