@@ -18,7 +18,7 @@ import org.redalert1741.robotbase.wrapper.FakeTalonSrxWrapper;
 
 public class ManipulationMoveTest {
     static Manipulation manipulation;
-    static FakeTalonSrxWrapper lift, up, down;
+    static FakeTalonSrxWrapper second, secondFollow, first;
     static FakeDoubleSolenoidWrapper tilt;
     static FakeSolenoidWrapper brake;
     static FakeSolenoidWrapper startBrake;
@@ -26,13 +26,15 @@ public class ManipulationMoveTest {
 
     @BeforeClass
     public static void initManipulation() {
-        lift = new FakeTalonSrxWrapper();
+        second = new FakeTalonSrxWrapper();
         tilt = new FakeDoubleSolenoidWrapper();
         brake = new FakeSolenoidWrapper();
-        down = new FakeTalonSrxWrapper();
+        first = new FakeTalonSrxWrapper();
         startBrake = new FakeSolenoidWrapper();
-        manipulation = new Manipulation(down, lift, tilt, brake, startBrake);
+        secondFollow = new FakeTalonSrxWrapper();
+        manipulation = new Manipulation(first, second, secondFollow, tilt, brake, startBrake);
         AutoFactory.addMoveMove("tilt", () -> new ManipulationTiltMove(manipulation));
+        AutoFactory.addMoveMove("reset", () -> new ManipulationLiftResetPosMove(manipulation));
 
         manual1 = new ManualEnd();
         manual2 = new ManualEnd();
@@ -46,6 +48,9 @@ public class ManipulationMoveTest {
 
         manual1.completed = false;
         manual2.completed = false;
+        
+        first.position = 0;
+        second.position = 0;
     }
 
     @Test
@@ -67,5 +72,21 @@ public class ManipulationMoveTest {
         auto.run();
         auto.run();
         assertEquals(Value.kForward, tilt.value);
+    }
+    
+    @Test
+    public void resetTest() {
+        Autonomous auto = new JsonAutoFactory().makeAuto(getClass().getResource("reset-manipulation-auto.json").getPath());
+        first.position = 100;
+        second.position = 100;
+        auto.start();
+        assertEquals(first.position, 100);
+        assertEquals(second.position, 100);
+        auto.run();
+        assertEquals(first.position, 0);
+        assertEquals(first.position, 0);
+        auto.run();
+        assertEquals(first.position, 0);
+        assertEquals(first.position, 0);
     }
 }

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 import org.redalert1741.robotbase.config.Config;
 import org.redalert1741.robotbase.config.Configurable;
-import org.redalert1741.robotbase.input.EdgeDetect;
 import org.redalert1741.robotbase.logging.DataLogger;
 import org.redalert1741.robotbase.logging.Loggable;
 import org.redalert1741.robotbase.wrapper.DoubleSolenoidWrapper;
@@ -19,6 +18,7 @@ public class Manipulation implements Loggable, Configurable {
     private DoubleSolenoidWrapper tilt;
     private TalonSrxWrapper first;
     private TalonSrxWrapper second;
+    private TalonSrxWrapper secondFollower;
     private SolenoidWrapper brake;
     private SolenoidWrapper startBrake;
     private double forwardSpeed;
@@ -33,8 +33,6 @@ public class Manipulation implements Loggable, Configurable {
     private double secondStageMaxHeight;
     private double firstStageHeightToTick;
     private double secondStageHeightToTick;
-    private EdgeDetect firstReset;
-    private EdgeDetect secondReset;
     private boolean homing;
     
     public enum LiftPos{
@@ -66,13 +64,16 @@ public class Manipulation implements Loggable, Configurable {
      * @see Solenoid
      */
     public Manipulation(TalonSrxWrapper firstStage, TalonSrxWrapper secondStage,
+            TalonSrxWrapper secondFollower,
             DoubleSolenoidWrapper tilt, SolenoidWrapper brake, SolenoidWrapper startBrake) {
         this.first = firstStage;
         this.second = secondStage;
         this.tilt = tilt;
         this.brake = brake;
         this.startBrake = startBrake;
-
+        this.secondFollower = secondFollower;
+        this.secondFollower.follow(this.second);
+        
         forwardSpeed = 1;
         reverseSpeed = -1;
         
@@ -88,9 +89,6 @@ public class Manipulation implements Loggable, Configurable {
         second.configNominalOutputReverse(0);
         second.configPeakOutputForward(forwardSpeed);
         second.configPeakOutputReverse(reverseSpeed);
-        
-        firstReset = new EdgeDetect();
-        secondReset = new EdgeDetect();
 
         homing = false;
     }
@@ -267,7 +265,6 @@ public class Manipulation implements Loggable, Configurable {
         homing = true;
     }
     
-    
     /**
      * Function run in periodic to automatically reset
      * the lift encoders when their respective limit
@@ -278,13 +275,6 @@ public class Manipulation implements Loggable, Configurable {
             first.set(ControlMode.PercentOutput, getFirstStageAtBottom() ? 0 : -0.1);
             second.set(ControlMode.PercentOutput, getSecondStageAtBottom() ? 0 : 0.1);
             homing = !(getFirstStageAtBottom() && getSecondStageAtBottom());
-        }
-        if(firstReset.check(getFirstStageAtBottom())) {
-            //resetFirstStagePosition();
-        }
-        
-        if(secondReset.check(getSecondStageAtBottom())) {
-            //resetSecondStagePosition();
         }
     }
     
