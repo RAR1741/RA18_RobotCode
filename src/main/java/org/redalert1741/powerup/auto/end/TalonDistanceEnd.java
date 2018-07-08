@@ -35,6 +35,7 @@ public class TalonDistanceEnd implements AutoMoveEnd {
     @Override
     public boolean isFinished() {
         int pos = talon.getPosition();
+        System.out.println("Distance:" + (start-pos));
         return (dir ? pos > start + distance :
             pos < start + distance);
     }
