@@ -187,6 +187,8 @@ public class Robot extends IterativeRobot {
             autoChoice = "min-auto.json";
         }
         
+        //autoChoice = "drive-a-proper-distance.json";
+        
         auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/"+autoChoice);
         auto.start();
 
@@ -224,11 +226,13 @@ public class Robot extends IterativeRobot {
         } else if(driver.getPOV() == 270) {
             climbing = false;
         }
-
+        System.out.println(climbing);
         //driving
         if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
+            drive.setP(1+0.5*driver.getTriggerAxis(Hand.kLeft));
+            System.out.println(speedmultiplier);
             drive.driveTeleopSpeed(deadband(driver.getX(Hand.kRight))*speedmultiplier,
                     -speedmultiplier*deadband(driver.getY(Hand.kLeft)));
         } else {

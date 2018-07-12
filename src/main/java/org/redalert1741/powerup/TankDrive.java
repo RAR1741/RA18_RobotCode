@@ -90,6 +90,8 @@ public class TankDrive implements Loggable, Configurable {
     public void driveTeleopSpeed(double xdrive, double ydrive){
       left1.set(ControlMode.Velocity, (ydrive+xdrive)*maxrpm);        
       right1.set(ControlMode.Velocity, (ydrive-xdrive)*maxrpm);
+      System.out.println("leftSet:" + left1.get());
+      System.out.println("rightSet:" + right1.get());
     }
 
     /**
