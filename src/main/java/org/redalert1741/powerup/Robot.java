@@ -1,9 +1,9 @@
 package org.redalert1741.powerup;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -185,8 +185,6 @@ public class Robot extends IterativeRobot {
         default:
             autoChoice = "min-auto.json";
         }
-        
-        //autoChoice = "drive-a-proper-distance.json";
         
         auto = new JsonAutoFactory().makeAuto("/home/lvuser/auto/"+autoChoice);
         auto.start();
