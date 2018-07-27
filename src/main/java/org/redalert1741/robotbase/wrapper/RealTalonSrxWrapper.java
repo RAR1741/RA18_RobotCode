@@ -145,10 +145,7 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
 	}
 	
 	@Override 
-	public void setStatusFrameRate(int speedMs, int timeoutMs)
-	{
+	public void setStatusFrameRate(int speedMs, int timeoutMs) {
 		talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, speedMs, timeoutMs);
 	}
-    
-    
 }

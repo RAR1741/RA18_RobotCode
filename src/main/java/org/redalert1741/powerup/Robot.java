@@ -153,7 +153,6 @@ public class Robot extends IterativeRobot {
         manip.lock();
 
         int position = findPosition(); //config.getSetting("auto_position", -1.0).intValue();
-        System.out.println(findPosition());
         MatchData.OwnedSide sw = MatchData.getOwnedSide(GameFeature.SWITCH_NEAR);
         MatchData.OwnedSide sc = MatchData.getOwnedSide(GameFeature.SCALE);
         String autoChoice = "empty-auto.json";
@@ -226,13 +225,12 @@ public class Robot extends IterativeRobot {
         } else if(driver.getPOV() == 270) {
             climbing = false;
         }
-        System.out.println(climbing);
+        
         //driving
         if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
             drive.setP(1+0.5*driver.getTriggerAxis(Hand.kLeft));
-            System.out.println(speedmultiplier);
             drive.driveTeleopSpeed(deadband(driver.getX(Hand.kRight))*speedmultiplier,
                     -speedmultiplier*deadband(driver.getY(Hand.kLeft)));
         } else {
@@ -371,7 +369,6 @@ public class Robot extends IterativeRobot {
     }
     
     public int findPosition() {
-        //System.out.println(di0.get());
         if(!di0.get()) {
             return 3;
         } else if(!di1.get()) {
