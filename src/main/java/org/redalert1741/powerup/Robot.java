@@ -159,10 +159,10 @@ public class Robot extends IterativeRobot {
         String autoChoice = "empty-auto.json";
         switch(position) {
         case 1:
-            if(sw == MatchData.OwnedSide.LEFT) {
-                autoChoice = "min-auto.json";
-            } else if(sc == MatchData.OwnedSide.LEFT) {
-                autoChoice = "left_scale.json";
+            if(sc == MatchData.OwnedSide.LEFT) {
+            	autoChoice = "left_scale.json";
+            } else if(sw == MatchData.OwnedSide.LEFT) {
+            	autoChoice = "min-auto.json";
             } else {
                 autoChoice = "min-auto.json";
             }
@@ -175,10 +175,10 @@ public class Robot extends IterativeRobot {
             }
             break;
         case 3:
-            if(sw == MatchData.OwnedSide.RIGHT) {
-                autoChoice = "min-auto.json";
-            } else if(sc == MatchData.OwnedSide.RIGHT) {
-                autoChoice = "right_scale.json";
+            if(sc == MatchData.OwnedSide.RIGHT) {
+            	autoChoice = "right_scale.json";
+            } else if(sw == MatchData.OwnedSide.RIGHT) {
+            	autoChoice = "min-auto.json";
             } else {
                 autoChoice = "min-auto.json";
             }
@@ -214,7 +214,7 @@ public class Robot extends IterativeRobot {
         manip.disableBrake();
         manip.unlock();
         manip.setSecondStagePos(0);
-
+        drive.motionProfileDistance(300);
         climbing = false;
     }
 
@@ -226,15 +226,19 @@ public class Robot extends IterativeRobot {
         } else if(driver.getPOV() == 270) {
             climbing = false;
         }
-        System.out.println(climbing);
+        //System.out.println(climbing);
         //driving
         if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
             drive.setP(1+0.5*driver.getTriggerAxis(Hand.kLeft));
-            System.out.println(speedmultiplier);
+            //System.out.println(speedmultiplier);
+            /*
             drive.driveTeleopSpeed(deadband(driver.getX(Hand.kRight))*speedmultiplier,
                     -speedmultiplier*deadband(driver.getY(Hand.kLeft)));
+                 */   
+            //drive.driveMotorsPercentV(driver.getY(Hand.kRight), driver.getY(Hand.kRight));
+            //drive.driveMotorsSpeed(deadband(driver.getY(Hand.kLeft))*-speedmultiplier, -speedmultiplier*deadband(driver.getY(Hand.kRight)));
         } else {
             climb.climb();
             manip.disable();
@@ -290,6 +294,10 @@ public class Robot extends IterativeRobot {
         }
         if(driver.getBButton()) {
             manip.tiltIn();
+        }
+        
+        if(driver.getXButton()){
+        	
         }
 
         //scoring controls

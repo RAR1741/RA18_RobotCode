@@ -149,6 +149,16 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
 	{
 		talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, speedMs, timeoutMs);
 	}
+
+	@Override
+	public void setMotionMagicCruiseVelocity(int vel, int timeoutMs) {
+		talon.configMotionCruiseVelocity(vel, timeoutMs);
+	}
+
+	@Override
+	public void setMotionMagicAcceleration(int acc, int timeoutMs) {
+		talon.configMotionAcceleration(acc, timeoutMs);
+	}
     
     
 }

@@ -53,7 +53,11 @@ public class TankDrive implements Loggable, Configurable {
         shifter = s1;
         
         left1.setPhase(true);
-        right1.setPhase(true);
+        right1.setPhase(false);
+        left1.setMotionMagicCruiseVelocity(200, 5);
+        left1.setMotionMagicAcceleration(20,5);
+        right1.setMotionMagicCruiseVelocity(200, 5);
+        right1.setMotionMagicAcceleration(20,5);
     }
 
     /**
@@ -83,15 +87,15 @@ public class TankDrive implements Loggable, Configurable {
     public void driveMotorsPercentV(double left, double right){
         left1.set(ControlMode.PercentOutput, left);
         right1.set(ControlMode.PercentOutput, right);
-        System.out.println("Left" + left1.getVelocity());
-        System.out.println("Right" + right1.getVelocity());
+        System.out.println("Left" + left1.getVelocity() + " Pos: " + left1.getPosition());
+        System.out.println("Right" + right1.getVelocity() + " Pos: " + right1.getPosition());
     }
     
     public void driveTeleopSpeed(double xdrive, double ydrive){
       left1.set(ControlMode.Velocity, (ydrive+xdrive)*maxrpm);        
       right1.set(ControlMode.Velocity, (ydrive-xdrive)*maxrpm);
-      System.out.println("leftSet:" + left1.get());
-      System.out.println("rightSet:" + right1.get());
+      //System.out.println("leftSet:" + left1.get());
+      //System.out.println("rightSet:" + right1.get());
     }
 
     /**
@@ -127,6 +131,14 @@ public class TankDrive implements Loggable, Configurable {
         left2.setD(dval);
         right1.setD(dval);
         right2.setD(dval);
+    }
+    
+    public void setF(double fval)
+    {
+        left1.setF(fval);
+        left2.setF(fval);
+        right1.setF(fval);
+        right2.setF(fval);
     }
 
     public void setPID(double pval, double ival, double dval) {
@@ -185,7 +197,13 @@ public class TankDrive implements Loggable, Configurable {
         setP(config.getSetting("drive_p", 1.0));
         setI(config.getSetting("drive_i", 0.0));
         setD(config.getSetting("drive_d", 0.0));
+        setF(0.0333);
         maxrpm = config.getSetting("drive_maxrpm", 1300.0);
         speedMode = config.getSetting("speedmode", true);
     }
+
+	public void motionProfileDistance(double inches) {
+		left1.set(ControlMode.MotionMagic, (left1.getPosition())+(inches*(80*((25.0/7)*(25.0/7))/(6*Math.PI))));
+		right1.set(ControlMode.MotionMagic, (right1.getPosition())+(inches*(80*((25.0/7)*(25.0/7))/(6*Math.PI))));
+	}
 }
