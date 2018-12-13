@@ -1,7 +1,9 @@
 package org.redalert1741.powerup;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -135,6 +137,9 @@ public class Robot extends IterativeRobot {
         AutoFactory.addMoveEnd("driveDistLeft", () -> new TalonDistanceEnd(leftDrive));
         AutoFactory.addMoveEnd("time", () -> new TimedEnd());
         AutoFactory.addMoveEnd("empty", () -> new EmptyEnd());
+        
+        UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
+        cam.setResolution(160, 120);
     }
 
     @Override
@@ -148,7 +153,6 @@ public class Robot extends IterativeRobot {
         manip.lock();
 
         int position = findPosition(); //config.getSetting("auto_position", -1.0).intValue();
-        System.out.println(findPosition());
         MatchData.OwnedSide sw = MatchData.getOwnedSide(GameFeature.SWITCH_NEAR);
         MatchData.OwnedSide sc = MatchData.getOwnedSide(GameFeature.SCALE);
         String autoChoice = "empty-auto.json";
@@ -219,11 +223,12 @@ public class Robot extends IterativeRobot {
         } else if(driver.getPOV() == 270) {
             climbing = false;
         }
-
+        
         //driving
         if(!climbing) {
             drive.enableDriving();
             double speedmultiplier = (0.4*driver.getTriggerAxis(Hand.kLeft)+0.6);
+            drive.setP(1+0.5*driver.getTriggerAxis(Hand.kLeft));
             drive.driveTeleopSpeed(deadband(driver.getX(Hand.kRight))*speedmultiplier,
                     -speedmultiplier*deadband(driver.getY(Hand.kLeft)));
         } else {
@@ -265,7 +270,7 @@ public class Robot extends IterativeRobot {
         }
         
         if(Math.abs(operator.getY(Hand.kRight))>0.1) {
-            manip.setSecondStageHeight(manip.getSecondStageHeight()-(operator.getY(Hand.kRight)*5));
+            manip.setSecondStageHeight(manip.getSecondStageHeight()-(operator.getY(Hand.kRight)*8));
         }
         
         //manipulation brake
@@ -362,7 +367,6 @@ public class Robot extends IterativeRobot {
     }
     
     public int findPosition() {
-        //System.out.println(di0.get());
         if(!di0.get()) {
             return 3;
         } else if(!di1.get()) {

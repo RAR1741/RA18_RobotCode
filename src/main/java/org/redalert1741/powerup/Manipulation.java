@@ -71,8 +71,6 @@ public class Manipulation implements Loggable, Configurable {
         this.tilt = tilt;
         this.brake = brake;
         this.startBrake = startBrake;
-        this.secondFollower = secondFollower;
-        this.secondFollower.follow(this.second);
         
         forwardSpeed = 1;
         reverseSpeed = -1;
@@ -89,6 +87,16 @@ public class Manipulation implements Loggable, Configurable {
         second.configNominalOutputReverse(0);
         second.configPeakOutputForward(forwardSpeed);
         second.configPeakOutputReverse(reverseSpeed);
+        second.setPhase(false);
+        
+        this.secondFollower = secondFollower;
+        this.secondFollower.configNominalOutputForward(0);
+        this.secondFollower.configNominalOutputReverse(0);
+        this.secondFollower.configPeakOutputForward(forwardSpeed);
+        this.secondFollower.configPeakOutputReverse(reverseSpeed);
+        this.secondFollower.setPhase(false);
+        this.secondFollower.follow(this.second);
+
 
         homing = false;
     }
@@ -297,6 +305,7 @@ public class Manipulation implements Loggable, Configurable {
         tilt.setupLogging(logger);
         first.setupLogging(logger);
         second.setupLogging(logger);
+        secondFollower.setupLogging(logger);
     }
 
     @Override
@@ -305,6 +314,7 @@ public class Manipulation implements Loggable, Configurable {
         tilt.log(logger);
         first.log(logger);
         second.log(logger);
+        secondFollower.log(logger);
     }
 
     @Override

@@ -35,9 +35,14 @@ public class TankDrive implements Loggable, Configurable {
             TalonSrxWrapper r1, TalonSrxWrapper r2, SolenoidWrapper s1) {
         left1 = l1;
         left2 = l2;
+        left1.setStatusFrameRate(20, 5);
+        left2.setStatusFrameRate(20, 5);
 
         right1 = r1;
         right2 = r2;
+        right1.setStatusFrameRate(20, 5);
+        right2.setStatusFrameRate(20, 5);
+
 
         left1.setInverted(true);
         left2.setInverted(true);
@@ -72,7 +77,6 @@ public class TankDrive implements Loggable, Configurable {
 
     public void driveMotorsSpeed(double left, double right) {
         left1.set(ControlMode.Velocity, left*maxrpm);
-        
         right1.set(ControlMode.Velocity, right*maxrpm);
     }
     

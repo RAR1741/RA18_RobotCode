@@ -55,6 +55,8 @@ public abstract class TalonSrxWrapper implements Loggable, Configurable {
     public abstract void setBrake(boolean brake);
     
     public abstract void setClosedLoopRampRate(double time);
+    
+    public abstract void setStatusFrameRate(int speedMs, int timeoutMs);
 
     @Override
     public void setupLogging(DataLogger logger) {

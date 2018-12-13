@@ -3,6 +3,7 @@ package org.redalert1741.robotbase.wrapper;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class RealTalonSrxWrapper extends TalonSrxWrapper {
@@ -142,6 +143,10 @@ public class RealTalonSrxWrapper extends TalonSrxWrapper {
 	public void setClosedLoopRampRate(double time) {
 		talon.configClosedloopRamp(time, timeout);
 	}
-    
-    
+	
+	@Override 
+	public void setStatusFrameRate(int speedMs, int timeoutMs) {
+		talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 
+				speedMs, timeoutMs);
+	}
 }
